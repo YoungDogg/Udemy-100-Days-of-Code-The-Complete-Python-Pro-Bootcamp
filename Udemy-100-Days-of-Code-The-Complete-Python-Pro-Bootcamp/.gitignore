@@ -1,0 +1,20 @@
+# Ignore compiled Python files
+__pycache__/
+*.pyc
+
+# Ignore cache folders
+.cache/
+
+# Ignore configuration files
+.config/
+
+# Ignore Unity package manager folders
+.upm/
+
+# Ignore Visual Studio Code settings
+.vscode/
+
+# Ignore virtual environment folders
+venv/
+
+.pythonlibs
