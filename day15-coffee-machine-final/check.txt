@@ -1,0 +1,7 @@
+[] print report
+[] check resources
+[] process coin
+[] check transaction successful
+[] make coffee
+
+#
