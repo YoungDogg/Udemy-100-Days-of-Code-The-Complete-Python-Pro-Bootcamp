@@ -2,6 +2,7 @@ import random
 
 from art import logo, vs
 from game_data import data
+from clear import clear_screen
 
 SCORE = 0
 
@@ -10,22 +11,34 @@ SCORE = 0
 
 
 def game_update():
-  is_playable = True
-  my_input = input("Who has more followers? Type 'A" or 'B': )  
-  a, b = diff_check_of_b()
-  answer = answer_func(a,b)
+  is_playable = True  
+  is_correct = False
 
   while is_playable:
+    a, b = diff_check_of_b()
+    answer = answer_func(a,b)
     print(logo)
     print(f'Compare A: {a["name"]}, {a["description"]}, from {a["country"]}')
+    if is_correct:
+      print(f"You're right! Current score: {SCORE}")    
     print()
     print()
     print(vs)
     print(f'Against B: {b["name"]}, {b["description"]}, from {b["country"]}')
-    my_input
+    my_input = input("Who has more followers? Type 'A' or 'B': ")
+
+    my_input = answer
     if my_input == answer:
-      # if it's right      
-      return True 
+      clear_screen()
+      is_correct = True
+      SCORE += 1
+      
+    else:
+      is_playable = False
+      clear_screen()
+      print(logo)
+      print(f"Sorry, that's wrong. Final socre: {SCORE}")
+
 
 def diff_check_of_b():
   a = data[random.randint(0, len(data))]
@@ -40,5 +53,3 @@ def answer_func(a, b):
   else:
     return b  
 
-def used_data_index_list():
-  return True
