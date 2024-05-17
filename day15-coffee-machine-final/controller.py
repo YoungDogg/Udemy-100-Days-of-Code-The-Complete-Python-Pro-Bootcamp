@@ -1,5 +1,5 @@
 import os
-from main import MENU
+from main import MENU, resources
 
 
 def clear():
@@ -16,15 +16,20 @@ def check_resources(resources, order):
     o_milk = ingredients["milk"] if ingredients["milk"] else 0
     o_coffee = ingredients["coffee"] if ingredients["coffee"] else 0
 
+    has_resource = True
+
     # compare each
     if r_water < o_water != 0:
+        has_resource = False
         print(f"Sorry there is not enough water.")
-        return False
     if r_milk < o_milk != 0:
+        has_resource = False
         print(f"Sorry there is not enough milk.")
-        return False
     if r_coffee < o_coffee != 0:
+        has_resource = False
         print(f"Sorry there is not enough coffee.")
+
+    if not has_resource:
         return False
 
     return True
@@ -39,3 +44,17 @@ def insert_coin():
     coin_sum = input_quaters+input_dimes+input_nickles+input_pennies
 
     return coin_sum
+
+def report(money: int = 0):
+    print(f'''
+            current resource values
+            Water: {resources["water"]}
+            Milk: {resources["milk"]}
+            Coffee: {resources["coffee"]}
+            Money: {money}
+    ''')
+
+def make_coffee():
+    ingredients = MENU[order]["ingredients"] if MENU[order]["ingredients"] else None
+    resources["water"] -= ingredients["water"]
+    print("Here is your {latte}. Enjoy!")
