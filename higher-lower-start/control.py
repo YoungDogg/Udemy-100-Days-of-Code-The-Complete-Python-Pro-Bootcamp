@@ -32,7 +32,7 @@ def game_update():
       clear_screen()
       is_correct = True
       SCORE += 1
-      
+
     else:
       is_playable = False
       clear_screen()

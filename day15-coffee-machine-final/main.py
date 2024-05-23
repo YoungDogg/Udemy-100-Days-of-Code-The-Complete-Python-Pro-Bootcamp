@@ -1,36 +1,14 @@
-from controller import clear, check_resources, insert_coin, report
+from controller import check_resources, insert_coin, report, make_coffee
+from config import MENU, resources
 
-MENU = {
-    "espresso": {
-        "ingredients": {
-            "water": 50,
-            "coffee": 18,
-        },
-        "cost": 1.5,
-    },
-    "latte": {
-        "ingredients": {
-            "water": 200,
-            "milk": 150,
-            "coffee": 24,
-        },
-        "cost": 2.5,
-    },
-    "cappuccino": {
-        "ingredients": {
-            "water": 250,
-            "milk": 100,
-            "coffee": 24,
-        },
-        "cost": 3.0,
-    }
-}
+import os
 
-resources = {
-    "water": 300,
-    "milk": 200,
-    "coffee": 100,
-}
+def clear():
+    if os.name == 'nt':  # For Windows
+        os.system('cls')
+    else:  # For Unix-based systems (Linux, macOS)
+        os.system('clear')
+
 
 # TODO: 1. Prompt user by asking “What would you like? (espresso/latte/cappuccino):”
 is_machine_working = True
@@ -42,10 +20,12 @@ while is_machine_working:
     if user_input == "off":
         clear()
         is_machine_working = False
+        continue
 
     # TODO: 3. Print report.
     if user_input == "report":
         report()
+        continue
 
     # TODO: 4. Check resources sufficient?
     is_resourceful = check_resources(resources, user_input)
@@ -72,6 +52,4 @@ while is_machine_working:
     else:
         print("Sorry that's not enough money. Money refunded.")
         continue
-
-
 
