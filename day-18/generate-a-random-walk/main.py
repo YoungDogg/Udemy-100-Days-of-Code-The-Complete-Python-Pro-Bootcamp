@@ -1,5 +1,9 @@
-from turtle import Turtle
+from MyTurtle import MyTurtle
+from turtle import Screen
 
-turtle = Turtle()
+screen = Screen()
+turtle = MyTurtle()
 
-turtle.move(move_count=100)  # how to inherit?
+turtle.move()
+screen.mainloop()
+
