@@ -1,9 +1,22 @@
 from MyTurtle import MyTurtle
 from turtle import Screen
 
-screen = Screen()
-turtle = MyTurtle()
+def main():
+    turtle = MyTurtle()
+    screen = Screen()
 
-turtle.move()
-screen.mainloop()
+    screen.colormode(255)
+    try:
+        turtle.move("joi")
+    except ValueError as e:
+        print(e)
+
+    screen.mainloop()
+
+if __name__ == "__main__":
+    main()
+
+
+
+
 
