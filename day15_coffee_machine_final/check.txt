@@ -1,0 +1,16 @@
+# functions
+[v] print report
+[v] check resources
+[v] process coin
+[v] check transaction successful
+[v] make coffee
+
+# flows
+[v] input
+[v] off
+[v] report
+[v] !is_resourceful
+[v] is_resourceful
+[v] memu_cost == input_coin
+[v] memu_cost < input_coin
+[v] else
