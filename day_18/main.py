@@ -13,8 +13,8 @@ def main():
     try:
         # turtle.randome_move(20)
         # turtle.circling_circle(5)
-        colorgram.append_color_tuple()
-        colorgram.display()
+        colorgram.append_color_tuple()        
+        turtle.draw_dot(color_list=colorgram.color_list)
     except ValueError as e:
         print(e)
 

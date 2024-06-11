@@ -10,9 +10,16 @@ class MyTurtle(Turtle):
         self.random_move_distance = random_move_distance
 
     def draw_dot(self,color_list):
-        for i in range(10):
-            self.color(i)
-            self.dot(size=20)
+        self.teleport(self.xcor() -250, self.ycor()-200)
+        for j in range(10):
+            starting_row_pos = self.pos()
+            for i in range(10):
+                # TODO: color
+                # self.color(color_list[i*(j+1)])
+                self.dot(size=20)
+                self.teleport(self.xcor()+50, self.ycor())
+            self.teleport(starting_row_pos[0], starting_row_pos[1]+50)
+
             #set location
 
     def random_move(self, move_count=20):
