@@ -11,7 +11,7 @@ def main():
     screen.colormode(255)
 
     try:
-        # turtle.randome_move(20)
+        # turtle.random_move(20)
         # turtle.circling_circle(5)
         colorgram.append_color_tuple()        
         turtle.draw_dot(color_list=colorgram.color_list)
