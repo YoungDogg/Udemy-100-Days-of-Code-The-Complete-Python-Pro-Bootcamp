@@ -1,5 +1,6 @@
 from turtle import Turtle, Screen
 from random import randint, choice
+from day_18.hirst_painting.colorgram import MyColorgram
 
 
 class MyTurtle(Turtle):
@@ -8,19 +9,29 @@ class MyTurtle(Turtle):
     def __init__(self, random_move_distance=40):
         super().__init__()
         self.random_move_distance = random_move_distance
+        self.coloring = MyColorgram(extract_num=100)
 
-    def draw_dot(self,color_list):
+    def draw_dot(self):
+        """
+        draw 10x10 dots with random color extracted from color_list
+        color_list (list of tuples): List of colors to be used for drawing dots.
+        """
+        self.coloring.append_color_tuple()
+        if not self.coloring.color_list:
+            raise ValueError("color_list cannot be empty")
+
         self.teleport(self.xcor() -250, self.ycor()-200)
-        for j in range(10):
+        color_index = 0
+        
+        for row in range(10):
             starting_row_pos = self.pos()
-            for i in range(10):
-                # TODO: color
-                # self.color(color_list[i*(j+1)])
+            for col in range(10):
+                current_color = self.coloring.color_list[color_index % len(self.coloring.color_list)]
+                color_index += 1
+                self.color(current_color)
                 self.dot(size=20)
                 self.teleport(self.xcor()+50, self.ycor())
             self.teleport(starting_row_pos[0], starting_row_pos[1]+50)
-
-            #set location
 
     def random_move(self, move_count=20):
         '''
