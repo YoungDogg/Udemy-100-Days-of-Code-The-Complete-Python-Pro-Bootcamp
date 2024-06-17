@@ -16,6 +16,7 @@ class MyTurtle(Turtle):
         draw 10x10 dots with random color extracted from color_list
         color_list (list of tuples): List of colors to be used for drawing dots.
         """
+        self.hideturtle()
         self.coloring.append_color_tuple()
         if not self.coloring.color_list:
             raise ValueError("color_list cannot be empty")
