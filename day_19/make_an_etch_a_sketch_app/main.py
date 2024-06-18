@@ -1,5 +1,5 @@
 from turtle import Screen
-from turtle_19 import Day19SketchTurtle
+from day_19.make_an_etch_a_sketch_app.day_19_sketch_turtle import Day19SketchTurtle
 
 
 class TurtleApp:
