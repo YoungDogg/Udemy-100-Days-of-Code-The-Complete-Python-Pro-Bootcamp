@@ -1,30 +1,44 @@
-from turtle import Turtle
-from typing import List
+from turtle import Turtle, Screen
+from typing import List, Tuple
+import random
+
 
 class TurtleRaceUnit(Turtle):
-    def __init__(self,color:str= "black"):
-        super().__init__() # what is the usage of super?
+    def __init__(self, color: str = "black"):
+        super().__init__()  # Initialize the Turtle base class
         self.shape("turtle")
         self.color(color)
 
-class TurtleGroup(TurtleRaceUnit):
-    turtle_objects: List[TurtleRaceUnit] = []
-    turtle_color: List = ["red", "blue", "green", "yellow", "orange", "purple"]
-    y_pos = -300
-    for color in turtle_color:
-        turtle= TurtleRaceUnit()
-        turtle.color(color)
-        turtle.teleport(x=-400,y=y_pos)
-        turtle_objects.append(turtle)
-        y_pos += 120
+    def teleport_turtle(self, x: int, y: int):
+        self.speed(5)
+        self.penup()
+        self.goto(x, y)
+        self.pendown()
 
-    def __init__(self):
-        # self.turtle_objects = []
-        # for color in self.turtle_color:
-        #     self.turtle_objects.append(TurtleRaceUnit(color))
-        pass
-    def print(self):
-        print(self.turtle_objects)
+    def run_turtle(self):
+        # random tutle speed given
+        self.speed(random.randint(1, 10))
+        self.forward(10)
 
 
+class TurtleGroup:
 
+    def __init__(self, turtle_num: int = 6):
+        self.scn = Screen()  # this is not related to the turtle... how to refactor this one?
+        self.scn.colormode(255)
+
+        self.turtle_objects: List[TurtleRaceUnit] = []
+
+        for _ in range(turtle_num):
+            color_rgb: List[int] = []
+            for _ in range(3):
+                color_rgb.append(random.randint(0, 255))
+            turtle_color: Tuple = (color_rgb[0], color_rgb[1], color_rgb[2])
+            turtle = TurtleRaceUnit()
+            turtle.fillcolor(turtle_color)
+            turtle.pencolor(turtle_color)
+            self.turtle_objects.append(turtle)
+
+    def print_color(self):
+        for turtle in self.turtle_objects:
+            print(turtle.color()[0])
