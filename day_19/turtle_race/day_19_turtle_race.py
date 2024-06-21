@@ -8,12 +8,12 @@ class TurtleRaceUnit(Turtle):
         super().__init__()  # Initialize the Turtle base class
         self.shape("turtle")
         self.color(color)
+        self.speed(3)
+        self.penup()
 
     def teleport_turtle(self, x: int, y: int):
         self.speed(5)
-        self.penup()
         self.goto(x, y)
-        self.pendown()
 
     def run_turtle(self):
         # random tutle speed given
