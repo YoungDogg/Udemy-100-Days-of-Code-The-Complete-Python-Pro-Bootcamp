@@ -20,8 +20,8 @@ class TurtleGame:
                                      minval=1, maxval=len(self.turtle_group.turtle_objects)))
             print(f"guessing tutle number: {int(self.winner_input)}")
         except TypeError:
-            print("Input was cancelled or invalid. Defaulting to turtle number 1")
-            self.winner_input = 1
+            print("Input was cancelled or invalid. Defaulting to turtle number 0")
+            self.winner_input = 0
 
         y_pos = -300
         num = 1
