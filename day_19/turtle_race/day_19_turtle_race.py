@@ -23,9 +23,9 @@ class TurtleRaceUnit(Turtle):
 
 class TurtleGroup:
 
-    def __init__(self, turtle_num: int = 6):
-        self.scn = Screen()  # this is not related to the turtle... how to refactor this one?
-        self.scn.colormode(255)
+    def __init__(self, screen:Screen, turtle_num: int = 6):
+        self.screen = screen  # this is not related to the turtle... how to refactor this one?
+        self.screen.colormode(255)
 
         self.turtle_objects: List[TurtleRaceUnit] = []
 

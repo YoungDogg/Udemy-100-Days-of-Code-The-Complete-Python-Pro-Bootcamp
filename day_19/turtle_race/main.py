@@ -1,4 +1,3 @@
-from turtle import Screen
 from day_19.turtle_race.day_19_game import TurtleGame
 
 
