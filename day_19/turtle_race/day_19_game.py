@@ -9,13 +9,13 @@ class TurtleGame:
         self.screen.screensize(canvwidth=screen_x, canvheight=screen_y)
         self.turtle_group = TurtleGroup(screen=self.screen)
         self.is_game_over: bool = False
-        self.winner_input: int = None
-        self.winner_output: int = None
+        self.winner_input = None
+        self.winner_output = None
 
     def start_game(self):
         # require input exception error handling
         try:
-            self.winner_input: int = (
+            self.winner_input = (
                 self.screen.numinput(title="Guess Winner", prompt="Number of the tutle:",
                                      minval=1, maxval=len(self.turtle_group.turtle_objects)))
             print(f"guessing tutle number: {int(self.winner_input)}")

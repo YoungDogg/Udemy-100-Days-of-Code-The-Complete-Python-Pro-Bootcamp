@@ -1,24 +1,17 @@
-from turtle import Screen, Turtle
-from typing import List
+from turtle import Turtle
+from Screen import GameScreen
+from GameCenter import GameCenter
+
+
+from day_20.GameCenter import GameCenter
 
 
 def main():
-    screen = Screen()
-    screen.setup(width=600, height=600)
-    screen.bgcolor("black")
-    screen.title("Snake Game")
+    width: int = 600
+    height: int = 400
 
-    snake:List[Turtle] = []
-    x_pos = 0
-    for _ in range(3):
-        cell = Turtle()
-        cell.color("white")
-        cell.shape("square")
-        cell.penup()
-        cell.goto(x=x_pos,y=0)
-        snake.append(cell)
-        x_pos += -20
-
+    gameCenter: GameCenter = GameCenter(width=width, height=height)
+    screen = gameCenter.screen
 
     screen.mainloop()
 
