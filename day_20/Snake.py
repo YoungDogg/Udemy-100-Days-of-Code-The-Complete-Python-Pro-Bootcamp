@@ -7,7 +7,7 @@ import time
 class Snake:
     def __init__(self):
         self.snake: List[Turtle] = []
-        self.snake_screen = GameScreen()
+        self.snake_screen = GameScreen().screen
         x_pos = 0
         for _ in range(3):
             segment = Turtle()
@@ -27,18 +27,21 @@ class Snake:
         self.head.forward(speed)
         time.sleep(time_sleep)
 
-    def turning_snake(self, key:str=""):
-        # TODO: insert key a,b, arrow left, arrow right
+    def turn_left(self):
+        # TODO: make turn mutiple times
         if self.head.heading() != 90:
-            self.head.setheading(90)
+            self.head.setheading(self.head.heading() * 90)
+
+    def turn_right(self):
+        if self.head.heading() != -90:
+            self.head.setheading(self.head.heading() * -90)
 
     def start_snake(self):
-        # set snake
-        # move snake while true
         while True:
-            self.turning_snake()
+            self.snake_screen.onkey(self.turn_left, "a")
+            self.snake_screen.onkey(self.turn_right, "d")
+            self.snake_screen.listen()
             self.move_snake()
             time.sleep(.1)
             self.snake_screen.update()
-            self.snake_screen.listen()
 

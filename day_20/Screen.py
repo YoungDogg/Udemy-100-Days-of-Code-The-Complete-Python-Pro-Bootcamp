@@ -7,8 +7,8 @@ class GameScreen:
         self.screen.setup(width=width, height=height)
         self.screen.bgcolor("black")
         self.screen.title("Snake Game")
-        # TODO: uncomment this tracer
         self.screen.tracer(tracer)
+
 
     def update(self):
         self.screen.update()
