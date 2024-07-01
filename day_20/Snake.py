@@ -2,6 +2,9 @@ from turtle import Turtle
 from Screen import GameScreen
 from typing import List
 import time
+import logging
+
+logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(message)s')
 
 
 class Snake:
@@ -21,27 +24,28 @@ class Snake:
         self.head = self.snake[0]
 
     def move_snake(self, time_sleep: float = .1, speed: int = 10):
-        for i in range(len(self.snake)-1,0,-1):
-            [x_pos, y_pos] = self.snake[i-1].position()
-            self.snake[i].goto(x=x_pos,y=y_pos)
+        for i in range(len(self.snake) - 1, 0, -1):
+            [x_pos, y_pos] = self.snake[i - 1].position()
+            self.snake[i].goto(x=x_pos, y=y_pos)
         self.head.forward(speed)
+        self.snake_screen.update()
         time.sleep(time_sleep)
 
     def turn_left(self):
-        # TODO: make turn mutiple times
-        if self.head.heading() != 90:
-            self.head.setheading(self.head.heading() * 90)
+        self.head.setheading(self.head.heading() + 90)
+        logging.info("turn left")
 
     def turn_right(self):
-        if self.head.heading() != -90:
-            self.head.setheading(self.head.heading() * -90)
+        self.head.setheading(self.head.heading() - 90)
+        logging.info('turn right')
 
     def start_snake(self):
+        self.snake_screen.listen()
+        self.snake_screen.onkey(self.turn_left, "Left")
+        self.snake_screen.onkey(self.turn_left, "a")
+        self.snake_screen.onkey(self.turn_left, "A")
+        self.snake_screen.onkey(self.turn_right, "Right")
+        self.snake_screen.onkey(self.turn_right, "d")
+        self.snake_screen.onkey(self.turn_right, "D")
         while True:
-            self.snake_screen.onkey(self.turn_left, "a")
-            self.snake_screen.onkey(self.turn_right, "d")
-            self.snake_screen.listen()
             self.move_snake()
-            time.sleep(.1)
-            self.snake_screen.update()
-
