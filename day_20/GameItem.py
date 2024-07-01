@@ -1,17 +1,10 @@
 from Screen import GameScreen
 from turtle import Turtle
+import random
+
 
 class Item:
     def __init__(self):
-        self.apple_list = []
-        for _ in range(5):
-            apple = Turtle()
-            apple.color("pink")
-            apple.shape("circle")
-            apple.shapesize(1, 1)
-            apple.setpos(0, 0)
-            self.apple_list.append(apple)
-
         self.screen = GameScreen().screen
         self.s_width = self.screen.window_width()
         self.s_height = self.screen.window_height()
@@ -21,19 +14,21 @@ class Item:
             'top': self.s_height / 2 - 20, 'bottom': -self.s_height / 2 + 20
         }
 
-        self.apple_list[0].setpos(self.s_coordinate['left'],self.s_coordinate['top'])
-        self.apple_list[1].setpos(self.s_coordinate['right'], self.s_coordinate['top'])
-        self.apple_list[2].setpos(self.s_coordinate['left'], self.s_coordinate['bottom'])
-        self.apple_list[3].setpos(self.s_coordinate['right'], self.s_coordinate['bottom'])
-        self.apple_list[4].setpos(0,0)
-
+        self.apple = Turtle()
+        self.apple.color("pink")
+        self.apple.shape("circle")
+        self.apple.shapesize(1, 1)
+        self.apple.penup()
+        self.apple.setpos(self.spawn_apple())
         self.screen.update()
-        print(self.apple_list)
 
     def spawn_apple(self):
-        # TODO: screen info
+        left = int(self.s_coordinate['left'])
+        right = int(self.s_coordinate['right'])
+        top = int(self.s_coordinate['top'])
+        bottom = int(self.s_coordinate['bottom'])
 
+        respawn_x = random.randint(left, right)
+        respawn_y = random.randint(bottom, top)
 
-        # TODO: random pos
-        pass
-
+        return respawn_x, respawn_y

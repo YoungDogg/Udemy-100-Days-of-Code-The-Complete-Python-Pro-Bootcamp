@@ -8,8 +8,8 @@
    - [x] 'a' or 'arrow left', left
    - [x] 'd' or 'arrow right', right
 4. item random spawning
-   - [ ] get screen width, height
-   - [ ] make an item
+   - [x] get screen width, height
+   - [x] make an item
 5. collision w/ itself, item, and screen
    - [ ] w/ screen
    - [ ] w/ item
