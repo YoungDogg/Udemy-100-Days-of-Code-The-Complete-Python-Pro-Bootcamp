@@ -32,3 +32,6 @@ class Item:
         respawn_y = random.randint(bottom, top)
 
         return respawn_x, respawn_y
+
+
+
