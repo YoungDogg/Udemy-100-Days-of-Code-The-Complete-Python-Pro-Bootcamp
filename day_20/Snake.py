@@ -39,7 +39,7 @@ class Snake:
         self.head.setheading(self.head.heading() - 90)
         logging.info('turn right')
 
-    def start_snake(self):
+    def key_bound(self):
         self.snake_screen.listen()
         self.snake_screen.onkey(self.turn_left, "Left")
         self.snake_screen.onkey(self.turn_left, "a")
@@ -47,5 +47,3 @@ class Snake:
         self.snake_screen.onkey(self.turn_right, "Right")
         self.snake_screen.onkey(self.turn_right, "d")
         self.snake_screen.onkey(self.turn_right, "D")
-        while True:
-            self.move_snake()
