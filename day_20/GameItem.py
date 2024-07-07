@@ -19,10 +19,11 @@ class Item:
         self.apple.shape("circle")
         self.apple.shapesize(1, 1)
         self.apple.penup()
-        self.apple.setpos(self.spawn_apple())
-        self.screen.update()
+        self.apple_pos = self.get_apple_cor()
+        self.apple.setpos(self.apple_pos)
+        # self.screen.update()
 
-    def spawn_apple(self):
+    def get_apple_cor(self):
         left = int(self.s_coordinate['left'])
         right = int(self.s_coordinate['right'])
         top = int(self.s_coordinate['top'])

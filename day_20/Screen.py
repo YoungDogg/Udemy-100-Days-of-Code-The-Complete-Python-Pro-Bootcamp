@@ -9,7 +9,6 @@ class GameScreen:
         self.screen.title("Snake Game")
         self.screen.tracer(tracer)
 
-
     def update(self):
         self.screen.update()
 
