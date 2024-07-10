@@ -1,5 +1,5 @@
 from turtle import Turtle
-from Screen import GameScreen
+from screen import GameScreen
 from typing import List
 import logging
 
@@ -7,29 +7,35 @@ logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(message)s')
 
 
 class Snake:
-    def __init__(self):
-        self.snake: List[Turtle] = []
-        self.snake_screen = GameScreen().screen
+    def __init__(self, screen):
+        self.x_pos = 0
+        self.y_pos = 0
 
-        x_pos = 0
-        for _ in range(3):
+        self.snake: List[Turtle] = []
+        self.snake_screen = screen
+        self.extend_segment(increment=3)
+
+        self.head = self.snake[0]
+        self.head.color("blue")
+
+    def extend_segment(self, increment: int = 1):
+
+        for _ in range(increment):
             segment = Turtle()
             segment.color("white")
             segment.shape("square")
             segment.shapesize(stretch_wid=1, stretch_len=1)
             segment.penup()
-            segment.goto(x=x_pos, y=0)
+            segment.setpos(x=self.x_pos, y=self.y_pos)
             self.snake.append(segment)
             self.snake_screen.update()
-            x_pos += -segment.turtlesize()[0]
-
-        self.head = self.snake[0]
-        self.head.color("blue")
+            self.x_pos = self.snake[-1].xcor()
+            self.y_pos = self.snake[-1].ycor()
 
     def move_snake(self, speed: int = 10):
         for i in range(len(self.snake) - 1, 0, -1):
-            [x_pos, y_pos] = self.snake[i - 1].position()
-            self.snake[i].goto(x=x_pos, y=y_pos)
+            [self.x_pos, self.y_pos] = self.snake[i - 1].position()
+            self.snake[i].goto(x=self.x_pos, y=self.y_pos)
         self.head.forward(speed)
         # self.snake_screen.update()
 

@@ -1,11 +1,11 @@
-from Screen import GameScreen
+from screen import GameScreen
 from turtle import Turtle
 import random
 
 
 class Item:
-    def __init__(self):
-        self.screen = GameScreen().screen
+    def __init__(self, screen):
+        self.screen = screen
         self.s_width = self.screen.window_width()
         self.s_height = self.screen.window_height()
         # subtract apple size
@@ -33,6 +33,9 @@ class Item:
         respawn_y = random.randint(bottom, top)
 
         return respawn_x, respawn_y
+
+    def hide(self):
+        self.apple.hideturtle()
 
 
 
