@@ -6,36 +6,34 @@ import random
 class Item:
     def __init__(self, screen):
         self.screen = screen
-        self.s_width = self.screen.window_width()
-        self.s_height = self.screen.window_height()
-        # subtract apple size
-        self.s_coordinate = {
-            'left': -self.s_width / 2 + 20, 'right': self.s_width / 2 - 20,
-            'top': self.s_height / 2 - 20, 'bottom': -self.s_height / 2 + 20
-        }
+        self.apple = self.create_apple()
+        self._apple_pos = self.respawn()
 
-        self.apple = Turtle()
-        self.apple.color("pink")
-        self.apple.shape("circle")
-        self.apple.shapesize(1, 1)
-        self.apple.penup()
-        self.apple_pos = self.get_apple_cor()
-        self.apple.setpos(self.apple_pos)
-        # self.screen.update()
+    @staticmethod
+    def create_apple():
+        apple = Turtle()
+        apple.color("pink")
+        apple.shape("circle")
+        apple.shapesize(1, 1)
+        apple.penup()
+        return apple
+
+    @property
+    def get_apple_pos(self):
+        return self._apple_pos
+
+    def respawn(self):
+        self._apple_pos = self.get_apple_cor()
+        self.apple.setpos(self._apple_pos)
+        return self._apple_pos
 
     def get_apple_cor(self):
-        left = int(self.s_coordinate['left'])
-        right = int(self.s_coordinate['right'])
-        top = int(self.s_coordinate['top'])
-        bottom = int(self.s_coordinate['bottom'])
+        left = int(self.screen.window_width() / 2 - 20)
+        right = int(-self.screen.window_width() / 2 + 20)
+        top = int(self.screen.window_height() / 2 - 20)
+        bottom = int(-self.screen.window_height() / 2 + 20)
 
-        respawn_x = random.randint(left, right)
-        respawn_y = random.randint(bottom, top)
-
-        return respawn_x, respawn_y
+        return random.randint(left, right), random.randint(bottom, top)
 
     def hide(self):
         self.apple.hideturtle()
-
-
-

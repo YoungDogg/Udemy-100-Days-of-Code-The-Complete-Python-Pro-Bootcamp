@@ -8,43 +8,50 @@ logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(message)s')
 
 class Snake:
     def __init__(self, screen):
-        self.x_pos = 0
-        self.y_pos = 0
-
-        self.snake: List[Turtle] = []
+        self._x_pos = 0
+        self._y_pos = 0
+        self._snake = []
         self.snake_screen = screen
-        self.extend_segment(increment=3)
+        self._initialize_snake(increment=3)
 
-        self.head = self.snake[0]
+    @property
+    def snake(self):
+        return self._snake
+
+    @property
+    def head(self):
+        return self._snake[0]
+
+    def _initialize_snake(self, increment: int):
+        for _ in range(increment):
+            self.extend_segment()
         self.head.color("blue")
 
     def extend_segment(self, increment: int = 1):
-
         for _ in range(increment):
             segment = Turtle()
             segment.color("white")
             segment.shape("square")
             segment.shapesize(stretch_wid=1, stretch_len=1)
             segment.penup()
-            segment.setpos(x=self.x_pos, y=self.y_pos)
-            self.snake.append(segment)
+            segment.setpos(x=self._x_pos, y=self._y_pos)
+            self._snake.append(segment)
             self.snake_screen.update()
-            self.x_pos = self.snake[-1].xcor()
-            self.y_pos = self.snake[-1].ycor()
+            self._x_pos = self._snake[-1].xcor()
+            self._y_pos = self._snake[-1].ycor()
 
     def move_snake(self, speed: int = 10):
-        for i in range(len(self.snake) - 1, 0, -1):
-            [self.x_pos, self.y_pos] = self.snake[i - 1].position()
-            self.snake[i].goto(x=self.x_pos, y=self.y_pos)
-        self.head.forward(speed)
-        # self.snake_screen.update()
+        for i in range(len(self._snake) - 1, 0, -1):
+            self._x_pos, self._y_pos = self._snake[i - 1].position()
+            self._snake[i].goto(x=self._x_pos, y=self._y_pos)
+        self._head.forward(speed)
 
     def turn_left(self):
-        self.head.setheading(self.head.heading() + 90)
+        self._head.setheading(self._head.heading() + 90)
         logging.info("turn left")
 
     def turn_right(self):
-        self.head.setheading(self.head.heading() - 90)
+        self._head.setheading(self._head.heading() - 90)
         logging.info('turn right')
 
     def key_bound(self):

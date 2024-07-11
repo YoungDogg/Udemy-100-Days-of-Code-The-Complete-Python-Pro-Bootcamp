@@ -26,8 +26,8 @@ class GameCenter:
             time.sleep(.1)
 
     def ate_apple(self):
-        snake_x = int(self.snake.head.xcor())
-        snake_y = int(self.snake.head.ycor())
+        snake_x = int(self.snake._head.xcor())
+        snake_y = int(self.snake._head.ycor())
         [apple_x, apple_y] = self.apple.apple_pos
         apple_cols_size = self.apple.apple.shapesize()[0] + 22
         if (apple_x - apple_cols_size <= snake_x <= apple_x + apple_cols_size) and (
