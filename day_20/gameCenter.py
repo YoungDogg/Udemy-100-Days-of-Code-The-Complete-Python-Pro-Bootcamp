@@ -2,6 +2,7 @@ from snake import Snake
 from screen import GameScreen
 from gameItem import Item
 from gameCollision import GameCollision
+from gameScore import GameScore
 import time
 
 
@@ -9,6 +10,7 @@ class GameCenter:
     def __init__(self, width, height):
         self.screen = GameScreen(width=width, height=height).screen
         self.snake = Snake(screen=self.screen)
+        self.scoreboard = GameScore(snake=self.snake, screen=self.screen)
         self.apple = Item(screen=self.screen)
         self.collision = GameCollision(screen=self.screen, snake=self.snake)
 
@@ -26,9 +28,9 @@ class GameCenter:
             time.sleep(.1)
 
     def ate_apple(self):
-        snake_x = int(self.snake._head.xcor())
-        snake_y = int(self.snake._head.ycor())
-        [apple_x, apple_y] = self.apple.apple_pos
+        snake_x = int(self.snake.head.xcor())
+        snake_y = int(self.snake.head.ycor())
+        [apple_x, apple_y] = self.apple.get_apple_pos
         apple_cols_size = self.apple.apple.shapesize()[0] + 22
         if (apple_x - apple_cols_size <= snake_x <= apple_x + apple_cols_size) and (
                 apple_y - apple_cols_size <= snake_y <= apple_y + apple_cols_size):

@@ -7,16 +7,16 @@
    - [x] keyboard moving
      - [x] 'a' or 'arrow left', left
      - [x] 'd' or 'arrow right', right
-   - [ ] one-more-segment method
+   - [x] one-more-segment method
 3. Item class 
    - [x] random spawning 
    - [x] get screen width, height
    - [x] make an item   
 4. GameCenter class
    - collision w/ itself, item, and screen
-     - [ ] w/ screen
-     - [ ] w/ item
-     - [ ] w/ itself
-   - [ ] run game   
-5. start as horizontally
+     - [x] w/ screen
+     - [x] w/ item
+     - [x] w/ itself
+   - [x] run game   
+5. [ ] scoreboard
 6. how to make logging globally

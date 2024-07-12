@@ -11,8 +11,8 @@ class GameCollision:
     def collision(self):
         screen_x = self.screen.window_width()
         screen_y = self.screen.window_height()
-        snake_x = int(self.snake._head.xcor())
-        snake_y = int(self.snake._head.ycor())
+        snake_x = int(self.snake.head.xcor())
+        snake_y = int(self.snake.head.ycor())
 
         def collision_screen():
             if snake_x >= int(screen_x / 2) or snake_x <= -int(screen_x / 2):
@@ -22,9 +22,9 @@ class GameCollision:
                 return True  # change this to game over
 
         def collision_snake():
-            head = self.snake._head
-            snake = self.snake._snake
-            for idx in range(1, len(self.snake._snake)):
+            head = self.snake.head
+            snake = self.snake.snake
+            for idx in range(1, len(snake)):
                 if head.distance(snake[idx]) < snake[1].distance((snake[2].pos())) - 1:
                     snake[idx].color("red")
                     return True

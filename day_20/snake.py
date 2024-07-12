@@ -44,14 +44,14 @@ class Snake:
         for i in range(len(self._snake) - 1, 0, -1):
             self._x_pos, self._y_pos = self._snake[i - 1].position()
             self._snake[i].goto(x=self._x_pos, y=self._y_pos)
-        self._head.forward(speed)
+        self.head.forward(speed)
 
     def turn_left(self):
-        self._head.setheading(self._head.heading() + 90)
+        self.head.setheading(self.head.heading() + 90)
         logging.info("turn left")
 
     def turn_right(self):
-        self._head.setheading(self._head.heading() - 90)
+        self.head.setheading(self.head.heading() - 90)
         logging.info('turn right')
 
     def key_bound(self):

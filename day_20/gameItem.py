@@ -28,11 +28,10 @@ class Item:
         return self._apple_pos
 
     def get_apple_cor(self):
-        left = int(self.screen.window_width() / 2 - 20)
-        right = int(-self.screen.window_width() / 2 + 20)
+        left = -int(self.screen.window_width() / 2 - 20)
+        right = int(self.screen.window_width() / 2 + 20)
         top = int(self.screen.window_height() / 2 - 20)
-        bottom = int(-self.screen.window_height() / 2 + 20)
-
+        bottom = -int(self.screen.window_height() / 2 + 20)
         return random.randint(left, right), random.randint(bottom, top)
 
     def hide(self):
