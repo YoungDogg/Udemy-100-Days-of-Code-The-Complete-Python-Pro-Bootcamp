@@ -11,8 +11,9 @@ class Snake:
         self._x_pos = 0
         self._y_pos = 0
         self._snake = []
+        self._initial_length = 3
         self.snake_screen = screen
-        self._initialize_snake(increment=3)
+        self._initialize_snake(increment=self._initial_length)
 
     @property
     def snake(self):
@@ -39,6 +40,13 @@ class Snake:
             self.snake_screen.update()
             self._x_pos = self._snake[-1].xcor()
             self._y_pos = self._snake[-1].ycor()
+
+    def append_score(self):
+        # count scroe by segments
+        score = len(self.snake) -self._initial_length
+
+        return score
+        pass
 
     def move_snake(self, speed: int = 10):
         for i in range(len(self._snake) - 1, 0, -1):

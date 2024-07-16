@@ -19,4 +19,6 @@
      - [x] w/ itself
    - [x] run game   
 5. [ ] scoreboard
+   - [x] score class: letter    
+   - [ ] gameCenter class: put that here    
 6. how to make logging globally

@@ -14,8 +14,6 @@ class GameCenter:
         self.apple = Item(screen=self.screen)
         self.collision = GameCollision(screen=self.screen, snake=self.snake)
 
-        self.start_game()
-        self.screen.mainloop()
 
     def start_game(self):
         self.snake.key_bound()  # key bound
@@ -36,6 +34,8 @@ class GameCenter:
                 apple_y - apple_cols_size <= snake_y <= apple_y + apple_cols_size):
             # increment snake segment
             self.snake.extend_segment()
+            # display score
+            self.scoreboard.displayScoreNumber()
             # apple disappear
             self.apple.hide()
             # self.apple = None

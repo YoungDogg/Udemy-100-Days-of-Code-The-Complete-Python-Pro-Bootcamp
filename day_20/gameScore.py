@@ -1,29 +1,35 @@
 from turtle import Turtle
 
 
+def display(obj, pos, content, font):
+    obj.hideturtle()
+    obj.color("white")
+    obj.penup()
+    obj.setpos(pos)
+    obj.clear()
+    obj.write(content, False, "left", font=font)
+
+
 class GameScore:
-    score = 0
     def __init__(self, snake, screen):
         self.snake = snake
+        self.score_letter = Turtle()
+        self.score_number = Turtle()
+
         self.screen = screen
-        self.font = ('Arial', 12, 'bold')
-        self.set_GUI()
+        self.screen_width = self.screen.window_width() / 2
+        self.screen_height = self.screen.window_height() / 2
 
-    def set_GUI(self):
-        screen_width = self.screen.window_width() / 2
-        screen_height = self.screen.window_height() / 2
-        text_pos = (screen_width * (1 - .4), screen_height * (1 - .2))
-        score_board = Turtle()
-        score_board.hideturtle()
-        score_board.color("white")
-        score_board.penup()
-        score_board.setpos(text_pos)
-        score_board.write("score: ", False, "left", font=self.font)
+        self.text_pos = (self.screen_width * (1 - .4), self.screen_height * (1 - .2))
+        self.number_pos = (self.screen_width * (1 - .2), self.screen_height * (1 - .2))
 
-    @staticmethod
-    def count_score(self):
-        # every additional segment of snake will be counted as one
-        score += 1
-        pass
+        self.font = ('Arial', 14, 'bold')
 
-    pass
+        self.displayLetter()
+
+    def displayLetter(self):
+        display(obj=self.score_letter, pos=self.text_pos, content="score: ", font=self.font)
+
+    def displayScoreNumber(self):
+        score = self.snake.append_score()
+        display(obj=self.score_number, pos=self.number_pos, content=f"{score}", font=self.font)
