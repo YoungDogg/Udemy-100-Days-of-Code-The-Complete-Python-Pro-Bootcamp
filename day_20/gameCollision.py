@@ -23,10 +23,11 @@ class GameCollision:
 
         def collision_snake():
             head = self.snake.head
-            snake = self.snake.snake
-            for idx in range(1, len(snake)):
-                if head.distance(snake[idx]) < snake[1].distance((snake[2].pos())) - 1:
-                    snake[idx].color("red")
+            snake = self.snake
+            snake_size = snake.get_snake_size[0]
+            for idx in range(1, len(snake.snake)):
+                if head.distance(snake.snake[idx]) < snake_size:
+                    snake.snake[idx].color("red")
                     return True
             return False
 

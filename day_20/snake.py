@@ -18,10 +18,13 @@ class Snake:
     @property
     def snake(self):
         return self._snake
-
     @property
     def head(self):
         return self._snake[0]
+
+    @property
+    def get_snake_size(self):
+        return self.head.shapesize()
 
     def _initialize_snake(self, increment: int):
         for _ in range(increment):

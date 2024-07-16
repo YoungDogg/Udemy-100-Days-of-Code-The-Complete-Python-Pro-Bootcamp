@@ -14,7 +14,6 @@ class GameCenter:
         self.apple = Item(screen=self.screen)
         self.collision = GameCollision(screen=self.screen, snake=self.snake)
 
-
     def start_game(self):
         self.snake.key_bound()  # key bound
         is_over = False
