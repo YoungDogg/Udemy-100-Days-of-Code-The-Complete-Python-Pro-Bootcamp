@@ -7,6 +7,7 @@ class Item:
     def __init__(self, screen):
         self.screen = screen
         self.apple = self.create_apple()
+        self.boundary = 30
         self._apple_pos = self.respawn()
 
     @staticmethod
@@ -28,10 +29,10 @@ class Item:
         return self._apple_pos
 
     def get_apple_cor(self):
-        left = -int(self.screen.window_width() / 2 - 20)
-        right = int(self.screen.window_width() / 2 + 20)
-        top = int(self.screen.window_height() / 2 - 20)
-        bottom = -int(self.screen.window_height() / 2 + 20)
+        left = int(-(self.screen.window_width() / 2) + self.boundary)
+        right = int(self.screen.window_width() / 2 - self.boundary)
+        top = int(self.screen.window_height() / 2 - self.boundary)
+        bottom = int((-self.screen.window_height() / 2) + self.boundary)
         return random.randint(left, right), random.randint(bottom, top)
 
     def hide(self):

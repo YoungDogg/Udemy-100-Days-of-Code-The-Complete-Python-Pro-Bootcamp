@@ -18,5 +18,7 @@
      - [x] w/ item
      - [x] w/ itself
    - [x] run game   
-5. [ ] scoreboard
+5. [x] scoreboard
+   - [x] score class: letter    
+   - [x] gameCenter class: put that here    
 6. how to make logging globally

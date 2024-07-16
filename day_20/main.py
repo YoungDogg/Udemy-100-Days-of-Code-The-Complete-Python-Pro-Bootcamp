@@ -10,6 +10,8 @@ def main():
     height: int = 500
 
     game_center = GameCenter(width=width, height=height)
+    game_center.start_game()
+    game_center.screen.mainloop()
 
 
 
