@@ -2,7 +2,7 @@ from turtle import Turtle
 from screen import GameScreen
 from gameCenter import GameCenter
 
-from day_20.gameCenter import GameCenter
+from day_20_21.gameCenter import GameCenter
 
 
 def main():
