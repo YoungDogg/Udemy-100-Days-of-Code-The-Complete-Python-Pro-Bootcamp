@@ -2,8 +2,8 @@ from paddle import Paddle
 
 
 class Opponent(Paddle):
-    def __init__(self,speed):
-        super().__init__(speed)
+    def __init__(self,speed, paddle_size):
+        super().__init__(speed, paddle_size)
         self._AI_speed = speed
 
     @property
