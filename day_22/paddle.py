@@ -8,16 +8,24 @@ class Paddle:
         self.size = paddle_size
         self.color = 'white'
         self.score = 0
-        self.super_pos = (0,0)  # [ ] need to set from child class
-
-    def set_paddle(self):
-        # size and position
-        self._paddle.shapesize(stretch_wid=self.size, stretch_len=1)
-        self._paddle.setpos(self.super_pos)
+        self._pos = (0, 0)  # [ ] need to set from child class
 
     @property
-    def get_paddle(self):
+    def pos(self):
+        return self._pos
+
+    @pos.setter
+    def pos(self, pos):
+        self._pos = pos
+
+    @property
+    def paddle(self):
         return self._paddle
+
+    @paddle.setter
+    def paddle(self):
+        # size and position
+        self._paddle.shapesize(stretch_wid=self.size, stretch_len=1)
 
     def move(self, direction: int):
         # [x] it moves up and down.
