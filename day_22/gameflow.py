@@ -1,19 +1,28 @@
 from player import Player
 from opponent import Opponent
 from ball import Ball
-from screen import Screen
+from gamescreen import GameScreen
+import time
 
 
 class GameFlow:
-    def __init__(self, score_limit, player_speed, opponent_speed, ball_speed, ball_size, paddle_size, width, height):
-        self.screen = Screen(width=width, height=height)
-        self.player = Player(speed=player_speed, paddle_size=paddle_size, screen=self.screen)
-        self.opponent = Opponent(speed=opponent_speed, paddle_size=paddle_size, screen=self.screen)
+    def __init__(self, score_limit,
+                 player_speed, opponent_speed, ball_speed,
+                 ball_size, paddle_size,
+                 width, height, paddles_margin):
+        self.screen = GameScreen(width=width, height=height)
+        self.player = Player(speed=player_speed, paddle_size=paddle_size, screen=self.screen, margin=paddles_margin)
+        self.opponent = Opponent(speed=opponent_speed,
+                                 paddle_size=paddle_size, screen=self.screen, margin=paddles_margin)
         self.ball = Ball(speed=ball_speed, size=ball_size)
         self.score_limit = score_limit
 
     def start_game(self):
-        pass
+        self.player.key_bound()
+        is_over = False
+        while not is_over:
+            self.screen.screen.update()
+            # time.sleep(.01)
 
     def update_score(self, winner):
         pass
