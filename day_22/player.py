@@ -2,7 +2,7 @@ from paddle import Paddle
 
 
 class Player(Paddle):
-    def __init__(self, speed, paddle_size, screen, margin):
+    def __init__(self, speed, paddle_size, screen, margin, ball):
         super().__init__(speed, paddle_size)  # need to set pos in parent class
         _margin = margin
         self._screen = screen
@@ -11,6 +11,8 @@ class Player(Paddle):
         _screen_y = 0
         self.pos = (_screen_x, _screen_y)  # set pos, requiring screen info
         print(f"Player: {self.pos}")
+
+        self._ball = ball
 
     @property
     def get_player_speed(self):
@@ -38,3 +40,5 @@ class Player(Paddle):
         screen.onkeypress(self.move_down, "Down")
         screen.onkeypress(self.move_down, "s")
         screen.onkeypress(self.move_down, "S")
+        # game setting
+        screen.onkey(self._ball.initial_move, "r")
