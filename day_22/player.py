@@ -42,3 +42,4 @@ class Player(Paddle):
         screen.onkeypress(self.move_down, "S")
         # game setting
         screen.onkey(self._ball.initial_move, "r")
+        screen.onkey(self._ball.initial_move, "R")
