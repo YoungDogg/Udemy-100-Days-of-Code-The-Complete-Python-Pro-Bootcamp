@@ -1,4 +1,5 @@
 from turtle import Turtle
+import random
 
 
 class Ball:
@@ -14,6 +15,10 @@ class Ball:
         self._dy = 0
         self._is_moving = False
 
+    @property
+    def ball(self):
+        return self._ball
+
     def initial_move(self):
         self._is_moving = True
 
@@ -25,19 +30,27 @@ class Ball:
         if self._is_moving:
             # bounce from wall and paddles
             # if the ball hit the screen, make direction opposite
-            new_x,new_y = self._ball.pos()
+            new_x, new_y = self._ball.pos()
             new_x += self._dx
             new_y += self._dy
-            screen_x, screen_y = self._screen.get_screen_size
-            # if hit the wall
-            if new_y > screen_y/2 or new_y > -screen_y/2:
-                self._dy *= -1
-            # if hit the paddle multiply -1 to x
             self._ball.goto(new_x, new_y)
-            print(f"ball pos ({new_x},{new_y})")
 
-    def check_collision(self, paddle):
-        # Determine if the ball has hit a paddle or the screen edges
-        # x goes negative direction, y keeps its own direction
-        if self._ball.distance(paddle.paddle) < 20:
-            pass
+    def ball_distance(self, obj):
+        return self.ball.distance(obj)
+
+    def bounce_2_wall(self):
+        print("ball bounces to wall")
+        self._dy *= -1
+
+    def bounce_2_paddle(self,paddle):
+        # make both absolute value
+        # turning x-coordinate direction
+        self._dx *= -1
+        # make random angle by adding random y-coordinate
+        # test angles before implementing
+        random_y = random.randint(-10,10) * 0.1
+        # apply paddle's y-coordinate direction and speed
+        # paddle_speed = paddle.speed()
+        self._dy += random_y
+        # apply more x-coordinate speed
+        self._dx *= 1.2

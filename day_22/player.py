@@ -18,18 +18,11 @@ class Player(Paddle):
     def get_player_speed(self):
         return self.speed
 
-    def handle_input(self):
-        # keyboard input mapping
-        pass
-
     def move_up(self):
         self.move(direction=1)
-        # print("move up")
-        # logging.info("move_up")
 
     def move_down(self):
         self.move(direction=-1)
-        # print("move down")
 
     def key_bound(self):
         screen = self._screen.screen

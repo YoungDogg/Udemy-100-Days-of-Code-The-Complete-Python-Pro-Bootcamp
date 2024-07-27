@@ -2,6 +2,7 @@ from player import Player
 from opponent import Opponent
 from ball import Ball
 from gamescreen import GameScreen
+from collision import Collision
 import time
 
 
@@ -16,15 +17,18 @@ class GameFlow:
                              ball=self.ball)
         self.opponent = Opponent(speed=opponent_speed,
                                  paddle_size=paddle_size, screen=self.screen, margin=paddles_margin)
+        self.collision = Collision()
         self.score_limit = score_limit
 
     def start_game(self):
         self.player.key_bound()
         is_over = False
         while not is_over:
+            self.collision.check_collision(ball=self.ball, screen=self.screen,
+                                           player=self.player, opponent=self.opponent)
             self.ball.move()
             self.screen.screen.update()
-            time.sleep(.01)
+            time.sleep(.0001)
 
     def update_score(self, winner):
         pass

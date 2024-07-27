@@ -11,7 +11,6 @@ def main():
     )
     game.start_game()
     game.screen.screen.mainloop()
-    pass
 
 
 if __name__ == '__main__':

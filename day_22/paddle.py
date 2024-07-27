@@ -3,7 +3,7 @@ from turtle import Turtle
 
 class Paddle:
     def __init__(self, speed, paddle_size):
-        self.speed = speed
+        self._speed = speed
         self.size = paddle_size
         self.color = 'white'
         self._paddle = Turtle()
@@ -27,10 +27,21 @@ class Paddle:
         self._pos = pos
         self._paddle.setpos(self._pos)
 
+    @property
+    def speed(self):
+        return self._speed
+
+    @speed.setter
+    def speed(self, num):
+        self._speed = num
+
     def move(self, direction: int):
         x, y = self._paddle.pos()
-        self._paddle.goto(x=x, y= y + (direction * self.speed))
+        self._paddle.goto(x=x, y=y + (direction * self._speed))
 
     def hit_ball(self, ball):
         #  Calculate speed and angle upon hit
         pass
+
+    def paddle_distance(self, spot):
+        return self._paddle.distance(spot)
