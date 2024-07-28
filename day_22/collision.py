@@ -31,7 +31,7 @@ class Collision:
 
     @staticmethod
     def handle_paddle_screen_collision(player, opponent, screen):
-        screen_x,screen_y = screen.get_screen_size
+        screen_x, screen_y = screen.get_screen_size
         screen_y = screen_y / 2
         # do not make paddle cross screen
         # consider two paddles, up & down screen
