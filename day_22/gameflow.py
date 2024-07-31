@@ -47,7 +47,7 @@ class GameFlow:
             self.debugging_log()
             elapsed_time = time.time() - loop_start_time  # Calculate elapsed time
             sleep_time = (
-                max(0, self.frame_duration - elapsed_time))  # Calculate sleep time to maintain consistent frame rate
+                max(0.001, self.frame_duration - elapsed_time))  # Calculate sleep time to maintain consistent frame rate
             time.sleep(sleep_time)  # Sleep for the calculated duration
 
             self.log_fps()

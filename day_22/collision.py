@@ -1,11 +1,12 @@
 COL_MARGIN = 12
 PADDLE_MARGIN = 40
 
+import asyncio
 
 class Collision:
 
     @staticmethod
-    def handle_ball_screen_collision(ball, screen):
+    async def handle_ball_screen_collision(ball, screen):
         # Calculate new ball direction when it hits the screens edges
         # split screen y-coordinate into upper and down screen
         screen_y = screen.get_screen_size[1] / 2
@@ -15,7 +16,7 @@ class Collision:
             ball.bounce_2_wall()
 
     @staticmethod
-    def handle_ball_paddle_collision(ball, player, opponent):
+    async def handle_ball_paddle_collision(ball, player, opponent):
         # Calculate new ball direction and speed based on the collision
         # calculate x-coordinates of both ball and paddle.
         # make both absolute value
@@ -30,7 +31,7 @@ class Collision:
                 ball.bounce_2_paddle(opponent.paddle)
 
     @staticmethod
-    def handle_paddle_screen_collision(player, opponent, screen):
+    async def handle_paddle_screen_collision(player, opponent, screen):
         screen_x, screen_y = screen.get_screen_size
         screen_y = screen_y / 2
         # do not make paddle cross screen
@@ -40,7 +41,7 @@ class Collision:
         if screen_y - abs(opponent.pos[1]) < PADDLE_MARGIN:
             opponent.speed(0)
 
-    def check_collision(self, ball, screen, player, opponent):
-        self.handle_ball_screen_collision(ball, screen)
-        self.handle_ball_paddle_collision(ball, player, opponent)
-        self.handle_paddle_screen_collision(player, opponent, screen)
+    async def check_collision(self, ball, screen, player, opponent):
+        await self.handle_ball_screen_collision(ball, screen)
+        await self.handle_ball_paddle_collision(ball, player, opponent)
+        await self.handle_paddle_screen_collision(player, opponent, screen)
