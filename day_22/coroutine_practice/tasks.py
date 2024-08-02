@@ -2,12 +2,12 @@ import asyncio
 import random
 
 '''
-question: what is different time.sleep() and asyncio.sleep()?
+[x] question: what is different time.sleep() and asyncio.sleep()?
 answer: 
 time.sleep(): synchronous, blocking, if stops, other codes stop
 asyncio.sleep(): asynchronous, non-blocking, if stops, other codes don't stop
 
-question: what is random.uniform()?
+[x] question: what is random.uniform()?
 answer: generate random floating-point number
 '''
 

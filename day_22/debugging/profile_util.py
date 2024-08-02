@@ -1,6 +1,7 @@
 import cProfile
 import pstats
-from gameflow import GameFlow
+from ..gameflow import GameFlow
+import asyncio
 
 
 def profile_game():
@@ -15,7 +16,7 @@ def profile_game():
         width=700, height=400,
         paddles_margin=.1
     )
-    game.start_game()
+    asyncio.run(game.start_game())
     game.screen.screen.mainloop()
 
     profiler.disable()

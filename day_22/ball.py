@@ -1,3 +1,4 @@
+import asyncio
 from turtle import Turtle
 import random
 
@@ -26,7 +27,7 @@ class Ball:
         self._ball.goto(0, 0)
         self._is_moving = False
 
-    def move(self):
+    async def move(self):
         if self._is_moving:
             # bounce from wall and paddles
             # if the ball hit the screen, make direction opposite
@@ -34,6 +35,7 @@ class Ball:
             new_x += self._dx
             new_y += self._dy
             self._ball.goto(new_x, new_y)
+            await asyncio.sleep(0)
 
     def ball_distance(self, obj):
         return self.ball.distance(obj)

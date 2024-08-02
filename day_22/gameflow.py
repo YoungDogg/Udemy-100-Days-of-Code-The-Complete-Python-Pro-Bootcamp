@@ -1,3 +1,5 @@
+import asyncio
+
 from player import Player
 from opponent import Opponent
 from ball import Ball
@@ -22,7 +24,7 @@ class GameFlow:
         self.score_limit = score_limit
 
         # Initialize the logger
-        self.logger = Logger.setup_logger('gameflow_logger', 'debug.log')
+        self.logger = Logger.setup_logger('gameflow_logger', 'debugging/debug.log')
         self.logger.info("GameFlow initialized")
         self._previous_ball_pos = self.ball.ball.pos()
         self._previous_player_pos = self.player.paddle.pos()
@@ -39,26 +41,42 @@ class GameFlow:
         # Game over flag
         self.is_over = False
 
-    def start_game(self):
+    async def start_game(self):
         self.player.key_bound(self)
         while not self.is_over:
             loop_start_time = time.time()  # Record start time of the loop
-            self.update_game_state()
-            self.debugging_log()
+            await self.update_game_state()
+            # await asyncio.gather(
+            #                      self.debugging_log(),
+            #                      self.log_fps())
+            await self.log_fps()
+
             elapsed_time = time.time() - loop_start_time  # Calculate elapsed time
+            # TODO: question
+            '''
+            [ ] question: why it should be this: self.frame_duration - elapsed_time
+            other than elapsed_time - self.frame_duration, or just self.frame_duration, elapsed_time?
+            Or why does it just wait self.frame_duration ignoring the elapsed time?
+            '''
             sleep_time = (
-                max(0.001, self.frame_duration - elapsed_time))  # Calculate sleep time to maintain consistent frame rate
-            time.sleep(sleep_time)  # Sleep for the calculated duration
+                max(0.001, self.frame_duration - elapsed_time))
+            # time.sleep(sleep_time)  # Sleep for the calculated duration
+            '''
+            [ ] question: if it's non blocking, then can it manage fps?
+            answer: 
+            '''
+            await asyncio.sleep(sleep_time)
 
-            self.log_fps()
+    async def update_game_state(self):
+        await asyncio.gather(
+            self.ball.move(),
+            self.collision.check_collision(ball=self.ball, screen=self.screen,
+                                           player=self.player, opponent=self.opponent)
+        )
 
-    def update_game_state(self):
-        self.ball.move()
-        self.collision.check_collision(ball=self.ball, screen=self.screen,
-                                       player=self.player, opponent=self.opponent)
         self.screen.screen.update()
 
-    def debugging_log(self):
+    async def debugging_log(self):
         # Log only when any objects move
         current_ball_pos = self.ball.ball.pos()
         current_player_pos = self.player.paddle.pos()
@@ -75,7 +93,7 @@ class GameFlow:
             self._previous_player_pos = current_player_pos
             self._previous_opponent_pos = current_opponent_pos
 
-    def log_fps(self):
+    async def log_fps(self):
         self.frame_counter += 1
         current_time = time.time()
         elapsed_time = current_time - self.start_time

@@ -10,6 +10,10 @@ def handle_exit(loop):
 
 
 def main():
+    '''
+    [x] question: where to put loop?
+    answer: where the all grouped async method should run
+    '''
     loop = asyncio.get_event_loop()
 
     try:
