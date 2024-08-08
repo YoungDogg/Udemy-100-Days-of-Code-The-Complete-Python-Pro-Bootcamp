@@ -28,8 +28,11 @@ def main():
     while not is_game_over:
         time.sleep(0.05)
         ball.make_toss()
+        # detect collision with wall
         if ball.ycor() >= screen_top - 30 or ball.ycor() <= screen_bottom + 30:
             ball.bounce()
+
+        # detect collision with paddle
 
         screen.update()
 
