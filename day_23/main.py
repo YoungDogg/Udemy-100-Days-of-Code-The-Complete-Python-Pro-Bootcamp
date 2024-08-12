@@ -1,6 +1,7 @@
 from turtle import Screen
 from character import GameTurtle
 from car import Car
+from pack_of_cars import PackOfCars
 import time
 
 
@@ -13,13 +14,16 @@ def main():
     screen.listen()
     turtle = GameTurtle(screen)
     difficulty = 1
-    car = Car(screen, difficulty)
+
+    cars = PackOfCars(screen, difficulty)
+    cars.spawn_cars()
 
     is_game_over = False
     while not is_game_over:
         time.sleep(0.01)
 
-        car.move_car()
+        for car in cars.car_list:
+            car.move_car()
 
         screen.update()
     screen.exitonclick()

@@ -23,7 +23,7 @@ class Car(Turtle):
         self.shapesize(stretch_wid=2, stretch_len=1)
         self.setheading(90)
         self.color(self.__color[self.__pick_color])
-        self.__speed = random.randrange(1, 10) * (1/10) * difficulty
+        self.__speed = random.randrange(1, 10) * (1 / 10) * difficulty
         self.penup()
 
         self.__direction = 1 if random.choice([True, False]) else -1
@@ -31,5 +31,6 @@ class Car(Turtle):
         scn_y = random.randrange(-screen.window_height() / 2 + MARGIN, screen.window_height() / 2 - MARGIN)
         self.setpos(scn_x, scn_y)
 
+
     def move_car(self):
-        self.goto( self.xcor() + (self.__speed * -self.__direction), self.ycor())
+        self.goto(self.xcor() + (self.__speed * -self.__direction), self.ycor())
