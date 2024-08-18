@@ -1,6 +1,6 @@
 from turtle import Turtle
-from screen import GameScreen
-from typing import List
+# from screen import GameScreen
+# from typing import List
 import logging
 
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(message)s')
@@ -18,6 +18,7 @@ class Snake:
     @property
     def snake(self):
         return self._snake
+
     @property
     def head(self):
         return self._snake[0]
@@ -45,8 +46,8 @@ class Snake:
             self._y_pos = self._snake[-1].ycor()
 
     def append_score(self):
-        # count scroe by segments
-        score = len(self.snake) -self._initial_length
+        # count score by segments
+        score = len(self.snake) - self._initial_length
 
         return score
         pass

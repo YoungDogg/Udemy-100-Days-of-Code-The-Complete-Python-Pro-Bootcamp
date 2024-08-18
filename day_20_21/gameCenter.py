@@ -23,6 +23,8 @@ class GameCenter:
             is_over = self.collision.collision()  # collision
             self.screen.update()
             time.sleep(.1)
+        if is_over:
+            self.scoreboard.updateHighestScore()
 
     def ate_apple(self):
         snake_x = int(self.snake.head.xcor())
