@@ -13,6 +13,5 @@
       2. if there's no highest score, make and read the number
       3. find the proper place for the code to overwrite the highestscore 
       3. if score is higher than the highest score, replace it
-      4. the game should run endlessly or control the procedure
 3. imply
 4. feedback
