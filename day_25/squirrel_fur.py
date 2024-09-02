@@ -12,7 +12,7 @@ def squirrel():
         number_list.append(len(data[data["Primary Fur Color"] == color]))
 
     data_dict = {
-        "color":color_diversity_list,
+        "color":coolr_diversity_list,
         "number":number_list
     }
 
