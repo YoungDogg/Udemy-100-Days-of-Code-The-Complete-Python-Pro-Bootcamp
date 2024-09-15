@@ -52,7 +52,7 @@ class GameFlow:
             await self.log_fps()
 
             elapsed_time = time.time() - loop_start_time  # Calculate elapsed time
-            # TODO: question
+            # question
             '''
             [ ] question: why it should be this: self.frame_duration - elapsed_time
             other than elapsed_time - self.frame_duration, or just self.frame_duration, elapsed_time?
