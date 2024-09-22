@@ -2,6 +2,10 @@ import math
 import turtle
 import pandas
 import tkinter
+import time
+
+# how to update score?
+SCORE = 0
 
 def main():
     # Make UI: the screen, pop-up window
@@ -11,6 +15,8 @@ def main():
     screen.addshape(image)
 
     turtle.shape(image)
+
+    is_game_over = False
     # [v] Check if the guess is among the 50 states
     # [v] get the list the states
     data = pandas.read_csv("50_states.csv")
@@ -18,8 +24,8 @@ def main():
 
     # Write correct guesses onto the map
     # [v] get game screen coordinate by clicking
-    def return_coordinates(x,y):
-        clicked_coord = [x,y]
+    def return_coordinates(x, y):
+        clicked_coord = [x, y]
         # print(f"Clicked coordinates: {clicked_coord}")
         find_closest_state(clicked_coord)
 
@@ -37,23 +43,20 @@ def main():
         print(f"clicked_coord:{clicked_coord} closest_coord: {closest_coord} "
               f"closet_distance:{closet_distance} state_name: {state_name}")
 
-
-
         check_state(state_name)
 
     def check_state(state_name):
         # input popup
         input_return = screen.textinput("Guess the State", "Name?")
         print(f"state_name: {state_name} input_return: {input_return}")
+        # condition comparing input and the state list
+        # make the condition
         if state_name.lower() == input_return.lower():
             # +1 score
-            print("you got it")
+            SCORE += 1
+            print(f"score: {SCORE}")
         else:
             print("failed and game over")
-
-    screen.onclick(return_coordinates)
-
-
 
     # [v] get coordinate data list
     # coordinate_x_list = list(data["x"])
@@ -65,7 +68,25 @@ def main():
     coordinate_list = [list(coord) for coord in zip(data["x"], data["y"], data["state"])]
     # print(coordinate_list)
 
-    # condition comparing input and the state list
+    # make the score
+    # UI
+    def display_ui(text, width, height):
+        score_ui = turtle.Turtle()
+        score_ui.hideturtle()
+        score_ui.penup()
+        score_ui.speed(10)
+        score_ui_width = (screen.window_width() / 2) * width / 100
+        score_ui_height = (screen.window_height() / 2) * height / 100
+        score_ui.goto(score_ui_width, score_ui_height)
+        score_ui.write(text, align="left", font=('Arial', 12, 'bold'))
+
+    display_ui("score: ", 50, 70)
+    display_ui(SCORE, 62, 70)
+
+    screen.onclick(return_coordinates)
+    # by click event, I want to get the signal of game over
+    screen.update()
+    time.sleep(.1)
 
     screen.mainloop()
 
