@@ -7,6 +7,7 @@ import time
 # how to update score?
 SCORE = 0
 
+
 def main():
     # Make UI: the screen, pop-up window
     screen = turtle.Screen()
@@ -16,11 +17,10 @@ def main():
 
     turtle.shape(image)
 
-    is_game_over = False
     # [v] Check if the guess is among the 50 states
     # [v] get the list the states
     data = pandas.read_csv("50_states.csv")
-    state_list = list(data["state"])
+    # state_list = list(data["state"])
 
     # Write correct guesses onto the map
     # [v] get game screen coordinate by clicking
@@ -53,8 +53,11 @@ def main():
         # make the condition
         if state_name.lower() == input_return.lower():
             # +1 score
+            global SCORE
             SCORE += 1
             print(f"score: {SCORE}")
+            display_ui(score_ui2, screen, "score: ", 50, 70)
+            display_ui(score_ui, screen, SCORE, 62, 70)
         else:
             print("failed and game over")
 
@@ -70,23 +73,25 @@ def main():
 
     # make the score
     # UI
-    def display_ui(text, width, height):
-        score_ui = turtle.Turtle()
-        score_ui.hideturtle()
-        score_ui.penup()
-        score_ui.speed(10)
+    score_ui = turtle.Turtle()
+    score_ui.hideturtle()
+    score_ui.penup()
+    score_ui.speed(10)
+
+    score_ui2 = turtle.Turtle()
+    score_ui2.hideturtle()
+    score_ui2.penup()
+    score_ui2.speed(10)
+
+    def display_ui(score_ui, screen, text, width, height):
         score_ui_width = (screen.window_width() / 2) * width / 100
         score_ui_height = (screen.window_height() / 2) * height / 100
         score_ui.goto(score_ui_width, score_ui_height)
+        score_ui.clear()
         score_ui.write(text, align="left", font=('Arial', 12, 'bold'))
-
-    display_ui("score: ", 50, 70)
-    display_ui(SCORE, 62, 70)
 
     screen.onclick(return_coordinates)
     # by click event, I want to get the signal of game over
-    screen.update()
-    time.sleep(.1)
 
     screen.mainloop()
 
