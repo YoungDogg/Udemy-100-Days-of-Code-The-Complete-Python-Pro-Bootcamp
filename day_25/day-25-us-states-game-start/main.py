@@ -60,6 +60,7 @@ def main():
             display_ui(score_ui, screen, SCORE, 62, 70)
         else:
             print("failed and game over")
+            save_score2file(score_data)
 
     # [v] get coordinate data list
     # coordinate_x_list = list(data["x"])
@@ -92,6 +93,16 @@ def main():
 
     screen.onclick(return_coordinates)
     # by click event, I want to get the signal of game over
+
+    score_dict = {"highest": 0}
+    score_data = pandas.DataFrame([score_dict])
+
+    def save_score2file(score_data):
+        global SCORE
+        highest = score_data.loc[0,"highest"]
+        if SCORE > highest:
+            score_data.loc[0,"highest"] = SCORE
+            score_data.to_csv("scoreboard.csv", index=False)
 
     screen.mainloop()
 

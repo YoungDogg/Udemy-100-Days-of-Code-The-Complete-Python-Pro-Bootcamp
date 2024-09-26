@@ -19,8 +19,10 @@
       - [x] get corresponding state name 
     - [x] input popup
       - [ ] handle the error (optional)
-  - [ ] condition comparing input and the state list
+  - [x] condition comparing input and the state list
     - [x] make the condition
-    - [ ] make the score
-      - [ ] UI
-      - [ ] file
+    - [x] make the score
+      - [x] UI
+      - [x] file
+  - [ ] Refactor
+    - [ ] Divide into classes
