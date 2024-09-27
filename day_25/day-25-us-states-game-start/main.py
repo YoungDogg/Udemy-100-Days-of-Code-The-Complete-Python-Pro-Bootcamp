@@ -3,18 +3,18 @@ import turtle
 import pandas
 import tkinter
 import time
-
 # how to update score?
 SCORE = 0
 
 
 def main():
+
+
     # Make UI: the screen, pop-up window
     screen = turtle.Screen()
     screen.title("U.S. States Game")
     image = "blank_states_img.gif"
     screen.addshape(image)
-
     turtle.shape(image)
 
     # [v] Check if the guess is among the 50 states
@@ -56,12 +56,15 @@ def main():
             global SCORE
             SCORE += 1
             print(f"score: {SCORE}")
+
             display_ui(score_ui2, screen, "score: ", 50, 70)
             display_ui(score_ui, screen, SCORE, 62, 70)
+            display_ui(highest_score_ui, screen, "highest: ", 50, 80)
+            # display_ui(highest_score_ui2, screen, score_data.loc[0,"highest"], 62, 80)
+            print(score_data.loc[0,"highest"])
         else:
             print("failed and game over")
             save_score2file(score_data)
-
     # [v] get coordinate data list
     # coordinate_x_list = list(data["x"])
     # coordinate_y_list = list(data["y"])
@@ -74,15 +77,18 @@ def main():
 
     # make the score
     # UI
-    score_ui = turtle.Turtle()
-    score_ui.hideturtle()
-    score_ui.penup()
-    score_ui.speed(10)
+    def generate_UI_obj():
+        score_ui = turtle.Turtle()
+        score_ui.hideturtle()
+        score_ui.penup()
+        score_ui.speed(10)
+        return score_ui
 
-    score_ui2 = turtle.Turtle()
-    score_ui2.hideturtle()
-    score_ui2.penup()
-    score_ui2.speed(10)
+    score_ui = generate_UI_obj()
+    score_ui2 = generate_UI_obj()
+
+    highest_score_ui = generate_UI_obj()
+    highest_score_ui2 = generate_UI_obj()
 
     def display_ui(score_ui, screen, text, width, height):
         score_ui_width = (screen.window_width() / 2) * width / 100
@@ -91,7 +97,7 @@ def main():
         score_ui.clear()
         score_ui.write(text, align="left", font=('Arial', 12, 'bold'))
 
-    screen.onclick(return_coordinates)
+    turtle.Screen().onclick(return_coordinates)
     # by click event, I want to get the signal of game over
 
     score_dict = {"highest": 0}

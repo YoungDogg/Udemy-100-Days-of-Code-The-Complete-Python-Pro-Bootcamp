@@ -19,10 +19,16 @@
       - [x] get corresponding state name 
     - [x] input popup
       - [ ] handle the error (optional)
+        - [ ] if click no
   - [x] condition comparing input and the state list
     - [x] make the condition
     - [x] make the score
       - [x] UI
+        - [ ] highest score
       - [x] file
   - [ ] Refactor
     - [ ] Divide into classes
+      ~~- [ ] screen~~
+      - [ ] data
+      - [ ] condition
+      - [ ] score
