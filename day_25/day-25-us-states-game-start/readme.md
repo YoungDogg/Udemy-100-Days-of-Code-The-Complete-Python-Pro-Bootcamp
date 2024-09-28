@@ -24,11 +24,26 @@
     - [x] make the condition
     - [x] make the score
       - [x] UI
-        - [ ] highest score
+        - [x] highest score
       - [x] file
   - [ ] Refactor
-    - [ ] Divide into classes
-      ~~- [ ] screen~~
-      - [ ] data
-      - [ ] condition
-      - [ ] score
+    - [ ] Divide into classes      
+      - [ ] screen
+      - [x] data
+      - [x] stateLocator
+      - [x] score
+        - used singleton for score value
+  - question
+    - [ ] class variable inside \__init__. should it be __var?
+    - [ ] how to get global value inside main function to other class?
+    - [ ] when share class object to other class? came this thought from Score class getting screen
+    - [ ] in class attribute, difference self.__fo, fo in def \__init__(self)
+  - fix
+    - [ ] highest
+      - [ ] highest score display 0, fix it
+        - [ ] if it's none, make it as 0
+      - [x] move the highest score display digit
+    - [ ] score increments weirdo
+        - self.__score += 1 (v) 
+        - why this incremented drastically self.score += 1
+    - [x] make game shut after game over
