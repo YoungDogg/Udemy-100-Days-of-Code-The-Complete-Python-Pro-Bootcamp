@@ -27,8 +27,13 @@
         - [ ] highest score
       - [x] file
   - [ ] Refactor
-    - [ ] Divide into classes
-      ~~- [ ] screen~~
-      - [ ] data
-      - [ ] condition
+    - [ ] Divide into classes      
+      - [ ] screen
+      - [x] data
+      - [ ] stateLocator
       - [ ] score
+        - used singleton for score value~~~~
+  - question
+    - class variable inside __init__. should it be __var?
+    - how to get global value inside main function to other class?
+    - when share class object to other class? came this thought from Score class getting screen~~~~~~~~ 
