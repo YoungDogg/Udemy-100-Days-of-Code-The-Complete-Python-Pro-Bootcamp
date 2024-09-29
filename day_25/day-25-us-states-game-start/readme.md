@@ -35,15 +35,20 @@
         - used singleton for score value
   - question
     - [ ] class variable inside \__init__. should it be __var?
+      - no underscore is for public
+      - one underscore is for protected attribute, internal use
+      - double underscore called **Name Mangling**
     - [ ] how to get global value inside main function to other class?
     - [ ] when share class object to other class? came this thought from Score class getting screen
     - [ ] in class attribute, difference self.__fo, fo in def \__init__(self)
   - fix
-    - [ ] highest
-      - [ ] highest score display 0, fix it
-        - [ ] if it's none, make it as 0
+    - [x] highest
+      - [x] highest score display 0, fix it
+        - [x] if it's none, make it as 0        
       - [x] move the highest score display digit
-    - [ ] score increments weirdo
+    - [x] score increments weirdo
         - self.__score += 1 (v) 
         - why this incremented drastically self.score += 1
+        - something related to singleton
+          - no it wasn't. The setter was the problem. changed self.__score += val to this self.__score = val
     - [x] make game shut after game over
