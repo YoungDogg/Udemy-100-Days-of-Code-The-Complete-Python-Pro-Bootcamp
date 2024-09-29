@@ -41,7 +41,6 @@
     - [ ] how to get global value inside main function to other class?
     - [ ] when share class object to other class? came this thought from Score class getting screen
       - my classes share each other on main.py
-    - [ ] in class attribute, difference self.__fo, fo in def \__init__(self)
   - fix
     - [x] highest
       - [x] highest score display 0, fix it
