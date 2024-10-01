@@ -26,21 +26,24 @@
       - [x] UI
         - [x] highest score
       - [x] file
-  - [ ] Refactor
-    - [ ] Divide into classes      
-      - [ ] screen
+  - [x] Refactor
+    - [x] Divide into classes      
+      - [x] screen
       - [x] data
       - [x] stateLocator
       - [x] score
         - used singleton for score value
   - question
-    - [ ] class variable inside \__init__. should it be __var?
+    - [x] class variable inside \__init__. should it be __var?
       - no underscore is for public
       - one underscore is for protected attribute, internal use
       - double underscore called **Name Mangling**
-    - [ ] how to get global value inside main function to other class?
+    - [x] how to get global value inside main function to other class?
+      - use `global` phrase
     - [ ] when share class object to other class? came this thought from Score class getting screen
       - my classes share each other on main.py
+      - it's related to refactoring
+    - [ ] split data and score variable. It's confusing
   - fix
     - [x] highest
       - [x] highest score display 0, fix it
@@ -52,3 +55,6 @@
         - something related to singleton
           - no it wasn't. The setter was the problem. changed self.__score += val to this self.__score = val
     - [x] make game shut after game over
+    - [ ] error handling
+      - [ ] click no on message input
+      - [ ] close without gameover

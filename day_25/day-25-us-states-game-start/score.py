@@ -1,16 +1,15 @@
 import os.path
 
 import pandas
-import pandas as pd
 
 from singleton import GlobalValue
 import turtle
 
 
 class Score:
-    def __init__(self, screen):
+    def __init__(self, screen, data):
         self.__screen = screen
-        self.__data = pandas.read_csv("50_states.csv")
+        self.__data = data
         self.__score_data = None
         self.init_save_file()
         self.__score = GlobalValue().value
