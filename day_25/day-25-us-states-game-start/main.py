@@ -1,15 +1,15 @@
 from score import Score
 from state_locator import StateLocator
 from screen import Screen
+from data import Data
 
 
 def main():
-    # Make UI: the screen, pop-up window
     screen = Screen().screen
-
-    score = Score(screen)
+    data = Data()
+    score = Score(screen, data)
     score.display_ui_all()
-    stateLocator = StateLocator(screen, score)
+    stateLocator = StateLocator(screen, data, score)
 
     screen.onclick(stateLocator.return_coordinates)
 

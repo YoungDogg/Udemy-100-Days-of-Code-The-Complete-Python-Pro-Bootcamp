@@ -18,8 +18,8 @@
       - [x] make condition comparing the coordinates of clicking and the data list 
       - [x] get corresponding state name 
     - [x] input popup
-      - [ ] handle the error (optional)
-        - [ ] if click no
+      - [x] handle the error (optional)
+        - [x] if click no
   - [x] condition comparing input and the state list
     - [x] make the condition
     - [x] make the score
@@ -40,10 +40,9 @@
       - double underscore called **Name Mangling**
     - [x] how to get global value inside main function to other class?
       - use `global` phrase
-    - [ ] when share class object to other class? came this thought from Score class getting screen
-      - my classes share each other on main.py
-      - it's related to refactoring
-    - [ ] split data and score variable. It's confusing
+    - [x] when share class object to other class? came this thought from Score class getting screen
+      - yes passing same arguments multiple times to different objects or classes is fine.
+    - [x] split data and score variable.
   - fix
     - [x] highest
       - [x] highest score display 0, fix it
@@ -55,6 +54,6 @@
         - something related to singleton
           - no it wasn't. The setter was the problem. changed self.__score += val to this self.__score = val
     - [x] make game shut after game over
-    - [ ] error handling
-      - [ ] click no on message input
-      - [ ] close without gameover
+    - [x] error handling
+      - [x] click no on message input
+      - [x] close without gameover

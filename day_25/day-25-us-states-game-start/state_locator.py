@@ -2,8 +2,9 @@ import math
 
 
 class StateLocator:
-    def __init__(self,screen, data):
+    def __init__(self, screen, data, score):
         self.__data = data
+        self.__score = score
         self.__screen = screen
 
     # get game screen coordinate by clicking
@@ -28,14 +29,19 @@ class StateLocator:
     def check_state(self, state_name):
         # input popup
         input_return = self.__screen.textinput("Guess the State", "Name?")
+
+        if not input_return or not input_return.isalpha():
+            self.__screen.textinput("Error", "Invalid input! Please enter a valid state name (letters only)")
+            return
+
         # condition comparing input and the state list
         if state_name.lower() == input_return.lower():
             # +1 score
-            self.__data.increment_score()
-            self.__data.display_ui_all()
+            self.__score.increment_score()
+            self.__score.display_ui_all()
         else:
-            self.__data.save_score2file()
-            self.__data.display_gameover()
+            if self.__data.highest_score < self.__score.score:
+                self.__data.highest_score = self.__score.score
+                self.__data.save_score2file()
+            self.__score.display_gameover()
             self.__screen.exitonclick()
-
-
