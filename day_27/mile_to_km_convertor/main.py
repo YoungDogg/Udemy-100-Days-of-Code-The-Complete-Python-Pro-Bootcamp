@@ -1,9 +1,10 @@
 from ui.ui import UI
+from services.service import Service
+
 
 def main():
-    # 1. make a layout
-    ui = UI()
-    # 2. then make the process
+    service = Service()
+    UI(service=service)
 
 
 if __name__ == "__main__":
