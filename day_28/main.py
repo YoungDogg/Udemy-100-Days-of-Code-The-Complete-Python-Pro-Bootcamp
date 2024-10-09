@@ -11,9 +11,10 @@ BLACK = 'black'
 FONT_NAME = "Courier"
 BUTTON_STYLE = 'TButton'
 CHECK_STYLE = 'TLabel'
-WORK_MIN = 1
+WORK_MIN = 24
 SHORT_BREAK_MIN = 5
 LONG_BREAK_MIN = 20
+HOW_MANY_SHORT_BREAK = 3
 
 
 def main():
@@ -22,22 +23,30 @@ def main():
     # ---------------------------- TIMER RESET ------------------------------- #
 
     # ---------------------------- TIMER MECHANISM ------------------------------- #
-    def press_start_btn():
-        # count down the first timer
-        # take short break
-        # doing this 4 times
-        # then one long break
-        # repeat this
+    def repeat_work_n_break(is_reset_pressed=False):
+        # (1 work + 1 short break) * 3 + (1 work + 1 long break)
+        # repeat
+        short_break_cnt = 3
+        while is_reset_pressed:
+            take_work()
+            if short_break_cnt <= 0:
+                long_break()
+                short_break_cnt = 3
+                continue
+            take_short_break()
+            short_break_cnt += -1
+
+    def take_work():
         pass
 
+    def take_short_break():
+        pass
+
+    def take_long_break():
+        pass
 
     # ---------------------------- COUNTDOWN MECHANISM ------------------------------- #
-    def count_down(count):
-        count_min = count // 60
-        count_sec = count % 60
-        canvas.itemconfig(timer_text, text=f'{count_min:02}:{count_sec:02}')
-        if count > 0:
-            window.after(1 * 1000, count_down, count - 1)
+
     # ---------------------------- UI SETUP ------------------------------- #
 
     window.title('Pomodoro')
@@ -67,8 +76,6 @@ def main():
     check_mark2 = ttk.Label(window, text=check_dict['fail'], style=CHECK_STYLE, foreground=RED, background=YELLOW)
     check_mark2.grid(row=3, column=1)
 
-    count = WORK_MIN * 60
-    count_down(count)
     window.mainloop()
 
 
