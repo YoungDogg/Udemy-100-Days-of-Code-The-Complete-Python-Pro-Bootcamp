@@ -1,5 +1,6 @@
 import tkinter as tk
 from tkinter import ttk
+from countdown import CountDown
 
 # ---------------------------- CONSTANTS ------------------------------- #
 PINK = "#e2979c"
@@ -23,27 +24,6 @@ def main():
     # ---------------------------- TIMER RESET ------------------------------- #
 
     # ---------------------------- TIMER MECHANISM ------------------------------- #
-    def repeat_work_n_break(is_reset_pressed=False):
-        # (1 work + 1 short break) * 3 + (1 work + 1 long break)
-        # repeat
-        short_break_cnt = 3
-        while is_reset_pressed:
-            take_work()
-            if short_break_cnt <= 0:
-                long_break()
-                short_break_cnt = 3
-                continue
-            take_short_break()
-            short_break_cnt += -1
-
-    def take_work():
-        pass
-
-    def take_short_break():
-        pass
-
-    def take_long_break():
-        pass
 
     # ---------------------------- COUNTDOWN MECHANISM ------------------------------- #
 
@@ -75,6 +55,9 @@ def main():
     check_mark = ttk.Label(window, text=check_dict['ok'], style=CHECK_STYLE, foreground=GREEN, background=YELLOW)
     check_mark2 = ttk.Label(window, text=check_dict['fail'], style=CHECK_STYLE, foreground=RED, background=YELLOW)
     check_mark2.grid(row=3, column=1)
+
+    count_down = CountDown(canvas, WORK_MIN, SHORT_BREAK_MIN, LONG_BREAK_MIN, HOW_MANY_SHORT_BREAK, timer_text)
+    count_down.start_whole_process()
 
     window.mainloop()
 
