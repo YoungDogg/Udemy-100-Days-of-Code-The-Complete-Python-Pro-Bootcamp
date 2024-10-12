@@ -11,6 +11,7 @@ class CountDown:
         self.__long_break_min = args[3] if len(args) >= 4 else kwargs.get('LONG_BREAK_MIN', 20)
         self.__how_many_short_break = args[4] if len(args) >= 5 else kwargs.get('HOW_MANY_SHORT_BREAK', 3)
         self.__timer_text = args[5] if len(args) >= 6 else kwargs.get('timer_text')
+        self.__update_ui_callback = args[6] if len(args) >= 7 else kwargs.get('update_ui_callback')
 
         self.__work_state = 'work'  # or short, long break
         self.__given_time = self.__work_min * 60  # initialize as work time as sec
@@ -32,8 +33,9 @@ class CountDown:
         count_sec = self.__given_time % 60
 
         current_time = time.strftime('%H:%M:%S')
-        print(f'{self.__work_state}==== {count_min:02}:{count_sec:02} || Real-time: {current_time}')
-        self.canvas.itemconfig(self.__timer_text, text=f'{count_min:02}:{count_sec:02}')
+        # print(f'{self.__work_state}==== {count_min:02}:{count_sec:02} || Real-time: {current_time}')
+        # self.canvas.itemconfig(self.__timer_text, text=f'{count_min:02}:{count_sec:02}')
+        self.__update_ui_callback(f'{count_min:02}:{count_sec:02}')
 
         if self.__given_time > 0:
             self.__given_time -= 1
@@ -75,6 +77,12 @@ class CountDown:
         self.__given_time = self.__long_break_min * 60
         # self.__given_time = 5   # for the test
         self.count_down_and_display_time()
+
+    def stop_timer(self):
+        print('stop timer')
+
+    def reset_timer(self):
+        print('reset timer')
 
 
 if __name__ == "__main__":
