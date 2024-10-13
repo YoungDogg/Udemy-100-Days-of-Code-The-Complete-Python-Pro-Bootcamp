@@ -13,6 +13,8 @@ class CountDown:
         self.__timer_text = args[5] if len(args) >= 6 else kwargs.get('timer_text')
         self.__update_ui_callback = args[6] if len(args) >= 7 else kwargs.get('update_ui_callback')
 
+        self.__is_start = False
+
         self.__work_state = 'work'  # or short, long break
         self.__given_time = self.__work_min * 60  # initialize as work time as sec
         # self.__given_time = self.__work_min  # for the test
@@ -28,7 +30,7 @@ class CountDown:
     def start_whole_process(self):
         self.move_to_work_phase()
 
-    def count_down_and_display_time(self):
+    def count_down_and_display_time(self, is_started):
         count_min = self.__given_time // 60
         count_sec = self.__given_time % 60
 
@@ -36,12 +38,13 @@ class CountDown:
         # print(f'{self.__work_state}==== {count_min:02}:{count_sec:02} || Real-time: {current_time}')
         # self.canvas.itemconfig(self.__timer_text, text=f'{count_min:02}:{count_sec:02}')
         self.__update_ui_callback(f'{count_min:02}:{count_sec:02}')
-
-        if self.__given_time > 0:
-            self.__given_time -= 1
-            self.canvas.after(1 * 1000, self.count_down_and_display_time)
-        else:
-            self.manage_phase_sequence()
+        print(f'countdown is_started:{is_started}')
+        if is_started:
+            if self.__given_time > 0:
+                self.__given_time -= 1
+                self.canvas.after(1 * 1000, lambda: self.count_down_and_display_time(is_started))
+            else:
+                self.manage_phase_sequence()
 
     def manage_phase_sequence(self):
         if self.__work_state == 'work':
@@ -64,22 +67,23 @@ class CountDown:
         self.__work_state = 'work'
         self.__given_time = self.__work_min * 60
         # self.__given_time = 10    # for the test
-        self.count_down_and_display_time()
+        self.count_down_and_display_time(True)
 
     def move_to_short_break_phase(self):
         self.__work_state = 'short_break'
         self.__given_time = self.__short_break_min * 60
         # self.__given_time = 3   # for the test
-        self.count_down_and_display_time()
+        self.count_down_and_display_time(True)
 
     def move_to_long_break_phase(self):
         self.__work_state = 'long_break'
         self.__given_time = self.__long_break_min * 60
         # self.__given_time = 5   # for the test
-        self.count_down_and_display_time()
+        self.count_down_and_display_time(True)
 
-    def stop_timer(self):
-        print('stop timer')
+    def start_timer(self, is_started):
+        self.count_down_and_display_time(is_started)
+        print('start timer')
 
     def reset_timer(self):
         print('reset timer')
