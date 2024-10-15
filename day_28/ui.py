@@ -37,7 +37,7 @@ class UI:
         self.__title.grid(row=0, column=1)
 
         self.__start_btn_command = None
-        self.__start_text = {'start': 'Start', 'stop':'Stop'}
+        self.__start_text = {'start': 'Start', 'stop': 'Stop'}
         self.__start_btn = ttk.Button(self.__window, text=self.__start_text['start'],
                                       style=BUTTON_STYLE, command=self.start_btn_command)
         self.__start_btn.grid(row=2, column=0)
@@ -78,6 +78,7 @@ class UI:
     def reset_btn_command(self):
         if self.__reset_btn_command:
             self.__reset_btn_command()
+
     def update_start_stop_btn(self, text):
         self.__start_btn.config(text=self.__start_text[text])
 

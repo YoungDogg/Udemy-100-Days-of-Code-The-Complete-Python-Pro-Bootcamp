@@ -13,16 +13,14 @@ class Main:
         self.__ui = UI()
         self.__timer_text = self.__ui.timer_text
         self.__canvas = self.__ui.canvas
-        self.__is_started = False
+        self.__is_started = True
 
         self.__countdown = CountDown(self.__ui.canvas, WORK_MIN, SHORT_BREAK_MIN, LONG_BREAK_MIN, HOW_MANY_SHORT_BREAK,
-                               update_ui_callback=self.__ui.update_ui)
+                                     update_ui_callback=self.__ui.update_ui)
         self.__ui.set_start_callback(self.toggle_timer)
         self.__ui.set_reset_callback(self.__countdown.reset_timer)
 
-
         self.__ui.window.mainloop()
-
 
     def toggle_timer(self):
         print(f'main is_started:{self.__is_started}')
@@ -36,6 +34,7 @@ class Main:
             self.__ui.update_start_stop_btn('start')
 
         self.__is_started = not self.__is_started
+
 
 if __name__ == '__main__':
     Main()

@@ -13,7 +13,7 @@ class CountDown:
         self.__timer_text = args[5] if len(args) >= 6 else kwargs.get('timer_text')
         self.__update_ui_callback = args[6] if len(args) >= 7 else kwargs.get('update_ui_callback')
 
-        self.__is_start = False
+        self.__is_started = False
 
         self.__work_state = 'work'  # or short, long break
         self.__given_time = self.__work_min * 60  # initialize as work time as sec
@@ -31,20 +31,24 @@ class CountDown:
         self.move_to_work_phase()
 
     def count_down_and_display_time(self, is_started):
+        if not self.__is_started:
+            print('countdown stopped.')
+            return
+
         count_min = self.__given_time // 60
         count_sec = self.__given_time % 60
 
-        current_time = time.strftime('%H:%M:%S')
+        # current_time = time.strftime('%H:%M:%S')
         # print(f'{self.__work_state}==== {count_min:02}:{count_sec:02} || Real-time: {current_time}')
         # self.canvas.itemconfig(self.__timer_text, text=f'{count_min:02}:{count_sec:02}')
         self.__update_ui_callback(f'{count_min:02}:{count_sec:02}')
-        print(f'countdown is_started:{is_started}')
-        if is_started:
-            if self.__given_time > 0:
-                self.__given_time -= 1
-                self.canvas.after(1 * 1000, lambda: self.count_down_and_display_time(is_started))
-            else:
-                self.manage_phase_sequence()
+        print(f'countdown is_started: {self.__is_started}')
+
+        if self.__given_time > 0:
+            self.__given_time -= 1
+            self.canvas.after(1 * 1000, lambda: self.count_down_and_display_time(is_started))
+        else:
+            self.manage_phase_sequence()
 
     def manage_phase_sequence(self):
         if self.__work_state == 'work':
@@ -82,10 +86,19 @@ class CountDown:
         self.count_down_and_display_time(True)
 
     def start_timer(self, is_started):
-        self.count_down_and_display_time(is_started)
-        print('start timer')
+        self.__is_started = is_started
+        if self.__is_started:
+            print('start timer')
+        else:
+            print('stop timer')
+
+        self.count_down_and_display_time(self.__is_started)
 
     def reset_timer(self):
+        self.__is_started = False
+        self.move_to_work_phase()
+        self.__update_ui_callback(f'{self.__work_min:02}:{0:02}')
+        # TODO: if pressed reset, if it's stop button, then make it to start
         print('reset timer')
 
 
