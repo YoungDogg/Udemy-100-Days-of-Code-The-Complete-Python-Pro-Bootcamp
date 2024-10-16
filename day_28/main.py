@@ -1,5 +1,7 @@
 from ui import UI
 from countdown import CountDown
+from timer_state import TimerState
+from timer_button import UIText
 
 WORK_MIN = 24
 SHORT_BREAK_MIN = 5
@@ -13,28 +15,29 @@ class Main:
         self.__ui = UI()
         self.__timer_text = self.__ui.timer_text
         self.__canvas = self.__ui.canvas
-        self.__is_started = True
 
         self.__countdown = CountDown(self.__ui.canvas, WORK_MIN, SHORT_BREAK_MIN, LONG_BREAK_MIN, HOW_MANY_SHORT_BREAK,
-                                     update_ui_callback=self.__ui.update_ui)
+                                     update_ui_callback=self.__ui.update_ui_digit)
         self.__ui.set_start_callback(self.toggle_timer)
-        self.__ui.set_reset_callback(self.__countdown.reset_timer)
+        self.__ui.set_reset_callback(self.handle_reset_process)
 
         self.__ui.window.mainloop()
 
     def toggle_timer(self):
-        print(f'main is_started:{self.__is_started}')
-        if self.__is_started:
-            # stop the timer
-            self.__countdown.start_timer(self.__is_started)
-            self.__ui.update_start_stop_btn('stop')
-        else:
-            # start the timer
-            self.__countdown.start_timer(self.__is_started)
-            self.__ui.update_start_stop_btn('start')
+        current_state = self.__countdown.get_state()
+        if current_state == TimerState.STOPPED or current_state == TimerState.RESET:
+            self.__countdown.start_timer()
+            self.__ui.update_ui_start_stop_btn(UIText.STOP.value)
+        elif current_state == TimerState.RUNNING:
+            self.__countdown.stop_timer()
+            self.__ui.update_ui_start_stop_btn(UIText.START.value)
 
-        self.__is_started = not self.__is_started
+    def handle_reset_process(self):
+        # reset the time and make start button appear
 
+        self.__countdown.reset_timer()
+        # Ensure the start button is set to 'Start' after resetting
+        self.__ui.update_ui_start_stop_btn(UIText.START.value)
 
 if __name__ == '__main__':
     Main()

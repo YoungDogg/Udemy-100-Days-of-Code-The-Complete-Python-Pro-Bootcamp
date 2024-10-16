@@ -1,6 +1,7 @@
 import tkinter as tk
 from tkinter import ttk
 from countdown import CountDown
+from timer_button import UIText
 
 # ---------------------------- CONSTANTS ------------------------------- #
 PINK = "#e2979c"
@@ -18,7 +19,7 @@ class UI:
     def __init__(self):
         self.__window = tk.Tk()
 
-        self.__window.title('Pomodoro')
+        self.__window.title(UIText.TITLE.value)
         self.__window.config(padx=100, pady=50, bg=YELLOW)
 
         self.__style = ttk.Style()
@@ -32,25 +33,21 @@ class UI:
                                                       font=(FONT_NAME, '35', 'bold'))
         self.__canvas.grid(row=1, column=1)
 
-        self.__title = ttk.Label(self.__window, text='Timer', font=(FONT_NAME, '42'), foreground=GREEN,
+        self.__title = ttk.Label(self.__window, text=UIText.LABEL.value, font=(FONT_NAME, '42'), foreground=GREEN,
                                  background=YELLOW)
         self.__title.grid(row=0, column=1)
 
         self.__start_btn_command = None
-        self.__start_text = {'start': 'Start', 'stop': 'Stop'}
-        self.__start_btn = ttk.Button(self.__window, text=self.__start_text['start'],
+        self.__start_btn = ttk.Button(self.__window, text=UIText.START.value,
                                       style=BUTTON_STYLE, command=self.start_btn_command)
         self.__start_btn.grid(row=2, column=0)
 
         self.__reset_btn_command = None
-        self.__reset_btn = ttk.Button(self.__window, text='Reset', style=BUTTON_STYLE, command=self.reset_btn_command)
+        self.__reset_btn = ttk.Button(self.__window, text=UIText.RESET.value, style=BUTTON_STYLE, command=self.reset_btn_command)
         self.__reset_btn.grid(row=2, column=2)
 
-        self.__check_dict = {'ok': '✔️', 'fail': '❌'}
-        self.__check_mark = ttk.Label(self.__window, text=self.__check_dict['ok'], style=CHECK_STYLE, foreground=GREEN,
+        self.__check_mark = ttk.Label(self.__window, text=UIText.OK.value, style=CHECK_STYLE, foreground=GREEN,
                                       background=YELLOW)
-        self.__check_mark2 = ttk.Label(self.__window, text=self.__check_dict['fail'], style=CHECK_STYLE, foreground=RED,
-                                       background=YELLOW)
         self.__check_mark2.grid(row=3, column=1)
 
     @property
@@ -79,12 +76,15 @@ class UI:
         if self.__reset_btn_command:
             self.__reset_btn_command()
 
-    def update_start_stop_btn(self, text):
-        self.__start_btn.config(text=self.__start_text[text])
+    def update_ui_start_stop_btn(self, text):
+        self.__start_btn.config(text=text)
 
-    def update_ui(self, time_string):
+    def update_ui_digit(self, time_string):
         # Update the UI with new timer value
         self.canvas.itemconfig(self.__timer_text, text=time_string)
+
+    def update_ui_process_check(self,text):
+        self.__check_mark.config(text=text)
 
 
 if __name__ == '__main__':

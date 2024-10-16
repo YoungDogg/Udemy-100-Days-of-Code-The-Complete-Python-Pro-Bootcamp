@@ -1,7 +1,7 @@
 # TODO
 - [x] separate ui work inside countdown class
   - [x] update_ui at main.py
-- [ ] make button work
+- [x] start, stop, and reset
   - [x] start
     -[x] how to pass countdown class function to ui?
       - [x] bridging main class as connector
@@ -14,8 +14,28 @@
       - [x] toggle text start to stop
       - [x] stop function worked
         - storing the value inside countdown class  
-  - [ ] reset
-    - [ ] if pressed reset, make button stop
+  - [x] reset
+    - [x] if pressed reset, make button stop
+- [ ] routine: work and break
+  - [ ] change main, and countdown classes compatible with this routine
+    - [ ] countdown class
+      - [ ] divide above with start, stop, and reset into different classes
+    - [ ] main class
+  - [ ] when the process finished both start and reset button reset the process
+    - [ ] when reset pressed, make the routine reset too
+    - [ ] if press start button, reset and start again
   - [ ] ui
-    - [ ] display check mark:✔️ ❌
+    - [ ] display current process using check mark:✔️ ❌
+      - initial all task x
+      - check as the routine passes by
+- [x] refactor
+  - [x] enum: UIText, TimerState, WorkState
+    - UIText class required `.value` while timer_state didn't. 
+      - UIText needs its vlaue while timer_state only checks logical states
+- [ ] test
+  - [ ] how to make test class?
+  - testing routine with hardcoding is not good. Any good method?
+- [ ] document
+  - [ ] following the process
+    
 
