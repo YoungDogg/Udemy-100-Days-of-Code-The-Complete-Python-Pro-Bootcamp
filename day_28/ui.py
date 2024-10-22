@@ -48,7 +48,7 @@ class UI:
 
         self.__check_mark = ttk.Label(self.__window, text=UIText.OK.value, style=CHECK_STYLE, foreground=GREEN,
                                       background=YELLOW)
-        self.__check_mark2.grid(row=3, column=1)
+        self.__check_mark.grid(row=3, column=1)
 
     @property
     def window(self):
