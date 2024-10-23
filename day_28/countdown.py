@@ -5,6 +5,7 @@ from timer_state import TimerState
 class CountDown:
     def __init__(self, *args, **kwargs):
         self.__update_ui_digit_callback = args[0] if len(args) >= 1 else kwargs.get('update_ui_callback')
+        self.__timer_widget = args[1] if len(args) >= 2 else kwargs.get('timer_widget')
 
         self.__given_time = 0
         self.__state = TimerState.STOPPED
@@ -26,13 +27,13 @@ class CountDown:
 
         if self.__given_time > 0:
             self.__given_time -= 1
-            self.__update_ui_digit_callback.after(1 * 1000, self.count_down_and_display_time)
+            self.__timer_widget.after(1 * 1000, self.count_down_and_display_time)
         else:
             self.stop_timer()
 
     def start_timer(self, time_in_min):
         self.__state = TimerState.RUNNING
-        self.__given_time = time_in_min * 60
+        self.__given_time = time_in_min
         print('timer started')
         self.count_down_and_display_time()
 
@@ -48,11 +49,14 @@ class CountDown:
 
 
 if __name__ == "__main__":
+    from tkinter import Tk
+
+
     def mock_update_ui(time_string):
         """Mock function to simulate UI update by printing the time."""
         print(f"Mock UI Update: {time_string}")
 
-    countdown = CountDown(update_ui_callback=mock_update_ui)
+    countdown = CountDown(mock_update_ui, Tk())
 
     print('Starting 1 min timer')
     countdown.start_timer(1)
