@@ -17,9 +17,10 @@
   - [x] reset
     - [x] if pressed reset, make button stop
 - [ ] routine: work and break
-  - [ ] change main, and countdown classes compatible with this routine
-    - [ ] countdown class
-      - [ ] divide above with start, stop, and reset into different classes
+  - [ ] change countdown, pomocycle, and main classes compatible with this routine
+    - [x] countdown class
+      - [x] divide above with start, stop, and reset into different classes
+    - [x] pomocycle      
     - [ ] main class
   - [ ] when the process finished both start and reset button reset the process
     - [ ] when reset pressed, make the routine reset too
@@ -32,9 +33,10 @@
   - [x] enum: UIText, TimerState, WorkState
     - UIText class required `.value` while timer_state didn't. 
       - UIText needs its vlaue while timer_state only checks logical states
-- [ ] test
-  - [ ] how to make test class?
+- [x] test
+  - [x] how to make test class?
   - testing routine with hardcoding is not good. Any good method?
+    - made beneath `if __name__ == 'main'`
 - [ ] document
   - [ ] following the process
     

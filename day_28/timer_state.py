@@ -11,3 +11,4 @@ class WorkState(Enum):
     WORK = 1
     SHORTBREAK = 0
     LONGBREAK = -1
+    RESET = -2
