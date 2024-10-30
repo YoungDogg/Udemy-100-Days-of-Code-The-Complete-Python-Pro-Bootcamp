@@ -1,14 +1,14 @@
 import time
 from timer_state import TimerState
 from typing import Callable, Optional
-from tkinter import Widget
+from tkinter import Canvas
 
 
 class CountDown:
     def __init__(self, *args, **kwargs):
-        self.__update_ui_digit_callback: Callable[[str], None] \
-            = args[0] if len(args) >= 1 else kwargs.get('update_ui_callback')
-        self.__timer_widget:Widget = args[1] if len(args) >= 2 else kwargs.get('timer_widget')
+        self.__update_ui_digit_callback: Callable[[str], None] = args[0] \
+            if len(args) >= 1 else kwargs.get('update_ui_callback')
+        self.__canvas: Canvas = args[1] if len(args) >= 2 else kwargs.get('canvas')
 
         self.__phase_complete_callback: Optional[Callable[[], None]] = None
         self.__given_time = 0
@@ -31,7 +31,7 @@ class CountDown:
 
         if self.__given_time > 0:
             self.__given_time -= 1
-            self.__timer_widget.after(1 * 1000, self.count_down_and_display_time)
+            self.__canvas.after(1 * 1000, self.count_down_and_display_time)
         else:
             self.stop_timer()
             if self.__phase_complete_callback:

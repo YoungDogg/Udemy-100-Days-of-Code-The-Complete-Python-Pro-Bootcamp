@@ -27,8 +27,10 @@
     - [ ] if press start button, reset and start again
   - [ ] ui
     - [ ] display current process using check mark:✔️ ❌
-      - initial all task x
-      - check as the routine passes by
+      - display all work and breaks. Initial all task x
+      - how to check current state? Check by WorkState and TimerState 
+        - if its TimerState is changed from RUNNING to STOPPED, regard it has done
+        
 - [x] refactor
   - [x] enum: UIText, TimerState, WorkState
     - UIText class required `.value` while timer_state didn't. 

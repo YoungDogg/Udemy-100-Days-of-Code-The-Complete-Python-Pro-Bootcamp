@@ -2,43 +2,53 @@ from ui import UI
 from countdown import CountDown
 from timer_state import TimerState
 from timer_button import UIText
-
-WORK_MIN = 3/60
-SHORT_BREAK_MIN = 5/60
-LONG_BREAK_MIN = 20/60
-HOW_MANY_SHORT_BREAK = 3
+from pomocycle import PomoCycle
 
 
 class Main:
 
     def __init__(self):
+        # Initialize UI
         self.__ui = UI()
         self.__timer_text = self.__ui.timer_text
         self.__canvas = self.__ui.canvas
 
-        self.__countdown = CountDown(self.__ui.canvas,
-                                     WORK_MIN, SHORT_BREAK_MIN, LONG_BREAK_MIN, HOW_MANY_SHORT_BREAK,
-                                     update_ui_callback=self.__ui.update_ui_digit)
-        self.__ui.set_start_callback(self.toggle_timer)
-        self.__ui.set_reset_callback(self.handle_reset_process)
+        # Initialize Countdown with UI update callback and Timer Widget
+        self.__countdown = CountDown(
+            update_ui_callback=self.__ui.update_ui_digit,
+            canvas=self.__canvas # it's for cavas.after()
+        )
+        # Initialize Pomocycle
+        self.__pomocycle = PomoCycle(self.__countdown)
 
-        self.__ui.window.mainloop()
+        # how to make the start button make start? and stop also? and what about reset?
+        # set button callbacks for start/stop and reset
+        self.__ui.set_start_callback(self.toggle_timer)
 
     def toggle_timer(self):
-        current_state = self.__countdown.get_state()
-        if current_state == TimerState.STOPPED or current_state == TimerState.RESET:
-            self.__countdown.start_timer()
+        # check both the timer state and work state
+        timer_state = self.__countdown.get_state()
+        work_state = self.__pomocycle.get_work_state()
+        current_progress = self.__pomocycle.get_current_work_progress()
+
+        if timer_state in [TimerState.STOPPED, TimerState.RESET]:
+            # start the pomodoro cycle
+            #  does this code count current progress?
+            self.__pomocycle.start_whole_process()
             self.__ui.update_ui_start_stop_btn(UIText.STOP.value)
-        elif current_state == TimerState.RUNNING:
+        elif timer_state == TimerState.RUNNING:
+            # stop the timer
             self.__countdown.stop_timer()
             self.__ui.update_ui_start_stop_btn(UIText.START.value)
 
     def handle_reset_process(self):
-        # reset the time and make start button appear
+        # reset the pomodoro cycle and update the button state
+        self.__pomocycle.move_to_work_phase()
+        self.__ui.update_ui_process_check(UIText.START.value)
 
-        self.__countdown.reset_timer()
-        # Ensure the start button is set to 'Start' after resetting
-        self.__ui.update_ui_start_stop_btn(UIText.START.value)
+        self.__ui.window.mainloop()
+
+
 
 
 if __name__ == '__main__':
