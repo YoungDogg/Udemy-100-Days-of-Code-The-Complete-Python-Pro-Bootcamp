@@ -15,7 +15,7 @@ class WorkState(Enum):
 
 
 class HowManyTimes(Enum):
-    WORK_MIN = 3 / 60
-    SHORT_BREAK_MIN = 5 / 60
-    LONG_BREAK_MIN = 20 / 60
-    HOW_MANY_SHORT_BREAK = 3
+    WORK_MIN = 3
+    SHORT_BREAK_MIN = 4
+    LONG_BREAK_MIN = 6
+    HOW_MANY_TIME_TO_WORK = 3
