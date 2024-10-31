@@ -12,7 +12,7 @@ class CountDown:
 
         self.__phase_complete_callback: Optional[Callable[[], None]] = None
         self.__given_time = 0
-        self.__state = TimerState.STOPPED
+        self.__state = TimerState.RESET
 
     def get_state(self):
         return self.__state
@@ -37,9 +37,12 @@ class CountDown:
             if self.__phase_complete_callback:
                 self.__phase_complete_callback()
 
-    def start_timer(self, time_in_min: int, phase_complete_callback: Optional[Callable[[], None]] = None):
+    def start_timer(self, time_in_min: int = None, phase_complete_callback: Optional[Callable[[], None]] = None):
+        if time_in_min is not None:
+            # set __given_time only if the timer is rest, starting fresh
+            self.__given_time = time_in_min
+
         self.__state = TimerState.RUNNING
-        self.__given_time = time_in_min
         print('timer started')
         self.__phase_complete_callback = phase_complete_callback
         self.count_down_and_display_time()

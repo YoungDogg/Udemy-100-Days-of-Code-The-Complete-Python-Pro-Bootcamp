@@ -23,8 +23,9 @@
     - [x] pomocycle      
     - [ ] main class
   - [ ] when the process finished both start and reset button reset the process
-    - [ ] when reset pressed, make the routine reset too
-    - [ ] if press start button, reset and start again
+    - [x] when reset pressed, make the routine reset too
+    - [x] if press start button, reset and start again
+    - [ ] works one more than expected. fix this
   - [ ] ui
     - [ ] display current process using check mark:✔️ ❌
       - display all work and breaks. Initial all task x
