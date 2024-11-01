@@ -7,5 +7,6 @@ class UIText(Enum):
     START = 'Start'
     STOP = 'Stop'
     RESET = 'Reset'
-    OK = '✔️'
-    FAIL = '❌'
+    WORK = 'WORK'
+    SHORTBREAK = 'SHORT BREAK'
+    LONGBREAK = 'LONG BREAK'

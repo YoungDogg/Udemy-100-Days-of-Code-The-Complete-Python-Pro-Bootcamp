@@ -2,6 +2,7 @@ import tkinter as tk
 from tkinter import ttk
 from countdown import CountDown
 from timer_button import UIText
+from timer_state import HowManyTimes
 
 # ---------------------------- CONSTANTS ------------------------------- #
 PINK = "#e2979c"
@@ -43,12 +44,24 @@ class UI:
         self.__start_btn.grid(row=2, column=0)
 
         self.__reset_btn_command = None
-        self.__reset_btn = ttk.Button(self.__window, text=UIText.RESET.value, style=BUTTON_STYLE, command=self.reset_btn_command)
+        self.__reset_btn = ttk.Button(self.__window, text=UIText.RESET.value, style=BUTTON_STYLE,
+                                      command=self.reset_btn_command)
         self.__reset_btn.grid(row=2, column=2)
 
-        self.__check_mark = ttk.Label(self.__window, text=UIText.OK.value, style=CHECK_STYLE, foreground=GREEN,
-                                      background=YELLOW)
-        self.__check_mark.grid(row=3, column=1)
+        self.__work_break_display = {'works':[], 'breaks':[]}
+        for idx in range(HowManyTimes.HOW_MANY_TIME_TO_WORK.value):
+            temp_work = ttk.Label(self.__window, text=UIText.WORK.value, style=CHECK_STYLE,
+                                  foreground=BLACK, background=YELLOW)
+            if idx == HowManyTimes.HOW_MANY_TIME_TO_WORK.value - 1:
+                temp_break = ttk.Label(self.__window, text=UIText.LONGBREAK.value, style=CHECK_STYLE,
+                                       foreground=BLACK, background=YELLOW)
+            else:
+                temp_break = ttk.Label(self.__window, text=UIText.SHORTBREAK.value, style=CHECK_STYLE,
+                                       foreground=BLACK, background=YELLOW)
+            temp_work.grid(row=3, column=idx)
+            temp_break.grid(row=4, column=idx)
+            self.__work_break_display['works'].append(temp_work)
+            self.__work_break_display['breaks'].append(temp_break)
 
     @property
     def window(self):
@@ -83,9 +96,12 @@ class UI:
         # Update the UI with new timer value
         self.canvas.itemconfig(self.__timer_text, text=time_string)
 
-    def update_ui_process_check(self,text):
-        self.__check_mark.config(text=text)
+    def update_ui_process_check(self, text):
+        self.__work_break_display.config(text=text)
 
+    def update_ui_work_break_display(self):
+        # current state background PINK, done states background GREEN
+        pass
 
 if __name__ == '__main__':
     ui = UI()

@@ -11,9 +11,9 @@ class PomoCycle:
         self.__work_min = HowManyTimes.WORK_MIN.value
         self.__short_break_min = HowManyTimes.SHORT_BREAK_MIN.value * Min
         self.__long_break_min = HowManyTimes.LONG_BREAK_MIN.value * Min
-        self.__how_many_short_break = HowManyTimes.HOW_MANY_TIME_TO_WORK.value
-        self.__current_short_break_count = 0
-        self.__current_work_count = 0
+        self.__how_many_work = HowManyTimes.HOW_MANY_TIME_TO_WORK.value
+        self.__how_many_short_break = HowManyTimes.HOW_MANY_TIME_TO_WORK.value - 1
+        self.__current_short_break_count = self.__current_work_count = 0
         self.__work_state = WorkState.WORK
         self.__given_time = 0
 
@@ -31,30 +31,34 @@ class PomoCycle:
             print(f'Do this again until press start or reset')
             self.__current_short_break_count = 0
             self.__current_work_count = 0
-            self.__work_state == WorkState.RESET # reset the state
+            self.__work_state = WorkState.RESET  # reset the state
         elif self.__work_state == WorkState.RESET:
             print('reset')
 
     def handle_work_phase_complete(self):
         if self.__current_short_break_count < self.__how_many_short_break:
-            self.__current_short_break_count += 1
+            print(f'=== short_break {self.__current_short_break_count} ===')
             self.move_to_short_break_phase()
         else:
+            print('=== long_break ===')
             self.move_to_long_break_phase()
 
     def move_to_work_phase(self):
-        print(f'=== work {self.__current_work_count} ===')
-        self.__work_state = WorkState.WORK
-        self.__current_work_count += 1 # increment work phase count properly
-        self.__countdown.start_timer(self.__work_min, self.manage_phase_sequence)
+        if self.__current_work_count < self.__how_many_work:
+            print(f'=== work {self.__current_work_count} ===')
+            self.__work_state = WorkState.WORK
+            self.__current_work_count += 1  # increment work phase count properly
+            self.__countdown.start_timer(self.__work_min, self.manage_phase_sequence)
+        else:
+            self.__work_state = WorkState.LONGBREAK
+            self.manage_phase_sequence()
 
     def move_to_short_break_phase(self):
-        print(f'=== short_break {self.__current_short_break_count} ===')
+        self.__current_short_break_count += 1
         self.__work_state = WorkState.SHORTBREAK
         self.__countdown.start_timer(self.__short_break_min, self.manage_phase_sequence)
 
     def move_to_long_break_phase(self):
-        print('=== long_break ===')
         self.__work_state = WorkState.LONGBREAK
         self.__countdown.start_timer(self.__long_break_min, self.manage_phase_sequence)
 

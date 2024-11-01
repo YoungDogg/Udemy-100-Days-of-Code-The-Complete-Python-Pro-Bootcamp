@@ -38,7 +38,7 @@ class CountDown:
                 self.__phase_complete_callback()
 
     def start_timer(self, time_in_min: int = None, phase_complete_callback: Optional[Callable[[], None]] = None):
-        if time_in_min is not None:
+        if time_in_min:
             # set __given_time only if the timer is rest, starting fresh
             self.__given_time = time_in_min
 

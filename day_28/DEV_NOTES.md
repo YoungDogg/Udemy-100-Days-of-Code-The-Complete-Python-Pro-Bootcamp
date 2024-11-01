@@ -25,7 +25,9 @@
   - [ ] when the process finished both start and reset button reset the process
     - [x] when reset pressed, make the routine reset too
     - [x] if press start button, reset and start again
-    - [ ] works one more than expected. fix this
+    - [x] works one more than expected. fix this
+    - [x] short break counts from 1, fix it to count from 0
+    - [x] long break is not working, fix it
   - [ ] ui
     - [ ] display current process using check mark:✔️ ❌
       - display all work and breaks. Initial all task x
