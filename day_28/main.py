@@ -19,7 +19,7 @@ class Main:
             canvas=self.__canvas  # it's for cavas.after()
         )
         # Initialize Pomocycle
-        self.__pomocycle = PomoCycle(self.__countdown)
+        self.__pomocycle = PomoCycle(self.__countdown, self.__ui.update_ui_work_break_display)
 
         # how to make the start button make start? and stop also? and what about reset?
         # set button callbacks for start/stop and reset

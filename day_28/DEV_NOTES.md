@@ -1,3 +1,8 @@
+# OVERVIEW
+- communicating with classes is hard. 
+- callback bridged them.
+- there are still lot of things to fix and append. Cease from here. Proceed to next project~~~~
+
 # TODO
 - [x] separate ui work inside countdown class
   - [x] update_ui at main.py
@@ -16,23 +21,25 @@
         - storing the value inside countdown class  
   - [x] reset
     - [x] if pressed reset, make button stop
-- [ ] routine: work and break
-  - [ ] change countdown, pomocycle, and main classes compatible with this routine
+- [x] routine: work and break
+  - [x] change countdown, pomocycle, and main classes compatible with this routine
     - [x] countdown class
       - [x] divide above with start, stop, and reset into different classes
     - [x] pomocycle      
-    - [ ] main class
-  - [ ] when the process finished both start and reset button reset the process
+    - [x] main class - connecting countdown and pomo class
+  - [x] when the process finished both start and reset button reset the process
     - [x] when reset pressed, make the routine reset too
     - [x] if press start button, reset and start again
     - [x] works one more than expected. fix this
     - [x] short break counts from 1, fix it to count from 0
     - [x] long break is not working, fix it
-  - [ ] ui
-    - [ ] display current process using check mark:✔️ ❌
-      - display all work and breaks. Initial all task x
-      - how to check current state? Check by WorkState and TimerState 
-        - if its TimerState is changed from RUNNING to STOPPED, regard it has done
+  - [x] ui
+    - [x] display work and break progress
+      - [x] not yet: background, no color; font color: black
+      - [x] current: background, red; font color: white
+      - [x] done: background, green; font color: white
+        - how to check current state? Check by WorkState and TimerState 
+          - if its TimerState is changed from RUNNING to STOPPED, regard it has done
         
 - [x] refactor
   - [x] enum: UIText, TimerState, WorkState

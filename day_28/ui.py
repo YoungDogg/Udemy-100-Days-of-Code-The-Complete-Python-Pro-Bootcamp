@@ -2,7 +2,7 @@ import tkinter as tk
 from tkinter import ttk
 from countdown import CountDown
 from timer_button import UIText
-from timer_state import HowManyTimes
+from timer_state import HowManyTimes, WorkState
 
 # ---------------------------- CONSTANTS ------------------------------- #
 PINK = "#e2979c"
@@ -48,16 +48,16 @@ class UI:
                                       command=self.reset_btn_command)
         self.__reset_btn.grid(row=2, column=2)
 
-        self.__work_break_display = {'works':[], 'breaks':[]}
+        self.__work_break_display = {'works': [], 'breaks': []}
         for idx in range(HowManyTimes.HOW_MANY_TIME_TO_WORK.value):
             temp_work = ttk.Label(self.__window, text=UIText.WORK.value, style=CHECK_STYLE,
                                   foreground=BLACK, background=YELLOW)
-            if idx == HowManyTimes.HOW_MANY_TIME_TO_WORK.value - 1:
-                temp_break = ttk.Label(self.__window, text=UIText.LONGBREAK.value, style=CHECK_STYLE,
-                                       foreground=BLACK, background=YELLOW)
-            else:
-                temp_break = ttk.Label(self.__window, text=UIText.SHORTBREAK.value, style=CHECK_STYLE,
-                                       foreground=BLACK, background=YELLOW)
+            temp_break = ttk.Label(self.__window,
+                                   text=UIText.LONGBREAK.value
+                                   if idx == HowManyTimes.HOW_MANY_TIME_TO_WORK.value - 1
+                                   else UIText.SHORTBREAK.value,
+                                   style=CHECK_STYLE,
+                                   foreground=BLACK, background=YELLOW)
             temp_work.grid(row=3, column=idx)
             temp_break.grid(row=4, column=idx)
             self.__work_break_display['works'].append(temp_work)
@@ -99,9 +99,30 @@ class UI:
     def update_ui_process_check(self, text):
         self.__work_break_display.config(text=text)
 
-    def update_ui_work_break_display(self):
+    def update_ui_work_break_display(self, pomo_satate, current_state):
+        # reset styles for all work and break labels
         # current state background PINK, done states background GREEN
-        pass
+        for idx, work_label in enumerate(self.__work_break_display['works']):
+            if idx < pomo_satate[WorkState.WORK]:   # completed work sessions
+                work_label.config(background=GREEN, foreground=WHITE)
+            elif idx == pomo_satate[WorkState.WORK] and current_state == WorkState.WORK:
+                # current work session
+                work_label.config(background=RED, foreground=WHITE)
+            else:   # preset work sesisons
+                work_label.config(background=YELLOW, foreground=BLACK)
+
+        for idx, break_label in enumerate(self.__work_break_display['breaks']):
+            if idx < pomo_satate[WorkState.SHORTBREAK]: # completed short breaks
+                break_label.config(background=GREEN, foreground=WHITE)
+            elif idx == pomo_satate[WorkState.SHORTBREAK] and current_state == WorkState.SHORTBREAK:
+                # current short break
+                break_label.config(background=RED, foreground=WHITE)
+            elif current_state == WorkState.LONGBREAK and idx == len(self.__work_break_display['breaks']) -1:
+                # current long break
+                break_label.config(background=RED, foreground=WHITE)
+            else:
+                break_label.config(background=YELLOW, foreground=BLACK)
+
 
 if __name__ == '__main__':
     ui = UI()
