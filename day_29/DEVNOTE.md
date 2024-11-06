@@ -1,0 +1,19 @@
+### How to only save 'formatted'?
+    self.__data['Formatted'].to_csv(something)
+### How to get entry data?
+	entry.get()
+### fill self.__data_dict using them	
+	self.__data_dict['Website']:  entry.get()
+	self.__data_dict['somthing']: otherentry.get()
+### how to append to the existing save file?
+    def gather_engtry_data(self):
+        self.__data_dict['Website'].append(website_entry.get())
+        self.__data_dict['Email/Username'].append(email_entry.get())
+        self.__data_dict['Password'].append(password_entry.get())
+### why `m.set_add_btn_command(m.save_data2file)` not working?
+`add_button = tk.Button(root, text="Add", width=36, command=self.add_data_btn_command)`
+- directly calls this function whether the function assigned
+
+`add_button = tk.Button(root, text="Add", width=36, command=lamda: self.add_data_btn_command)`
+- lambda works as a wrapper to prevent an immediate error 
+
