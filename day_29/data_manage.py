@@ -1,42 +1,42 @@
+import pandas as pd
+import os.path
+
+
 class DataManage:
-    def __init__(self):
-        self.__data_dict = None
+    def __init__(self, ui):
+        self.__data_dict = {'Website': [], 'Email/Username': [], 'Password': []}
         self.__data = None
         self.__file_name = 'data.txt'
+        self.__ui = ui
 
-    # pandas saving
+        # pandas saving
+
     def init_save_file(self):
-        if not os.path.exists(self.__file_name):
-            # Create initial DataFrame
-            self.__data_dict = {
-                'Website': ['dummy'],
-                'Email/Username': ['dummy@email.com'],
-                'Password': ['qwerty']
-            }
-            self.__data = pd.DataFrame(self.__data_dict)
-            # Generate the 'Formatted' column
-            self.__data['Formatted'] = self.__data[['Website', 'Email/Username', 'Password']].astype(str).apply(
-                lambda x: ' | '.join(x), axis=1)
-            # Save to file
-            self.__data['Formatted'].to_csv(self.__file_name, index=False, header=False)
+        if os.path.exists(self.__file_name):
+            self.__load_existing_data()
         else:
-            # Load existing data and add 'Formatted' if missing
-            self.__data = pd.read_csv(self.__file_name, header=None,
-                                      names=['Website', 'Email/Username', 'Password'])
-            if 'Formatted' not in self.__data.columns:
-                self.__data['Formatted'] = self.__data[['Website', 'Email/Username', 'Password']].astype(str).apply(
-                    lambda x: ' | '.join(x), axis=1)
+            self.__data = pd.DataFrame(columns=['Website', 'Email/Username', 'Password'])
 
-        # Save only the 'Formatted' column
+    def __load_existing_data(self):
+        # Load existing data and add 'Formatted' if missing
+        self.__data = pd.read_csv(self.__file_name, header=None,
+                                  names=['Website', 'Email/Username', 'Password'])
+        self.__data = self.__data.apply(lambda x: x.str.strip() if x.dtype == "object" else x)
+        if 'Formatted' not in self.__data.columns:
+            self.__format_data()
+
+    def __format_data(self):
+        # Generate the 'Formatted' column
+        self.__data['Formatted'] = self.__data[['Website', 'Email/Username', 'Password']].astype(str).apply(
+            lambda x: ' | '.join(x), axis=1)
 
     def save_data2file(self):
         self.gather_engtry_data()
-        self.__data['Formatted'].to_csv(self.__file_name, index=False, header=False)
-
-        # gather entry data
+        self.__data = pd.DataFrame(self.__data_dict)
+        self.__format_data()
+        self.__data['Formatted'].to_csv(self.__file_name, mode='a', index=False, header=False)
 
     def gather_engtry_data(self):
-        self.__data_dict['Website'].append(website_entry.get())
-        self.__data_dict['Email/Username'].append(email_entry.get())
-        self.__data_dict['Password'].append(password_entry.get())
-
+        self.__data_dict['Website'].append(self.__ui.website)
+        self.__data_dict['Email/Username'].append(self.__ui.email)
+        self.__data_dict['Password'].append(self.__ui.password)

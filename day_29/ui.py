@@ -3,6 +3,13 @@ import tkinter as tk
 
 class UI:
     def __init__(self):
+        self.__password_entry = None
+        self.__website_entry = None
+        self.__email_entry = None
+        self.__add_data_btn_command = None
+        self.__generate_pswd_btn_command = None
+
+    def setup_ui(self):
         # Initialize the main window
         root = tk.Tk()
         root.title("Password Manager")
@@ -51,7 +58,6 @@ class UI:
         generate_button.grid(row=0, column=1)
 
         # Add button with a placeholder command
-        self.__add_data_btn_command = None
         add_button = tk.Button(root, text="Add", width=36, command=self.add_data_btn_command)
         add_button.grid(row=4, column=1, columnspan=2, pady=(10, 20), padx=(0, 20), sticky="w")
 
@@ -77,3 +83,11 @@ class UI:
     def add_data_btn_command(self):
         if self.__add_data_btn_command:
             self.__add_data_btn_command()
+            self.__clean_entries()
+
+    def set_generate_pswd_btn_command(self, command):
+        self.__generate_pswd_btn_command = command
+
+    def __clean_entries(self):
+        self.__website_entry.delete(0, tk.END)
+        self.__password_entry.delete(0, tk.END)
