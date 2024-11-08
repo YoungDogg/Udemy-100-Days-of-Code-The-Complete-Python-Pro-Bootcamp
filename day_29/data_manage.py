@@ -11,11 +11,13 @@ class DataManage:
 
         # pandas saving
 
-    def init_save_file(self):
+    def load_or_init_data(self):
         if os.path.exists(self.__file_name):
+            print('load_or_init_data true')
             self.__load_existing_data()
         else:
             self.__data = pd.DataFrame(columns=['Website', 'Email/Username', 'Password'])
+            self.__data.to_csv(self.__file_name, index=False, header=False)
 
     def __load_existing_data(self):
         # Load existing data and add 'Formatted' if missing
