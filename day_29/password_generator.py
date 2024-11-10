@@ -2,7 +2,7 @@ import random
 import string
 
 
-class PasswordGenrator:
+class PasswordGenerator:
     # 12 digits including characters
     def __init__(self):
         self.digits = 12
@@ -13,13 +13,11 @@ class PasswordGenrator:
         self.__pwd_tray = self.__pwd_numbers + self.__pwd_lowercase + self.__pwd_uppercase + self.__special
 
     def generate_pwd(self):
-        print('hi')
         password_str = ""
         for _ in range(self.digits):
-            password_str += self.__pwd_tray[random.randint(0, len(self.__pwd_tray)-1)]
-            print(f'password_str: {password_str}')
+            password_str += random.choice(self.__pwd_tray)
         return password_str
 
 if __name__ == '__main__':
-    p = PasswordGenrator()
+    p = PasswordGenerator()
     print(p.generate_pwd())

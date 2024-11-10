@@ -4,6 +4,7 @@ from tkinter import messagebox
 
 class UI:
     def __init__(self):
+        self.logo_image = None
         self.__password_entry = None
         self.__website_entry = None
         self.__email_entry = None
@@ -24,11 +25,11 @@ class UI:
 
         # Load the logo image (Make sure it's a .png or .gif file)
         logo_path = "logo.png"  # Replace with your image path
-        logo_image = tk.PhotoImage(file=logo_path)
+        self.logo_image = tk.PhotoImage(file=logo_path)
 
         # Display the logo image in the top row, centered
-        logo_label = tk.Label(self.__root, image=logo_image)
-        logo_label.grid(row=0, column=1, pady=(20, 20))
+        logo_label = tk.Label(self.__root, image=self.logo_image)
+        logo_label.grid(row=0, column=0, columnspan=3, pady=(20, 20), sticky="n")
 
         # Website label and entry
         website_label = tk.Label(self.__root, text="Website:")
@@ -64,8 +65,8 @@ class UI:
         add_button = tk.Button(self.__root, text="Add", width=36, command=self.add_data_btn_command)
         add_button.grid(row=4, column=1, columnspan=2, pady=(10, 20), padx=(0, 20), sticky="w")
 
-        # Run the application
-        self.__root.mainloop()
+        # Run the application -- not in here
+        # self.__root.mainloop()
 
     @property
     def root(self):
@@ -83,7 +84,6 @@ class UI:
     def password(self):
         return self.__password_entry.get()
 
-    # Method to set the private add button command
     def set_add_data_btn_command(self, command):
         self.__add_data_btn_command = command
 
