@@ -24,7 +24,7 @@ class UI:
         self.__root.grid_columnconfigure(2, weight=1)
 
         # Load the logo image (Make sure it's a .png or .gif file)
-        logo_path = "logo.png"  # Replace with your image path
+        logo_path = "../day_29/logo.png"  # Replace with your image path
         self.logo_image = tk.PhotoImage(file=logo_path)
 
         # Display the logo image in the top row, centered

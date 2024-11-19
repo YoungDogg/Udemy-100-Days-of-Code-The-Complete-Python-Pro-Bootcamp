@@ -1,4 +1,4 @@
-class ErrorHandle:
+class NatoAlphabetErrorHandle:
     @staticmethod
     def check_input_error():
         while True:
@@ -16,5 +16,5 @@ class ErrorHandle:
 
 
 if __name__ == "__main__":
-    e = ErrorHandle()
+    e = NatoAlphabetErrorHandle()
     print(e.check_input_error())

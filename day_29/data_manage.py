@@ -1,12 +1,17 @@
 import pandas as pd
 import os.path
 
+
 class DataManage:
-    def __init__(self, ui):
+    def __init__(self, ui, file_name='data.txt'):
         self.__data_dict = {'Website': [], 'Email/Username': [], 'Password': []}
         self.__data = None
-        self.__file_name = 'data.txt'
+        self.__file_name = file_name
         self.__ui = ui
+
+    @property
+    def file_name(self):
+        return self.__file_name
 
     def load_or_init_data(self):
         if os.path.exists(self.__file_name):
