@@ -7,6 +7,7 @@ from day_29.password_generator import PasswordGenerator
 from day_29.data_manage import DataManage
 from day_29.store_to_clipboard import Clipboard
 
+
 class Main:
     def __init__(self):
         # day26
@@ -22,14 +23,13 @@ class Main:
         self.file_name = "data.json"
 
     def set_up(self):
-
         # def set_class(self):
         self.ui.setup_ui()
 
         self.data_manage = DataManage(self.ui, file_name=self.file_name)
         self.clipboard = Clipboard(self.ui)
 
-        self.jsonData = JSONData(file=self.file_name)
+        self.jsonData = JSONData(file_name=self.file_name)
         self.data_manage.load_or_init_data()
 
         # def set_function(self):
@@ -49,5 +49,4 @@ if __name__ == '__main__':
     # ========day29========
     m = Main()
     m.set_up()
-
-
+    m.ui.root.mainloop()
