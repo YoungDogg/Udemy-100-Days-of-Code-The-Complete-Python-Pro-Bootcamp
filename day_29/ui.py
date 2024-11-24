@@ -10,6 +10,7 @@ class UI:
         self.__email_entry = None
         self.__add_data_btn_command = None
         self.__generate_pswd_btn_command = None
+        self.__search_website_btn_command = None
         self.__root = None
         self.__clipboard = None
 
@@ -36,7 +37,10 @@ class UI:
         website_label.grid(row=1, column=0, padx=(20, 10), sticky="e")
         self.__website_entry = tk.Entry(self.__root, width=35)
         self.__website_entry.focus()
-        self.__website_entry.grid(row=1, column=1, columnspan=2, padx=(0, 20), pady=(5, 5), sticky="w")
+        self.__website_entry.grid(row=1, column=1, padx=(0, 5), pady=(5, 5), sticky="w")
+
+        search_button = tk.Button(self.__root, text="Search", command=self.__search_website_btn_command)
+        search_button.grid(row=1, column=2, padx=(5, 20), pady=(5, 5), sticky="w")
 
         # Email/Username label and entry
         email_label = tk.Label(self.__root, text="Email/Username:")
@@ -104,6 +108,34 @@ class UI:
 
             if self.__clipboard:
                 self.__clipboard.copy_to_clipboard(password)
+
+    def set_search_website_btn_command(self, command):
+        if self.__search_website_btn_command:
+            self.__search_website_btn_command = command
+
+    def search_website_btn_command(self):
+        if self.website:
+            # Add functionality for searching
+            pass
+        else:
+            tk.messagebox.showinfo(message="Please enter a website to search")
+
+    def show_search_msgbox(self, search_result):
+        """
+        Displays the search result or an error messagein a messagebox.
+        Args:
+            search_result: A tuple containing (error_message, result_dict).
+        """
+        error_message, result = search_result
+
+        if error_message:
+            tk.messagebox.showinfo(message=error_message)
+        elif result:
+            tk.messagebox.showinfo(
+                message=f"Website: {self.website}\n"
+                        f"ID: {result['Email/Username']}\n"
+                        f"PWD: {result['Password']}\n"
+            )
 
     def __clean_entries(self):
         self.__website_entry.delete(0, tk.END)

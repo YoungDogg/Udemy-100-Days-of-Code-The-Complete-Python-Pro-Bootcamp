@@ -115,4 +115,9 @@ Provides a dictionary with separate keys for `index`, `columns`, and `data`.
 | `index`        | Index-to-row mappings    | Useful if the index is meaningful (e.g., primary keys).                |
 | `split`        | Separated metadata       | Useful for transmitting metadata like `index` and `columns` with data. |
 
-Let me know if you need additional clarification or examples!
+## sticky
+```python
+add_button.grid(row=4, column=1, columnspan=2, pady=(10, 20), padx=(0, 20), sticky="w")
+```
+- "w": Aligns the widget to the west (left) side of the cell.
+- "e": Aligns the widget to the east (right) side of the cell.
