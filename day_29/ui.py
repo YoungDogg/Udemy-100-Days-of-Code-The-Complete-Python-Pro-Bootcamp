@@ -39,7 +39,7 @@ class UI:
         self.__website_entry.focus()
         self.__website_entry.grid(row=1, column=1, padx=(0, 5), pady=(5, 5), sticky="w")
 
-        search_button = tk.Button(self.__root, text="Search", command=self.__search_website_btn_command)
+        search_button = tk.Button(self.__root, text="Search", command=self.search_website_btn_command)
         search_button.grid(row=1, column=2, padx=(5, 20), pady=(5, 5), sticky="w")
 
         # Email/Username label and entry
@@ -110,13 +110,18 @@ class UI:
                 self.__clipboard.copy_to_clipboard(password)
 
     def set_search_website_btn_command(self, command):
-        if self.__search_website_btn_command:
+        if not self.__search_website_btn_command:
             self.__search_website_btn_command = command
 
     def search_website_btn_command(self):
+        print('search_website_btn_command hi')
+        # only "message" appears not website realted
         if self.website:
-            # Add functionality for searching
-            pass
+            # perform search using SearchWebsite
+            search_result = self.__search_website_btn_command(self.website)
+
+            # Display result in a messagebox
+            self.show_search_msgbox(search_result)
         else:
             tk.messagebox.showinfo(message="Please enter a website to search")
 

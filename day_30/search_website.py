@@ -7,14 +7,14 @@ class SearchWebsite:
     Checks if the file exists and if the website has associated data.
     """
 
-    def __init__(self, json_handelr, file_name):
+    def __init__(self, json_handler, file_name):
         """
         Initializes the SearchWebsite class with a JSONData handelr.
 
         Args:
-            json_handelr (JSONData): An instance of JSONData to manage the JSON file
+            json_handler (JSONData): An instance of JSONData to manage the JSON file
         """
-        self.json_handler = json_handelr
+        self.json_handler = json_handler
         self.__file_name = file_name
 
     def search_website(self, website):
