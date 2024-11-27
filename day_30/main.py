@@ -1,56 +1,41 @@
-from day_26.NatoAlphabet import NatoAlphabet
-from error_handle import NatoAlphabetErrorHandle
-
-from json_controller import JSONData
 from day_29.ui import UI
 from day_29.password_generator import PasswordGenerator
 from day_29.data_manage import DataManage
 from day_29.store_to_clipboard import Clipboard
 from day_30.search_website import SearchWebsite
+from json_controller import JSONData
+
 
 class Main:
+    """Upgrade Day29 project with json data format, and search function"""
+
     def __init__(self):
-        # day26
-        # self.n_alphabet = NatoAlphabet()
-        # self.e_handle = NatoAlphabetErrorHandle()
-
-        # day29
-        self.jsonData = None
-        self.ui = UI()
-        self.pwd = PasswordGenerator()
-        self.data_manage = None
-        self.clipboard = None
+        """Initializes the main application components."""
         self.file_name = "data.json"
-        self.searchWebsite = None
-
-    def set_up(self):
-        # def set_class(self):
-        self.ui.setup_ui()
-
-        self.data_manage = DataManage(self.ui, file_name=self.file_name)
+        self.ui = UI()
+        self.password_generator = PasswordGenerator()
+        self.data_manager = DataManage(self.ui, file_name=self.file_name)
         self.clipboard = Clipboard(self.ui)
+        self.json_data = JSONData(file_name=self.file_name)
+        self.search_website = SearchWebsite(self.json_data, self.file_name)
+        self._initialize_data()
+        self._set_commands()
 
-        self.jsonData = JSONData(file_name=self.file_name)
-        self.data_manage.load_or_init_data()
+    def _initialize_data(self):
+        """Loads or initializes data required for the application."""
+        try:
+            self.data_manager.load_or_init_data()
+        except Exception as e:
+            print(f"Error loading data: {e}")
 
-        self.searchWebsite = SearchWebsite(self.jsonData, self.file_name)
-
-        # def set_function(self):
-        self.ui.set_add_data_btn_command(self.data_manage.save_data2file)
-        self.ui.set_generate_pswd_btn_command(self.pwd.generate_pwd)
+    def _set_commands(self):
+        """Binds UI buttons to their respective commands."""
+        self.ui.set_add_data_command(self.data_manager.save_data2file)
+        self.ui.set_generate_password_command(self.password_generator.generate_pwd)
         self.ui.set_clipboard(self.clipboard)
-        self.ui.set_search_website_btn_command(self.searchWebsite.search_website)
+        self.ui.set_search_website_command(self.search_website.search_website)
 
 
 if __name__ == '__main__':
-    # ========day26========
-    # m = Main()
-    # m.n_alphabet.setup()
-    # word = m.e_handle.check_input_error()
-    # result = m.n_alphabet.result(word)
-    # print(result)
-
-    # ========day29========
-    m = Main()
-    m.set_up()
-    m.ui.root.mainloop()
+    main_app = Main()
+    main_app.ui.root.mainloop()

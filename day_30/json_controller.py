@@ -3,6 +3,8 @@ import os
 
 
 class JSONData:
+    """Class for managing JSON data stored in a file using Pandas."""
+
     def __init__(self, file_name):
         if not isinstance(file_name, str) or not file_name.endswith(".json"):
             raise ValueError("File must be a valid JSON file path.")

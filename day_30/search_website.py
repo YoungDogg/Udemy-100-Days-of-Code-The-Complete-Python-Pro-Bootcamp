@@ -32,8 +32,10 @@ class SearchWebsite:
             return {"message":"No Data File Found", "data":None}
 
         data = self.json_handler.read()
+
         if website in data['Website'].values:
             row = data.loc[data['Website'] == website]
+
             result = {
                 "Email/Username": row['Email/Username'].values[0],
                 "Password": row["Password"].values[0]

@@ -20,9 +20,12 @@
 - [x] make error handling class in day_30
 ## Change save data format as JSON
 - [x] learn pandas json
-- [ ] implement to my code
+- [x] implement to my code~~~~
   - [x] make json CRUD class
     - [x] make exception
+## Search website
+- [x] search class
+- [x] combine with UI
 # Struggled
 - relative path solved linking assigning from other directory main class
 ## `orient`  
