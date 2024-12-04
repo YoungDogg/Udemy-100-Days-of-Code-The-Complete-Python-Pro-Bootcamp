@@ -11,17 +11,20 @@
    - If ❌, shuffle the card abck into the deck.
 3. The game ends when all words have been marked as remembered. 
 # Steps
-- [ ] UI
-  - [ ] test case, didn't test yet
-- [ ] Data
-  - columns: English(str), other language(str), checked(bool), 
-- [ ] Card
+- [x] UI   
+- [x] Card
+  - [x] Data CRUD
+  - [x] Card Deck
 - [ ] Game Flow
   - [ ] Game Start
   - [ ] Game Over
   - [ ] Game Process
     - [ ] Card Judge
-      - [ ] Card Shuffle
+- maintenance
+  - test
+    - [ ] UI
+    - [ ] Card
+    - [ ] Game
 
 # Must Include Features
 - exception

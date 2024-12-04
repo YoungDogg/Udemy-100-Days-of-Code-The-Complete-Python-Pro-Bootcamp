@@ -3,14 +3,14 @@ class Card:
     A single card object.
 
     Attributes:
-        korean (str): The korean word.
+        korean (str): The Korean word.
         japanese (str): The Japanese translation of the word.
         isChecked (bool): Indicates whether the card is marked as checked.
     """
 
     def __init__(self, korean: str = "", japanese: str = ""):
         """
-        Initialize a Card object with optional korean and Japanese values.
+        Initialize a Card object with optional Korean and Japanese values.
         """
         self.korean: str = korean
         self.japanese: str = japanese
@@ -19,10 +19,10 @@ class Card:
     def validate(self):
         """
         Validates the attributes.
-        Raises an error if either korean or Japanese is empty.
+        Raises an error if either korean or japanese is empty.
         """
         if not self.korean:
-            raise ValueError("korean word is missing")
+            raise ValueError("Korean word is missing")
         if not self.japanese:
             raise ValueError("Japanese word is missing")
 
