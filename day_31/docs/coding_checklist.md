@@ -1,0 +1,41 @@
+# UI
+- [ ] document
+- [ ] error handling
+- [ ] test
+- [ ] def __init__()
+- [ ] def set_up()
+- [ ] def root()
+- [ ] def card()
+- [ ] def buttons()
+- [ ] def game_over()
+# Card
+- [ ] document
+- [ ] error handling
+- [ ] test
+- [ ] Card class
+- [ ] CardDeck class
+- [ ] CardCRUD class
+- [ ] CardJsonManager class
+# Flow
+- [ ] document
+- [ ] error handling
+- [ ] test
+- [ ] before_start()
+  - [ ] def shuffle_card()
+- [ ] start()
+  - [ ] def display_ui()
+- [ ] main_flow()
+  - [ ] loop the deck until all cards in the deck checked
+  - [ ] judge_checked()
+    - [ ] checked()
+      - [ ] def diplay_next_card()
+    - [ ] not_checked()
+      - [ ] def shuffle_deck()
+      - [ ] def diplay_next_card()
+- [ ] end()
+  - [ ] show the gameover label
+# Main
+- [ ] document
+- [ ] error handling
+- [ ] test
+- [ ] init all class

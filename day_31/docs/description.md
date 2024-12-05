@@ -1,0 +1,24 @@
+# UI
+- UI class
+  - attributes
+    - root (tk): the root of the canvas.
+    - card (tk): display current card
+  - methods
+    - def __init__(): initialize attributes as none.
+    - def set_up(): assign attributes with their own functions
+    - def set_root(): assign root
+    - def set_card(): display current card. If clicked it flips and shows different language.
+    - def set_check_button(): display ✅❌ and send boolean value.
+# Card
+- Card class
+  - attributes
+  - methods
+- CardDeck class
+  - attributes
+  - methods
+- CardCRUD class
+  - attributes
+  - methods
+- CardJsonManager class
+  - attributes
+  - methods
