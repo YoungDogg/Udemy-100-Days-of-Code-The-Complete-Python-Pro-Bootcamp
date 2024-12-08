@@ -1,12 +1,12 @@
 # UI
-- [ ] document
-- [ ] error handling
-- [ ] test
-- [ ] def __init__()
-- [ ] def set_up()
-- [ ] def root()
-- [ ] def card()
-- [ ] def buttons()
+- [x] document
+- [x] error handling
+- [x] test
+- [x] def __init__()
+- [x] def set_up()
+- [x] def root()
+- [x] def card()
+- [x] def buttons()
 - [ ] def game_over()
 # Card
 - [ ] document
