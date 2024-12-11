@@ -18,6 +18,7 @@
   - Docstrings
 ## Future Features
 - Play again
+- Make sentences with remaining words
 - Deck management
   - Adding cards
   - Language options

@@ -12,10 +12,11 @@
 - [ ] document
 - [ ] error handling
 - [ ] test
-- [ ] Card class
-- [ ] CardDeck class
+- [x] Card class
+- [x] CardDeck class
+# Data
 - [ ] CardCRUD class
-- [ ] CardJsonManager class
+- [ ] DataFileManager class
 # Flow
 - [ ] document
 - [ ] error handling

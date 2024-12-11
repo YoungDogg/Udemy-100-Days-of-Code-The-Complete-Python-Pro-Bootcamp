@@ -57,5 +57,7 @@
   - isChecked (bool) = False
     - check if the UI button checked and received the data from its command.  
 ## CardDeck Class
+- a collection of cards
+- methods: add, discard, shuffle, count, draw card
 ## CardCRUD
 ## CardJsonManager
