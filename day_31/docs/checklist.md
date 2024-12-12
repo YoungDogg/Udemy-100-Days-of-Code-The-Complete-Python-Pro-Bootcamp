@@ -9,14 +9,11 @@
 - [x] def buttons()
 - [ ] def game_over()
 # Card
-- [ ] document
-- [ ] error handling
-- [ ] test
 - [x] Card class
 - [x] CardDeck class
 # Data
-- [ ] CardCRUD class
-- [ ] DataFileManager class
+- [x] CardCRUD class
+- [x] DataFileManager class
 # Flow
 - [ ] document
 - [ ] error handling
@@ -40,3 +37,7 @@
 - [ ] error handling
 - [ ] test
 - [ ] init all class
+# Maintenance
+- [ ] document
+- [ ] error handling
+- [ ] test

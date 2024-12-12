@@ -66,6 +66,10 @@ class Card:
         self._is_checked = False
 
     @property
+    def word(self):
+        return self._word
+
+    @property
     def is_checked(self) -> bool:
         """
         Checks if the card is marked as checked.

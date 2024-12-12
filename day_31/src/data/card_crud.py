@@ -1,6 +1,6 @@
 from __future__ import annotations
 from typing import Optional, Dict, Any
-from card import Language
+from day_31.src.card.card import Card, Language
 
 
 class CardCRUD:
@@ -91,7 +91,7 @@ class CardCRUD:
             raise ValueError(f"Language {language} not found in the card.")
         del self.card[language]
 
-    def delete_card(self) -> None:
+    def clear_card(self) -> None:
         """
         Clears the currently managed card, resetting it to None.
         """
@@ -111,6 +111,7 @@ if __name__ == "__main__":
     print(f"Japanese Word: {japanese_word}")
 
     # Update a word
+    # crud.update("CHINESE", "NIHAO")
     crud.update("ENGLISH", "Hi")
     print(f"Updated Card: {crud.card}")
 
@@ -119,5 +120,5 @@ if __name__ == "__main__":
     print(f"Card After Deletion: {crud.card}")
 
     # Clear the card
-    crud.delete_card()
+    crud.clear_card()
     print(f"Cleared Card: {crud.card}")
