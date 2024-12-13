@@ -2,7 +2,6 @@ import pandas as pd
 from typing import List
 from day_31.src.card.card import Card, Language
 
-
 class DataFileManager:
     """
     Handles file-based operations for managing card data using Pandas.
@@ -17,7 +16,7 @@ class DataFileManager:
     def create_file(self) -> None:
         """Creates the JSON file if it doesn't exist."""
         try:
-            pd.DataFrame([]).to_json(self._file_name, orient="records", indent=4)
+            pd.DataFrame([], columns=["words", "is_checked"]).to_json(self._file_name, orient="records", indent=4)
         except FileExistsError:
             pass  # File already exists, no need to create it
 
@@ -66,8 +65,21 @@ class DataFileManager:
         try:
             return pd.read_json(self._file_name, orient="records")
         except ValueError:  # If the JSON file is empty or invalid
-            return pd.DataFrame([])
+            return pd.DataFrame([], columns=["words", "is_checked"])
 
     def _write_file(self, data: pd.DataFrame) -> None:
         """Writes data to the JSON file."""
         data.to_json(self._file_name, orient="records", indent=4)
+
+
+# Example usage
+if __name__ == "__main__":
+    manager = DataFileManager()
+    manager.create_file()  # Creates the file with predefined columns
+
+    # Check the structure of the JSON file
+    data = manager._read_file()
+    print("DataFrame structure:")
+    print(data.info())  # Displays the structure of the DataFrame
+    print("DataFrame preview:")
+    print(data.head())  # Displays the first few rows of the DataFrame
