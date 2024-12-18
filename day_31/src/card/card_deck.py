@@ -3,7 +3,7 @@ from __future__ import annotations
 import random
 from typing import List
 from enum import Enum
-from card import Card
+from day_31.src.card.card import Card
 
 
 class CardDeck:

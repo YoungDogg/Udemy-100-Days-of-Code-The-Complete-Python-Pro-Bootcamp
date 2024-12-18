@@ -2,6 +2,7 @@ import pandas as pd
 from typing import List
 from day_31.src.card.card import Card, Language
 
+
 class DataFileManager:
     """
     Handles file-based operations for managing card data using Pandas.
@@ -20,12 +21,23 @@ class DataFileManager:
         except FileExistsError:
             pass  # File already exists, no need to create it
 
+    # deprecated, apply won't work
+    # def check_duplicate(self, card: Card) -> bool:
+    #     """Checks if a card already exists in the file."""
+    #     data = self._read_file()
+    #     if data.empty:  # No data in file
+    #         return False
+    #     return any(data["words"].apply(lambda x: dict(x) == card.word))
+
     def check_duplicate(self, card: Card) -> bool:
         """Checks if a card already exists in the file."""
         data = self._read_file()
         if data.empty:  # No data in file
             return False
-        return any(data["words"].apply(lambda x: x == card.word))
+        for existing_card in data["words"]:
+            if self._normalize_keys(existing_card) == card.word:
+                return True
+        return False
 
     def save(self, card: Card) -> None:
         """Saves a card to the JSON file."""
@@ -41,24 +53,28 @@ class DataFileManager:
         data = self._read_file()
         if data.empty:  # No data to update
             return False
+
         for i, row in data.iterrows():
-            if row["words"] == card.word:
+            if self._normalize_keys(row["words"]) == card.word:
                 data.at[i, "is_checked"] = card.is_checked
-                self._write_file(data)
+                self._write_file(data)  # Write the updated data back to the file
                 return True
+
         return False
 
     def remove(self, card: Card) -> bool:
-        """Removes a card from the JSON file."""
+        """Removes a card from the JSON file if it exists."""
         data = self._read_file()
         if data.empty:  # No data to remove
             return False
-        original_length = len(data)
-        data = data[~data["words"].apply(lambda x: x == card.word)]
-        if len(data) == original_length:  # No card removed
-            return False
-        self._write_file(data)
-        return True
+
+        for i, row in data.iterrows():
+            if self._normalize_keys(row["words"]) == card.word:
+                data.drop(index=i, inplace=True)
+                self._write_file(data.reset_index(drop=True))  # Write back without the dropped row
+                return True
+
+        return False
 
     def _read_file(self) -> pd.DataFrame:
         """Reads data from the JSON file."""
@@ -70,6 +86,10 @@ class DataFileManager:
     def _write_file(self, data: pd.DataFrame) -> None:
         """Writes data to the JSON file."""
         data.to_json(self._file_name, orient="records", indent=4)
+
+    def _normalize_keys(self, words: dict) -> dict:
+        """Converts stringified keys in a dictionary to Language enums."""
+        return {Language[key.split(".")[1]]: value for key, value in words.items()}
 
 
 # Example usage
