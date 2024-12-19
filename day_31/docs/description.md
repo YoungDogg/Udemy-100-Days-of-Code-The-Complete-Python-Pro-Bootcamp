@@ -61,3 +61,6 @@
 - methods: add, discard, shuffle, count, draw card
 ## CardCRUD
 ## CardJsonManager
+
+# GameController
+- this manages the flow of the process.
