@@ -2,6 +2,12 @@ import pandas as pd
 from typing import List
 from day_31.src.card.card import Card, Language
 
+from enum import Enum
+
+
+class Data(Enum):
+    FILE_NAME = "data.json"
+
 
 class DataFileManager:
     """
@@ -11,7 +17,7 @@ class DataFileManager:
         _file_name (str): Name of the JSON file for storing card data.
     """
 
-    def __init__(self, file_name: str = "data.json"):
+    def __init__(self, file_name: str = Data.FILE_NAME):
         self._file_name = file_name
 
     def create_file(self) -> None:
@@ -24,14 +30,14 @@ class DataFileManager:
     # deprecated, apply won't work
     # def check_duplicate(self, card: Card) -> bool:
     #     """Checks if a card already exists in the file."""
-    #     data = self._read_file()
+    #     data = self.read_file()
     #     if data.empty:  # No data in file
     #         return False
     #     return any(data["words"].apply(lambda x: dict(x) == card.word))
 
     def check_duplicate(self, card: Card) -> bool:
         """Checks if a card already exists in the file."""
-        data = self._read_file()
+        data = self.read_file()
         if data.empty:  # No data in file
             return False
         for existing_card in data["words"]:
@@ -43,14 +49,14 @@ class DataFileManager:
         """Saves a card to the JSON file."""
         if self.check_duplicate(card):
             raise ValueError("Duplicate card data detected.")
-        data = self._read_file()
+        data = self.read_file()
         new_entry = {"words": card.word, "is_checked": card.is_checked}
         data = pd.concat([data, pd.DataFrame([new_entry])], ignore_index=True)
         self._write_file(data)
 
     def update(self, card: Card) -> bool:
         """Updates a card in the JSON file if it exists."""
-        data = self._read_file()
+        data = self.read_file()
         if data.empty:  # No data to update
             return False
 
@@ -64,7 +70,7 @@ class DataFileManager:
 
     def remove(self, card: Card) -> bool:
         """Removes a card from the JSON file if it exists."""
-        data = self._read_file()
+        data = self.read_file()
         if data.empty:  # No data to remove
             return False
 
@@ -76,7 +82,7 @@ class DataFileManager:
 
         return False
 
-    def _read_file(self) -> pd.DataFrame:
+    def read_file(self) -> pd.DataFrame:
         """Reads data from the JSON file."""
         try:
             return pd.read_json(self._file_name, orient="records")
@@ -98,7 +104,7 @@ if __name__ == "__main__":
     manager.create_file()  # Creates the file with predefined columns
 
     # Check the structure of the JSON file
-    data = manager._read_file()
+    data = manager.read_file()
     print("DataFrame structure:")
     print(data.info())  # Displays the structure of the DataFrame
     print("DataFrame preview:")

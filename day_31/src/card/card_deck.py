@@ -20,6 +20,17 @@ class CardDeck:
         """
         self._card_deck: List[Card] = []
 
+    @classmethod
+    def from_file(cls, file_manager: DataFileManager):
+        """ Creates a CardDeck instance by loading data from a file. """
+        data = file_manager.read_file()
+        deck = cls()
+        for _, row in data.iterrows():
+            card = Card(**row['words'])
+            card.is_checked = row["is_checked"]
+            deck.add_to_deck(card)
+        return deck
+
     def add_to_deck(self, card: Card) -> None:
         """
         Adds a card to the deck.
