@@ -79,6 +79,18 @@ class Card:
         """
         return self._is_checked
 
+    def __str__(self):
+        """
+        Returns a string representation of the card's content.
+        """
+        return f"Card({', '.join(f'{lang.name}: {word}' for lang, word in self._word.items())})"
+
+    def __repr__(self):
+        """
+        Returns a developer-friendly representation of the card.
+        """
+        return self.__str__()
+
 
 if __name__ == "__main__":
     # Test case for the Card class

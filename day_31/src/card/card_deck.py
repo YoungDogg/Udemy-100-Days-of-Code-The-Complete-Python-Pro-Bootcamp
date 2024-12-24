@@ -40,6 +40,20 @@ class CardDeck:
         """
         self._card_deck.append(card)
 
+    def put_back(self, card: Card, to_top: bool = False) -> None:
+        """
+        Puts a card back into the deck.
+
+        Args:
+            card (Card): The card to be put back into the deck.
+            to_top (bool): If True, the card is placed at the top of the deck.
+                           Otherwise, it is placed at the bottom (default).
+        """
+        if to_top:
+            self._card_deck.insert(0, card)
+        else:
+            self._card_deck.append(card)
+
     def discard_from_deck(self, card: Card) -> None:
         """
         Removes a card from the deck if it exists.
@@ -87,24 +101,16 @@ class CardDeck:
         return self._card_deck.pop(0)
 
 
+
 if __name__ == "__main__":
-    # Test the CardDeck class (assumes a Card class exists with proper implementation)
-
-    class Card:
-        def __init__(self, name: str):
-            self.name = name
-
-        def __repr__(self):
-            return f"Card({self.name})"
-
+    from card import Card, Language  # Importing the updated Card and Language classes
 
     # Example usage
     deck = CardDeck()
-
-    card1 = Card("Ace of Spades")
-    card2 = Card("King of Hearts")
-    card3 = Card("Queen of Diamonds")
-    card4 = Card("10 of Diamonds")
+    card1 = Card(JAPANESE="エース", KOREAN="에이스", ENGLISH="Ace of Spades")
+    card2 = Card(JAPANESE="キング", KOREAN="킹", ENGLISH="King of Hearts")
+    card3 = Card(JAPANESE="クイーン", KOREAN="퀸", ENGLISH="Queen of Diamonds")
+    card4 = Card(JAPANESE="10", KOREAN="10", ENGLISH="10 of Diamonds")
 
     # Add cards to the deck
     deck.add_to_deck(card1)
@@ -126,3 +132,15 @@ if __name__ == "__main__":
     # Discard a card
     deck.discard_from_deck(card2)
     print(f"Deck after discarding: ``{deck._card_deck}``")
+
+    # Test the put_back method
+    print("\nTesting put_back method:")
+    deck.put_back(drawn_card)  # Put the drawn card back to the bottom of the deck
+    print(f"Deck after putting back at the bottom: ``{deck._card_deck}``")
+
+    deck.put_back(card3, to_top=True)  # Put card3 back at the top of the deck
+    print(f"Deck after putting back at the top: ``{deck._card_deck}``")
+
+    # Shuffle again and verify
+    deck.shuffle_deck()
+    print(f"Deck after reshuffling: ``{deck._card_deck}``")
