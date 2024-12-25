@@ -91,6 +91,14 @@ class Card:
         """
         return self.__str__()
 
+    def __eq__(self, other):
+        if not isinstance(other, Card):  # Check if 'other' is an instance of Card
+            return NotImplemented  # If not, return NotImplemented
+        return self.word == other.word and self.is_checked == other.is_checked
+
+    def __hash__(self):
+        # Optional: Define this if you intend to use cards in sets or as dictionary keys
+        return hash((frozenset(self.word.items()), self.is_checked))
 
 if __name__ == "__main__":
     # Test case for the Card class

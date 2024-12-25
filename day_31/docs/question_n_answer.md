@@ -1,3 +1,14 @@
+# Card class
+- ```python
+    def __eq__(self, other):
+        if not isinstance(other, Card):  # Check if 'other' is an instance of Card
+            return NotImplemented  # If not, return NotImplemented
+        return self.word == other.word and self.is_checked == other.is_checked
+  ```
+  - What is other?
+    - `__eq__` automatically arises when comparing using `==`. `other` is the right side of `==`. 
+    - `NotImplemented` returns `False` gracefully avoiding errors 
+
 # DataFileManager class
 -   ```python
     pd.DataFrame([]).to_json(self._file_name, orient="records", indent=4)

@@ -40,19 +40,15 @@ class CardDeck:
         """
         self._card_deck.append(card)
 
-    def put_back(self, card: Card, to_top: bool = False) -> None:
+    def put_back(self, card: Card) -> None:
         """
-        Puts a card back into the deck.
-
+        Puts a card back into the deck and shuffles it if the deck is not empty.
         Args:
             card (Card): The card to be put back into the deck.
-            to_top (bool): If True, the card is placed at the top of the deck.
-                           Otherwise, it is placed at the bottom (default).
         """
-        if to_top:
-            self._card_deck.insert(0, card)
-        else:
-            self._card_deck.append(card)
+        self._card_deck.append(card)  # Add the card to the bottom of the deck
+        if len(self._card_deck) > 1:  # Shuffle only if there is more than one card
+            self.shuffle_deck()
 
     def discard_from_deck(self, card: Card) -> None:
         """
@@ -65,6 +61,8 @@ class CardDeck:
             ValueError: If the card is not found in the deck.
         """
         try:
+            for c in self._card_deck:
+                print(f"Deck Card: {c}, To Remove: {card}, Equal: {c == card}")
             self._card_deck.remove(card)
         except ValueError:
             raise ValueError("Card not found in the deck.")
@@ -72,9 +70,15 @@ class CardDeck:
     def shuffle_deck(self) -> None:
         """
         Shuffles the deck in place.
+
+        Does nothing if the deck contains one card.
+        Raises:
+            ValueError: If the deck is empty.
         """
-        if not self._card_deck:
+        if not self._card_deck:  # Deck is empty
             raise ValueError("Cannot shuffle an empty deck.")
+        if len(self._card_deck) <= 1:  # Deck has only one card
+            return
         random.shuffle(self._card_deck)
 
     def get_card_count(self) -> int:
@@ -100,17 +104,24 @@ class CardDeck:
             raise ValueError("Cannot draw from an empty deck.")
         return self._card_deck.pop(0)
 
+    def is_empty(self) -> bool:
+        """
+        Checks if the deck is empty.
 
+        Returns:
+            bool: True if the deck is empty, False otherwise.
+        """
+        return len(self._card_deck) == 0
 
 if __name__ == "__main__":
     from card import Card, Language  # Importing the updated Card and Language classes
 
     # Example usage
     deck = CardDeck()
-    card1 = Card(JAPANESE="エース", KOREAN="에이스", ENGLISH="Ace of Spades")
-    card2 = Card(JAPANESE="キング", KOREAN="킹", ENGLISH="King of Hearts")
-    card3 = Card(JAPANESE="クイーン", KOREAN="퀸", ENGLISH="Queen of Diamonds")
-    card4 = Card(JAPANESE="10", KOREAN="10", ENGLISH="10 of Diamonds")
+    card1 = Card(JAPANESE="エース", KOREAN="에이스", ENGLISH="Ace")
+    card2 = Card(JAPANESE="キング", KOREAN="킹", ENGLISH="King")
+    card3 = Card(JAPANESE="クイーン", KOREAN="퀸", ENGLISH="Queen")
+    card4 = Card(JAPANESE="10", KOREAN="10", ENGLISH="10")
 
     # Add cards to the deck
     deck.add_to_deck(card1)
@@ -138,7 +149,7 @@ if __name__ == "__main__":
     deck.put_back(drawn_card)  # Put the drawn card back to the bottom of the deck
     print(f"Deck after putting back at the bottom: ``{deck._card_deck}``")
 
-    deck.put_back(card3, to_top=True)  # Put card3 back at the top of the deck
+    deck.put_back(card3)  # Put card3 back at the top of the deck
     print(f"Deck after putting back at the top: ``{deck._card_deck}``")
 
     # Shuffle again and verify
