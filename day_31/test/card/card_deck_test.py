@@ -24,17 +24,37 @@ class TestCardDeck(unittest.TestCase):
         self.deck.add_to_deck(self.card2)
         self.deck.discard_from_deck(self.card1)
         self.assertEqual(self.deck.get_card_count(), 1)
-        self.assertRaises(ValueError, self.deck.discard_from_deck, self.card3)  # Card not in deck
+        with self.assertRaises(ValueError):
+            self.deck.discard_from_deck(self.card3)  # Card not in deck
+
+    def test_put_back(self):
+        """Test putting a card back into the deck."""
+        self.deck.add_to_deck(self.card1)
+        self.deck.add_to_deck(self.card2)
+        self.deck.add_to_deck(self.card3)
+        drawn_card = self.deck.draw_card()
+        self.deck.put_back(drawn_card)
+        self.assertEqual(self.deck.get_card_count(), 3)
+        self.assertIn(drawn_card, self.deck._card_deck)
 
     def test_shuffle_deck(self):
         """Test shuffling the deck."""
         self.deck.add_to_deck(self.card1)
         self.deck.add_to_deck(self.card2)
         self.deck.add_to_deck(self.card3)
+
         before_shuffle = self.deck._card_deck[:]
         self.deck.shuffle_deck()
         after_shuffle = self.deck._card_deck
-        self.assertNotEqual(before_shuffle, after_shuffle)  # Deck order should change
+
+        # Retry shuffle if the order is accidentally the same
+        attempts = 5
+        while before_shuffle == after_shuffle and attempts > 0:
+            self.deck.shuffle_deck()
+            after_shuffle = self.deck._card_deck
+            attempts -= 1
+
+        self.assertNotEqual(before_shuffle, after_shuffle, "Deck order did not change after shuffling.")
 
     def test_draw_card(self):
         """Test drawing a card from the deck."""
@@ -46,7 +66,8 @@ class TestCardDeck(unittest.TestCase):
 
         # Drawing from an empty deck should raise an error
         self.deck.draw_card()  # Draw remaining card
-        self.assertRaises(ValueError, self.deck.draw_card)
+        with self.assertRaises(ValueError):
+            self.deck.draw_card()
 
     def test_get_card_count(self):
         """Test getting the card count in the deck."""
@@ -55,6 +76,12 @@ class TestCardDeck(unittest.TestCase):
         self.assertEqual(self.deck.get_card_count(), 1)
         self.deck.add_to_deck(self.card2)
         self.assertEqual(self.deck.get_card_count(), 2)
+
+    def test_is_empty(self):
+        """Test checking if the deck is empty."""
+        self.assertTrue(self.deck.is_empty())  # Deck should be empty initially
+        self.deck.add_to_deck(self.card1)
+        self.assertFalse(self.deck.is_empty())  # Deck is no longer empty
 
 
 if __name__ == "__main__":

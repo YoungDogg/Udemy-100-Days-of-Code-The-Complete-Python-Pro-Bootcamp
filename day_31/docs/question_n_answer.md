@@ -62,3 +62,18 @@
 ```
 - what is `with`?
   - it's like more Pythonic `try-catch`. Good when managing resources.
+
+# Test Card Deck Class
+```python
+    def test_put_back(self):
+        """Test putting a card back into the deck."""
+        self.deck.add_to_deck(self.card1)
+        self.deck.add_to_deck(self.card2)
+        self.deck.add_to_deck(self.card3)
+        drawn_card = self.deck.draw_card()
+        self.deck.put_back(drawn_card)
+        self.assertEqual(self.deck.get_card_count(), 3)
+        self.assertIn(drawn_card, self.deck._card_deck)
+```
+- What is `self.assertIn(drawn_card, self.deck._card_deck)`?
+  - It checks if `drawn_card` is in `self.deck._card_deck`
