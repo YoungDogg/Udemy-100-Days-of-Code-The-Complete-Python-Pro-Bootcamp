@@ -61,8 +61,8 @@ class CardDeck:
             ValueError: If the card is not found in the deck.
         """
         try:
-            for c in self._card_deck:
-                print(f"Deck Card: {c}, To Remove: {card}, Equal: {c == card}")
+            # for c in self._card_deck:
+            #     print(f"Deck Card: {c}, To Remove: {card}, Equal: {c == card}")
             self._card_deck.remove(card)
         except ValueError:
             raise ValueError("Card not found in the deck.")

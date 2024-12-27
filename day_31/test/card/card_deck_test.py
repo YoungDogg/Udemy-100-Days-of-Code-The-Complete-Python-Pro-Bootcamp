@@ -1,25 +1,27 @@
 import unittest
-from day_31.src.card.card import Card, Language
+from unittest.mock import MagicMock
+from day_31.src.card.card import Card
 from day_31.src.card.card_deck import CardDeck
 
 
 class TestCardDeck(unittest.TestCase):
     def setUp(self):
-        """Set up a CardDeck instance and some Card instances for testing."""
+        """Set up a CardDeck instance with mocked Card instances."""
         self.deck = CardDeck()
-        self.card1 = Card(JAPANESE="こんにちは", ENGLISH="Hello")
-        self.card2 = Card(KOREAN="안녕하세요", ENGLISH="Hi")
-        self.card3 = Card(JAPANESE="さようなら", KOREAN="안녕히 계세요", ENGLISH="Goodbye")
+        # Create mocked cards
+        self.card1 = MagicMock(spec=Card)
+        self.card2 = MagicMock(spec=Card)
+        self.card3 = MagicMock(spec=Card)
 
     def test_add_to_deck(self):
-        """Test adding cards to the deck."""
+        """Test adding mocked cards to the deck."""
         self.deck.add_to_deck(self.card1)
         self.assertEqual(self.deck.get_card_count(), 1)
         self.deck.add_to_deck(self.card2)
         self.assertEqual(self.deck.get_card_count(), 2)
 
     def test_discard_from_deck(self):
-        """Test discarding cards from the deck."""
+        """Test discarding mocked cards from the deck."""
         self.deck.add_to_deck(self.card1)
         self.deck.add_to_deck(self.card2)
         self.deck.discard_from_deck(self.card1)
@@ -28,7 +30,7 @@ class TestCardDeck(unittest.TestCase):
             self.deck.discard_from_deck(self.card3)  # Card not in deck
 
     def test_put_back(self):
-        """Test putting a card back into the deck."""
+        """Test putting a mocked card back into the deck."""
         self.deck.add_to_deck(self.card1)
         self.deck.add_to_deck(self.card2)
         self.deck.add_to_deck(self.card3)
@@ -38,7 +40,7 @@ class TestCardDeck(unittest.TestCase):
         self.assertIn(drawn_card, self.deck._card_deck)
 
     def test_shuffle_deck(self):
-        """Test shuffling the deck."""
+        """Test shuffling the deck with mocked cards."""
         self.deck.add_to_deck(self.card1)
         self.deck.add_to_deck(self.card2)
         self.deck.add_to_deck(self.card3)
@@ -57,7 +59,7 @@ class TestCardDeck(unittest.TestCase):
         self.assertNotEqual(before_shuffle, after_shuffle, "Deck order did not change after shuffling.")
 
     def test_draw_card(self):
-        """Test drawing a card from the deck."""
+        """Test drawing a mocked card from the deck."""
         self.deck.add_to_deck(self.card1)
         self.deck.add_to_deck(self.card2)
         drawn_card = self.deck.draw_card()
@@ -70,7 +72,7 @@ class TestCardDeck(unittest.TestCase):
             self.deck.draw_card()
 
     def test_get_card_count(self):
-        """Test getting the card count in the deck."""
+        """Test getting the card count in the deck with mocked cards."""
         self.assertEqual(self.deck.get_card_count(), 0)  # Deck is initially empty
         self.deck.add_to_deck(self.card1)
         self.assertEqual(self.deck.get_card_count(), 1)
@@ -78,7 +80,7 @@ class TestCardDeck(unittest.TestCase):
         self.assertEqual(self.deck.get_card_count(), 2)
 
     def test_is_empty(self):
-        """Test checking if the deck is empty."""
+        """Test checking if the deck is empty with mocked cards."""
         self.assertTrue(self.deck.is_empty())  # Deck should be empty initially
         self.deck.add_to_deck(self.card1)
         self.assertFalse(self.deck.is_empty())  # Deck is no longer empty

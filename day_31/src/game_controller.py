@@ -1,4 +1,4 @@
-from card.card_deck import CardDeck
+from day_31.src.card.card_deck import CardDeck
 
 
 class GameController:
