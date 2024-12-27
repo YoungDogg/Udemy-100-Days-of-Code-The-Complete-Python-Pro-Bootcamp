@@ -55,6 +55,12 @@
 
 # TestCard
 ```python
+if __name__ == "__main__":
+```
+- script guard vs unittest
+  - script guard for execution of separated script
+  - unittest for test only
+```python
     def test_invalid_language_key(self):
         """Test creating a card with an invalid language key."""
         with self.assertRaises(ValueError):

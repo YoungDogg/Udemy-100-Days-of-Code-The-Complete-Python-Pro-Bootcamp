@@ -1,5 +1,5 @@
 import unittest
-from unittest.mock import MagicMock
+from unittest.mock import MagicMock, patch
 from day_31.src.card.card import Card
 from day_31.src.card.card_deck import CardDeck
 
@@ -12,6 +12,29 @@ class TestCardDeck(unittest.TestCase):
         self.card1 = MagicMock(spec=Card)
         self.card2 = MagicMock(spec=Card)
         self.card3 = MagicMock(spec=Card)
+
+    @patch("day_31.src.card.card_deck.Card")
+    @patch("day_31.src.data.data_file_manager.DataFileManager")
+    def test_from_file(self, MockDataFileManager, MockCard):
+        """Test creating a CardDeck from a file."""
+        mock_file_manager = MockDataFileManager.return_value
+        test_data = [
+            {"words": {"JAPANESE": "こんにちは", "KOREAN": "안녕하세요", "ENGLISH": "Hello"}, "is_checked": False},
+            {"words": {"JAPANESE": "さようなら", "KOREAN": "안녕히 계세요", "ENGLISH": "Goodbye"}, "is_checked": True},
+        ]
+        mock_file_manager.read_file.return_value = MagicMock(
+            iterrows=lambda: enumerate(test_data)
+        )
+        MockCard.side_effect = [MagicMock(spec=Card), MagicMock(spec=Card)]
+
+        deck = CardDeck.from_file(mock_file_manager)
+
+        # Assertions
+        mock_file_manager.read_file.assert_called_once()
+        MockCard.assert_any_call(**test_data[0]["words"])
+        MockCard.assert_any_call(**test_data[1]["words"])
+        self.assertEqual(deck.get_card_count(), len(test_data))
+        self.assertTrue(all(isinstance(card, MagicMock) for card in deck._card_deck))
 
     def test_add_to_deck(self):
         """Test adding mocked cards to the deck."""

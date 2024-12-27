@@ -4,6 +4,7 @@ import random
 from typing import List
 from enum import Enum
 from day_31.src.card.card import Card
+from day_31.src.data.data_file_manager import DataFileManager
 
 
 class CardDeck:
@@ -21,7 +22,7 @@ class CardDeck:
         self._card_deck: List[Card] = []
 
     @classmethod
-    def from_file(cls, file_manager: DataFileManager):
+    def from_file(cls, file_manager: DataFileManager): # test method didn't catch the class importing error
         """ Creates a CardDeck instance by loading data from a file. """
         data = file_manager.read_file()
         deck = cls()
