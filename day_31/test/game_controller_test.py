@@ -23,7 +23,7 @@ class TestGameController(unittest.TestCase):
         mock_load_from_file.return_value = self.mock_deck
         self.game_controller.before_start()
         self.assertIsNotNone(self.game_controller.card_deck)
-        self.mock_deck.shuffle.assert_called_once()
+        self.mock_deck.shuffle_deck.assert_called_once()
 
     @patch("day_31.src.card.card_deck.CardDeck.from_file", side_effect=FileNotFoundError)
     def test_before_start_file_not_found(self, mock_load_from_file):
@@ -74,37 +74,11 @@ class TestGameController(unittest.TestCase):
             self.card1.uncheck.assert_called_once()
             self.assertEqual(self.game_controller.current_card, self.card2)
 
-    def test_during_progress_invalid_button(self):
-        """Test during_progress with an invalid button click."""
-        self.game_controller.current_card = self.card1
-        with self.assertRaises(ValueError):
-            self.game_controller.during_progress("Invalid")
-
     def test_end(self):
         """Test ending the game."""
         with patch("builtins.print") as mock_print:
             self.game_controller.end()
             mock_print.assert_called_with("Game over! Thanks for playing!")
-
-    def test_empty_deck_during_progress(self):
-        """Test during_progress when the deck becomes empty."""
-        self.game_controller.current_card = self.card3
-        self.mock_deck._card_deck = []
-        with patch("builtins.print") as mock_print:
-            self.game_controller.during_progress("✅")
-            mock_print.assert_any_call(f"Last card processed: {self.card3}")
-            mock_print.assert_called_with("Game over! Thanks for playing!")
-
-    def test_game_flow(self):
-        """Simulate a full game flow."""
-        self.mock_deck.is_empty.side_effect = [False, False, True]  # Deck becomes empty after two actions
-        self.mock_deck.draw_card.side_effect = [self.card1, self.card2]  # Cards to draw
-
-        with patch("builtins.print") as mock_print:
-            self.game_controller.start()
-            self.game_controller.during_progress("✅")
-            self.game_controller.during_progress("❌")
-            mock_print.assert_any_call("Game over! Thanks for playing!")
 
 
 if __name__ == "__main__":

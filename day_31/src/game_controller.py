@@ -16,7 +16,7 @@ class GameController:
     def before_start(self):
         """Assign the card deck and shuffle the card deck."""
         try:
-            self.card_deck = CardDeck.load_from_file("data.json")  # Hypothetical method
+            self.card_deck = CardDeck.from_file("data.json")  # Hypothetical method
             self.card_deck.shuffle()
         except FileNotFoundError:
             print("Error: data.json file not found!")

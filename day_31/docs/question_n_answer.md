@@ -55,6 +55,12 @@
 
 # TestCard
 ```python
+if __name__ == "__main__":
+```
+- script guard vs unittest
+  - script guard for execution of separated script
+  - unittest for test only
+```python
     def test_invalid_language_key(self):
         """Test creating a card with an invalid language key."""
         with self.assertRaises(ValueError):
@@ -77,3 +83,20 @@
 ```
 - What is `self.assertIn(drawn_card, self.deck._card_deck)`?
   - It checks if `drawn_card` is in `self.deck._card_deck`
+```python
+    @patch("day_31.src.card.card_deck.Card")
+    @patch("day_31.src.data.data_file_manager.DataFileManager")
+    def test_from_file(self, MockDataFileManager, MockCard):
+```
+- the arguments order following patches?
+  - it's bottom up.
+```python
+mock_file_manager = MockDataFileManager.return_value
+```
+mock_file_manager = MockDataFileManager.return_value
+- In this line, what is MockDataFileManager.return_value?
+  - It represents the instance of class. If omit it, accessing its method's value will be blocked
+  ``` python
+  mock_file_manager = MockDataFileManager
+  mock_file_manager.read_file.return_value = test_data  # This doesn't work as expected
+  ```
