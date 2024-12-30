@@ -2,8 +2,6 @@ from __future__ import annotations
 
 import random
 from typing import List
-from enum import Enum
-from day_31.src.card.card import Card
 from day_31.src.data.data_file_manager import DataFileManager
 
 
@@ -22,7 +20,7 @@ class CardDeck:
         self._card_deck: List[Card] = []
 
     @classmethod
-    def from_file(cls, file_manager: DataFileManager): # test method didn't catch the class importing error
+    def from_file(cls, file_manager: DataFileManager):  # test method didn't catch the class importing error
         """ Creates a CardDeck instance by loading data from a file. """
         data = file_manager.read_file()
         deck = cls()
@@ -113,6 +111,7 @@ class CardDeck:
             bool: True if the deck is empty, False otherwise.
         """
         return len(self._card_deck) == 0
+
 
 if __name__ == "__main__":
     from card import Card, Language  # Importing the updated Card and Language classes

@@ -93,10 +93,34 @@ if __name__ == "__main__":
 ```python
 mock_file_manager = MockDataFileManager.return_value
 ```
-mock_file_manager = MockDataFileManager.return_value
 - In this line, what is MockDataFileManager.return_value?
   - It represents the instance of class. If omit it, accessing its method's value will be blocked
   ``` python
   mock_file_manager = MockDataFileManager
   mock_file_manager.read_file.return_value = test_data  # This doesn't work as expected
   ```
+```python
+MockCard.side_effect = [MagicMock(spec=Card), MagicMock(spec=Card)]
+```
+- What does `side_effect` mean?
+  - In this line, it creates those 2 instances. 
+  - ```python
+    @classmethod
+    def from_file(cls, file_manager: DataFileManager):  # test method didn't catch the class importing error
+        """ Creates a CardDeck instance by loading data from a file. """
+        data = file_manager.read_file()
+        deck = cls()
+        for _, row in data.iterrows():
+            card = Card(**row['words'])
+            card.is_checked = row["is_checked"]
+            deck.add_to_deck(card)
+        return deck
+    ```
+    - This method from CardDeck class is called and inside of it, this line `card = Card(**row['words'])` automatically
+    - creates Card object. And `side_effect` helps make it.
+- ```python
+    MockCard.assert_any_call(**test_data[0]["words"])
+  ```
+  - `assert_any_call`, What does it do?
+    - It checks if `MockCard`is called with this `(**test_data[0]["words"])`  
+  - `**test_data[0]["words"]`, why kwarg is here?
