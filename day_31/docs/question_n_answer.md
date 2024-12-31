@@ -124,3 +124,4 @@ MockCard.side_effect = [MagicMock(spec=Card), MagicMock(spec=Card)]
   - `assert_any_call`, What does it do?
     - It checks if `MockCard`is called with this `(**test_data[0]["words"])`  
   - `**test_data[0]["words"]`, why kwarg is here?
+    - `**` is used to unpack dictionaries. It can be used not only defining, but calling method too.
