@@ -54,23 +54,23 @@
     - data = data[...] overwrites data. With ~, inside [] only card.word matched one will be false. And [...] only saves true values.
 
 # TestCard
-```python
-if __name__ == "__main__":
-```
-- script guard vs unittest
-  - script guard for execution of separated script
-  - unittest for test only
-```python
+- ```python
+  if __name__ == "__main__":
+  ```
+  - script guard vs unittest
+    - script guard for execution of separated script
+    - unittest for test only
+- ```python
     def test_invalid_language_key(self):
         """Test creating a card with an invalid language key."""
         with self.assertRaises(ValueError):
             Card(SPANISH="Hola")  # SPANISH is not in Language enum
-```
-- what is `with`?
-  - it's like more Pythonic `try-catch`. Good when managing resources.
+  ```
+  - what is `with`?
+    - it's like more Pythonic `try-catch`. Good when managing resources.
 
 # Test Card Deck Class
-```python
+- ```python
     def test_put_back(self):
         """Test putting a card back into the deck."""
         self.deck.add_to_deck(self.card1)
@@ -80,48 +80,53 @@ if __name__ == "__main__":
         self.deck.put_back(drawn_card)
         self.assertEqual(self.deck.get_card_count(), 3)
         self.assertIn(drawn_card, self.deck._card_deck)
-```
-- What is `self.assertIn(drawn_card, self.deck._card_deck)`?
-  - It checks if `drawn_card` is in `self.deck._card_deck`
-```python
+  ```
+  - What is `self.assertIn(drawn_card, self.deck._card_deck)`?
+    - It checks if `drawn_card` is in `self.deck._card_deck`
+- ```python
     @patch("day_31.src.card.card_deck.Card")
     @patch("day_31.src.data.data_file_manager.DataFileManager")
     def test_from_file(self, MockDataFileManager, MockCard):
-```
-- the arguments order following patches?
-  - it's bottom up.
-```python
-mock_file_manager = MockDataFileManager.return_value
-```
-- In this line, what is MockDataFileManager.return_value?
-  - It represents the instance of class. If omit it, accessing its method's value will be blocked
-  ``` python
-  mock_file_manager = MockDataFileManager
-  mock_file_manager.read_file.return_value = test_data  # This doesn't work as expected
   ```
-```python
-MockCard.side_effect = [MagicMock(spec=Card), MagicMock(spec=Card)]
-```
-- What does `side_effect` mean?
-  - In this line, it creates those 2 instances. 
-  - ```python
-    @classmethod
-    def from_file(cls, file_manager: DataFileManager):  # test method didn't catch the class importing error
-        """ Creates a CardDeck instance by loading data from a file. """
-        data = file_manager.read_file()
-        deck = cls()
-        for _, row in data.iterrows():
-            card = Card(**row['words'])
-            card.is_checked = row["is_checked"]
-            deck.add_to_deck(card)
-        return deck
-    ```
-    - This method from CardDeck class is called and inside of it, this line `card = Card(**row['words'])` automatically
-    - creates Card object. And `side_effect` helps make it.
+  - the arguments order following patches?
+    - it's bottom up.
 - ```python
-    MockCard.assert_any_call(**test_data[0]["words"])
+  mock_file_manager = MockDataFileManager.return_value
+  ```
+  - In this line, what is MockDataFileManager.return_value?
+    - It represents the instance of class. If omit it, accessing its method's value will be blocked
+    ``` python
+    mock_file_manager = MockDataFileManager
+    mock_file_manager.read_file.return_value = test_data  # This doesn't work as expected
+    ```
+- ```python
+  MockCard.side_effect = [MagicMock(spec=Card), MagicMock(spec=Card)]
+  ```
+  - What does `side_effect` mean?
+    - In this line, it creates those 2 instances. 
+    - ```python
+      @classmethod
+      def from_file(cls, file_manager: DataFileManager):  # test method didn't catch the class importing error
+          """ Creates a CardDeck instance by loading data from a file. """
+          data = file_manager.read_file()
+          deck = cls()
+          for _, row in data.iterrows():
+              card = Card(**row['words'])
+              card.is_checked = row["is_checked"]
+              deck.add_to_deck(card)
+          return deck
+      ```
+      - This method from CardDeck class is called and inside of it, this line `card = Card(**row['words'])` automatically
+      - creates Card object. And `side_effect` helps make it.
+- ```python
+  MockCard.assert_any_call(**test_data[0]["words"])
   ```
   - `assert_any_call`, What does it do?
     - It checks if `MockCard`is called with this `(**test_data[0]["words"])`  
   - `**test_data[0]["words"]`, why kwarg is here?
     - `**` is used to unpack dictionaries. It can be used not only defining, but calling method too.
+- ```python
+  self.assertTrue(all(isinstance(card, MagicMock) for card in deck._card_deck))
+  ```
+  - `isinstance`, what is this?
+    - `(isinstance(card, MagicMock)` this method checks if card is an instance of `MagicMock`. If not, it returns `False`.      

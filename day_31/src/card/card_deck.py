@@ -3,6 +3,8 @@ from __future__ import annotations
 import random
 from typing import List
 from day_31.src.data.data_file_manager import DataFileManager
+from day_31.src.card.card import Card # for the unit test
+
 
 
 class CardDeck:

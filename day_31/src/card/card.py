@@ -79,6 +79,12 @@ class Card:
         """
         return self._is_checked
 
+    @is_checked.setter
+    def is_checked(self, value: bool):
+        """
+        set the card as checked.
+        """
+        self._is_checked = value
     def __str__(self):
         """
         Returns a string representation of the card's content.

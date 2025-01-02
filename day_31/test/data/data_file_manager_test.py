@@ -23,13 +23,13 @@ class TestDataFileManager(unittest.TestCase):
     def test_create_file(self):
         """Test creating the JSON file."""
         self.assertTrue(os.path.exists(self.file_name))
-        data = self.manager._read_file()
+        data = self.manager.read_file()
         self.assertTrue(data.empty)  # File should start empty
 
     def test_save(self):
         """Test saving a new card to the file."""
         self.manager.save(self.card1)
-        data = self.manager._read_file()
+        data = self.manager.read_file()
 
         # Convert stringified keys back to Language enum for comparison
         saved_words = {Language[key.split(".")[1]]: value for key, value in data.iloc[0]["words"].items()}
@@ -53,7 +53,7 @@ class TestDataFileManager(unittest.TestCase):
         self.card1.check()  # Mark the card as checked
         updated = self.manager.update(self.card1)  # Update the card
         self.assertTrue(updated)  # Ensure the update method returns True
-        data = self.manager._read_file()  # Read updated file
+        data = self.manager.read_file()  # Read updated file
         self.assertTrue(data.iloc[0]["is_checked"])  # Ensure is_checked is True
 
     def test_update_non_existing_card(self):
@@ -66,7 +66,7 @@ class TestDataFileManager(unittest.TestCase):
         self.manager.save(self.card1)
         removed = self.manager.remove(self.card1)
         self.assertTrue(removed)
-        data = self.manager._read_file()
+        data = self.manager.read_file()
         self.assertTrue(data.empty)
 
     def test_remove_non_existing_card(self):
@@ -77,7 +77,7 @@ class TestDataFileManager(unittest.TestCase):
     def test_read_write_file(self):
         """Test reading and writing to the file."""
         self.manager.save(self.card1)
-        data = self.manager._read_file()
+        data = self.manager.read_file()
         self.assertEqual(len(data), 1)
 
         # Normalize keys in the words column for comparison
@@ -86,14 +86,14 @@ class TestDataFileManager(unittest.TestCase):
 
     def test_clear_empty_file(self):
         """Test clearing the JSON file when empty."""
-        data = self.manager._read_file()
+        data = self.manager.read_file()
         self.assertTrue(data.empty)
 
     def test_read_invalid_file(self):
         """Test reading from an invalid JSON file."""
         with open(self.file_name, "w") as file:
             file.write("INVALID JSON")
-        data = self.manager._read_file()
+        data = self.manager.read_file()
         self.assertTrue(data.empty)  # Should handle invalid JSON gracefully
 
 

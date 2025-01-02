@@ -17,7 +17,7 @@ class GameController:
         """Assign the card deck and shuffle the card deck."""
         try:
             self.card_deck = CardDeck.from_file("data.json")  # Hypothetical method
-            self.card_deck.shuffle()
+            self.card_deck.shuffle_deck()
         except FileNotFoundError:
             print("Error: data.json file not found!")
         except Exception as e:
@@ -32,7 +32,7 @@ class GameController:
         self.current_card = self.card_deck.draw_card()
         print("Game started! Good luck!")  # Replace with UI logic if needed
 
-    def during_progress(self, button_clicked: str) -> None:
+    def handle_button_click(self, button_clicked: str) -> None:
         """
         Handles button clicks and progresses the game.
 
@@ -45,7 +45,7 @@ class GameController:
         if button_clicked not in ["✅", "❌"]:
             raise ValueError("Invalid button clicked.")
 
-        print(f"\nButton Clicked: {button_clicked}")
+        print(f"Button Clicked: {button_clicked}")
         print(f"Current Card Before Action: {self.current_card}")
 
         if button_clicked == "✅":
@@ -69,6 +69,32 @@ class GameController:
     def end(self):
         """Handle game over logic."""
         print("Game over! Thanks for playing!")  # Replace with proper UI handling
+
+    def play_game(self):
+        """Runs the game loop until the deck is empty."""
+        print("Game started! Good luck!")
+        self.start()  # Initialize the game
+
+        while not self.card_deck.is_empty():
+            # Prompt the user for input
+            button_clicked = input("Press 'v' to check or 'x' to uncheck: ").strip().lower()
+
+            if button_clicked not in ["v", "x"]:
+                print("Invalid input! Please enter 'v' or 'x'.")
+                continue
+
+            # Map input to the appropriate action
+            if button_clicked == "v":
+                button_clicked = "✅"
+            elif button_clicked == "x":
+                button_clicked = "❌"
+
+            try:
+                self.during_progress(button_clicked)
+            except ValueError as e:
+                print(f"Invalid input: {e}")
+
+        self.end()
 
 if __name__ == "__main__":
     from card.card import Card
@@ -103,19 +129,19 @@ if __name__ == "__main__":
 
     # Simulate progress
     print("\nDuring Progress: ✅ Button Clicked")
-    game.during_progress("✅")
+    game.handle_button_click("✅")
     print(f"Next Card: ``{game.current_card}``")
     print(f"Deck After Progress: ``{game.card_deck._card_deck}``")
 
     print("\nDuring Progress: ❌ Button Clicked")
-    game.during_progress("❌")
+    game.handle_button_click("❌")
     print(f"Next Card: ``{game.current_card}``")
     print(f"Deck After Progress: ``{game.card_deck._card_deck}``")
 
     # Simulate ending the game when the deck is empty
     while not game.card_deck.is_empty():
         print(f"Deck Status Before Progress: {game.card_deck._card_deck}")
-        game.during_progress("✅")
+        game.handle_button_click("✅")
         print(f"Deck Status After Progress: {game.card_deck._card_deck}")
 
     game.end()

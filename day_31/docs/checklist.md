@@ -9,7 +9,7 @@
 - [x] def buttons()
 - [ ] def game_over()
 # Card
-- [x] document
+- [ ] document
 - [x] error handling
 - [x] test
 - [x] Card class
@@ -21,12 +21,12 @@
 - [x] CardCRUD class
 - [x] DataFileManager class
 # WordCardGameController
-- [ ] document
-- [ ] error handling
-- [ ] test
-- [ ] before_start()
-  - [ ] def shuffle_card()
-- [ ] start()
+- [x] document
+- [x] error handling
+- [x] test
+- [x] before_start()
+  - [x] def shuffle_card()
+- [x] start()
   - [ ] def display_ui()
 - [ ] main_flow()
   - [ ] loop the deck until all cards in the deck checked

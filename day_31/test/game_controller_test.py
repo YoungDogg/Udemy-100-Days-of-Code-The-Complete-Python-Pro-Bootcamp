@@ -48,27 +48,27 @@ class TestGameController(unittest.TestCase):
             mock_print.assert_called_with("Error: Card deck is not initialized!")
             self.assertIsNone(self.game_controller.current_card)
 
-    def test_during_progress_check(self):
-        """Test during_progress with a '✅' button click."""
+    def test_handle_button_click_check(self):
+        """Test handle_button_click with a '✅' button click."""
         self.game_controller.current_card = self.card1
         self.mock_deck.draw_card.return_value = self.card2
         self.card1.is_checked = False
 
         with patch("builtins.print") as mock_print:
-            self.game_controller.during_progress("✅")
+            self.game_controller.handle_button_click("✅")
             mock_print.assert_any_call("Button Clicked: ✅")
             mock_print.assert_any_call(f"Current Card Before Action: {self.card1}")
             self.card1.check.assert_called_once()
             self.assertEqual(self.game_controller.current_card, self.card2)
 
-    def test_during_progress_uncheck(self):
-        """Test during_progress with a '❌' button click."""
+    def test_handle_button_click_uncheck(self):
+        """Test handle_button_click with a '❌' button click."""
         self.game_controller.current_card = self.card1
         self.mock_deck.draw_card.return_value = self.card2
         self.card1.is_checked = True
 
         with patch("builtins.print") as mock_print:
-            self.game_controller.during_progress("❌")
+            self.game_controller.handle_button_click("❌")
             mock_print.assert_any_call("Button Clicked: ❌")
             mock_print.assert_any_call(f"Current Card Before Action: {self.card1}")
             self.card1.uncheck.assert_called_once()
