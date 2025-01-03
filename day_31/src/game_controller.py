@@ -9,8 +9,8 @@ class GameController:
         card_deck (CardDeck): The card deck, loaded from a JSON file.
     """
 
-    def __init__(self):
-        self.card_deck = None
+    def __init__(self, card_deck=None):
+        self.card_deck = None or CardDeck()
         self.current_card = None
 
     def before_start(self):
@@ -42,12 +42,18 @@ class GameController:
         Raises:
             ValueError: If the button clicked is invalid.
         """
-        if button_clicked not in ["✅", "❌"]:
-            raise ValueError("Invalid button clicked.")
+        # Check if the deck is valid
+        if not self._is_deck_valid():
+            print("Card deck is not initialized or empty.")
+            self.end()
+            return
 
+        # Validate and log the button click
+        button_clicked = self._validate_button(button_clicked)
         print(f"Button Clicked: {button_clicked}")
         print(f"Current Card Before Action: {self.current_card}")
 
+        # Handle the button action
         if button_clicked == "✅":
             self.current_card.check()
             print(f"Card Checked: {self.current_card.is_checked}")
@@ -55,16 +61,26 @@ class GameController:
             self.current_card.uncheck()
             print(f"Card Unchecked: {self.current_card.is_checked}")
 
-        # Handle the last card separately
-        if len(self.card_deck._card_deck) == 0:
+        # Handle the last card
+        if self.card_deck.is_empty():
             print(f"Last card processed: {self.current_card}")
             self.end()
             return
 
-        # Draw the next card as usual
+        # Draw the next card
         self.current_card = self.card_deck.draw_card()
         print(f"Next Card Drawn: {self.current_card}")
         print(f"Deck After Drawing: {self.card_deck._card_deck}")
+
+    def _is_deck_valid(self) -> bool:
+        """Helper to check if the card deck is valid."""
+        return self.card_deck and not self.card_deck.is_empty()
+
+    def _validate_button(self, button_clicked: str) -> str:
+        """Validates and converts button input."""
+        if button_clicked not in ["✅", "❌"]:
+            raise ValueError("Invalid button clicked.")
+        return button_clicked
 
     def end(self):
         """Handle game over logic."""

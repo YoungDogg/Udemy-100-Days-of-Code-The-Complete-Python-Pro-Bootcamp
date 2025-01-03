@@ -9,6 +9,8 @@
     - `__eq__` automatically arises when comparing using `==`. `other` is the right side of `==`. 
     - `NotImplemented` returns `False` gracefully avoiding errors 
 
+
+
 # DataFileManager class
 -   ```python
     pd.DataFrame([]).to_json(self._file_name, orient="records", indent=4)
@@ -53,6 +55,8 @@
   - question: then how this method can remove it?
     - data = data[...] overwrites data. With ~, inside [] only card.word matched one will be false. And [...] only saves true values.
 
+
+
 # TestCard
 - ```python
   if __name__ == "__main__":
@@ -68,6 +72,7 @@
   ```
   - what is `with`?
     - it's like more Pythonic `try-catch`. Good when managing resources.
+
 
 # Test Card Deck Class
 - ```python
@@ -130,3 +135,27 @@
   ```
   - `isinstance`, what is this?
     - `(isinstance(card, MagicMock)` this method checks if card is an instance of `MagicMock`. If not, it returns `False`.      
+
+
+# Game Controller Class
+- ```python
+  """from this code to"""
+  self.game_controller = GameController()
+  self.game_controller.card_deck = self.mock_deck
+  
+  """to this"""
+  self.game_controller = GameController(card_deck=self.mock_deck)  # Inject mock deck into GameController
+  ```
+  - What are benefit of the latter code?
+    - The explicit argument implies the object needs attribute.
+    - Keep from forgetting to set card_deck later
+    - More close to encapsulation. If card_deck attribute became private or something, it will occur errors.
+- ```python
+        # Add cards to the mocked deck using add_to_deck
+        self.mock_deck.add_to_deck.side_effect = lambda card: card  # Mock the behavior of adding cards
+        self.mock_deck.draw_card.side_effect = [self.card1, self.card2, self.card3]  # Mock draw behavior
+        self.mock_deck.is_empty.side_effect = [False, False, True]  # Deck becomes empty after three cards
+  ```
+  - Why not use `add_to_deck` in `self.mock_deck` directly?
+    - To check its interaction (ensuring the method was called)
+    - It's not using real _card_deck attribute. So verifying its internal behavior is not necessary.
