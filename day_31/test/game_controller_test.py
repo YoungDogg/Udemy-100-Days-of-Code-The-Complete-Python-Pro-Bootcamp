@@ -7,18 +7,31 @@ from day_31.src.card.card_deck import CardDeck, Card
 class TestGameController(unittest.TestCase):
     def setUp(self):
         """Set up a GameController instance with mocked CardDeck and Cards."""
+        # Create the mock deck and GameController
         self.mock_deck = MagicMock(spec=CardDeck)
         self.game_controller = GameController(card_deck=self.mock_deck)
 
-        # Create mocked cards
+        # Mock cards
         self.card1 = MagicMock(spec=Card)
         self.card2 = MagicMock(spec=Card)
         self.card3 = MagicMock(spec=Card)
 
-        # Add cards to the mocked deck using add_to_deck
-        self.mock_deck.add_to_deck.side_effect = lambda card: card  # Mock the behavior of adding cards
-        self.mock_deck.draw_card.side_effect = [self.card1, self.card2, self.card3]  # Mock draw behavior
-        self.mock_deck.is_empty.side_effect = [False, False, True]  # Deck becomes empty after three cards
+        # Track added cards
+        self.added_cards = []  # Simulate the internal state of the deck
+
+        # Mock add_to_deck to populate the deck
+        self.mock_deck.add_to_deck.side_effect = lambda card: self.added_cards.append(card)
+
+        # Mock draw_card to pop cards from the deck
+        self.mock_deck.draw_card.side_effect = lambda: self.added_cards.pop(0) if self.added_cards else None
+
+        # Mock is_empty to check the state of the deck
+        self.mock_deck.is_empty.side_effect = lambda: len(self.added_cards) == 0
+
+        # Add cards to the mock deck (already handled by side_effect)
+        self.mock_deck.add_to_deck(self.card1)
+        self.mock_deck.add_to_deck(self.card2)
+        self.mock_deck.add_to_deck(self.card3)
 
     @patch("day_31.src.card.card_deck.CardDeck.from_file")
     def test_before_start_success(self, mock_load_from_file):
@@ -37,18 +50,20 @@ class TestGameController(unittest.TestCase):
 
     def test_start_success(self):
         """Test starting the game when the deck is properly initialized."""
-        # Add cards to the mock deck
-        self.mock_deck.is_empty.return_value = False
-        self.mock_deck.draw_card.return_value = self.card1  # Simulate drawing the first card
-
         with patch("builtins.print") as mock_print:
             self.game_controller.start()  # Call the start method
+
             # Verify that the start message is printed
             mock_print.assert_called_with("Game started! Good luck!")
+
             # Verify that the first card is set as the current card
             self.assertEqual(self.game_controller.current_card, self.card1)
+
             # Verify that draw_card was called
             self.mock_deck.draw_card.assert_called_once()
+
+            # Verify that is_empty is called during the game flow
+            self.mock_deck.is_empty.assert_called()
 
     def test_start_no_deck(self):
         """Test starting the game without initializing the deck."""

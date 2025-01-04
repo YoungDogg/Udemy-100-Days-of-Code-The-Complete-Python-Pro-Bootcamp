@@ -159,3 +159,26 @@
   - Why not use `add_to_deck` in `self.mock_deck` directly?
     - To check its interaction (ensuring the method was called)
     - It's not using real _card_deck attribute. So verifying its internal behavior is not necessary.
+- ```python
+    # Mock add_to_deck to populate the deck
+    self.mock_deck.add_to_deck.side_effect = lambda card: self.added_cards.append(card)
+    # Add cards to the mock deck (already handled by side_effect)
+    self.mock_deck.add_to_deck(self.card1)
+  ```
+  -  They look same code, but what is the difference?
+    - W/ `side_effect`, the line what should happen. It sets up a mocked behavior, 
+    - W/O `side_effect`, it execute the line. But w/o `side_effect`, it doesn't return anything. 
+      - This is actual method invocation
+  - Then Why other lines like these don't have invocation lines in `SetUp()`?
+  - ```python
+    # Mock draw_card to pop cards from the deck
+    self.mock_deck.draw_card.side_effect = lambda: self.added_cards.pop(0) if self.added_cards else None
+
+    # Mock is_empty to check the state of the deck
+    self.mock_deck.is_empty.side_effect = lambda: len(self.added_cards) == 0
+    ```
+    - they have their own invocations on other test methods like 
+      - `self.game_controller.start()` from `test_start_success`
+      - inner code containing `is_empty` from other methods like `test_handle_button_click_valid_check`
+    - `SetUp` is for setting the test not running the whole mocking behaviors. 
+    
