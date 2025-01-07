@@ -10,13 +10,21 @@ class GameController:
     """
 
     def __init__(self, card_deck=None):
-        self.card_deck = None or CardDeck()
+        self.card_deck = card_deck or CardDeck()
         self.current_card = None
 
     def before_start(self):
         """Assign the card deck and shuffle the card deck."""
         try:
-            self.card_deck = CardDeck.from_file("data.json")  # Hypothetical method
+            # Load the deck from the file
+            self.card_deck = CardDeck.from_file("data.json")
+
+            # Check if the deck is empty
+            if self.card_deck.is_empty():
+                print("Error: The deck is empty!")
+                return
+
+            # Shuffle the deck
             self.card_deck.shuffle_deck()
         except FileNotFoundError:
             print("Error: data.json file not found!")
