@@ -1,5 +1,5 @@
 import unittest
-from unittest.mock import patch, MagicMock
+from unittest.mock import patch, MagicMock, call
 from day_31.src.game_controller import GameController
 from day_31.src.card.card_deck import CardDeck, Card
 
@@ -34,12 +34,35 @@ class TestGameController(unittest.TestCase):
         self.mock_deck.add_to_deck(self.card3)
 
     @patch("day_31.src.card.card_deck.CardDeck.from_file")
+    def test_before_start_empty_deck(self, mock_load_from_file):
+        """Test handling of an empty deck."""
+        # Mock an empty CardDeck
+        mock_card_deck = MagicMock(spec=CardDeck)
+        mock_card_deck.is_empty.return_value = True
+        mock_load_from_file.return_value = mock_card_deck
+
+        with patch("builtins.print") as mock_print:
+            self.game_controller.before_start()
+            mock_print.assert_called_with("Error: The deck is empty!")
+            mock_card_deck.shuffle_deck.assert_not_called()  # Ensure shuffle is not called
+
+    @patch("day_31.src.card.card_deck.CardDeck.from_file")
     def test_before_start_success(self, mock_load_from_file):
-        """Test that before_start correctly loads and shuffles the deck."""
-        mock_load_from_file.return_value = self.mock_deck
-        self.game_controller.before_start()
-        self.assertIsNotNone(self.game_controller.card_deck)
-        self.mock_deck.shuffle_deck.assert_called_once()
+        """Test successful deck loading and shuffling."""
+        # Mock a non-empty CardDeck
+        mock_card_deck = MagicMock(spec=CardDeck)
+        mock_card_deck.is_empty.return_value = False
+        mock_load_from_file.return_value = mock_card_deck
+
+        with patch("builtins.print") as mock_print:
+            self.game_controller.before_start()
+
+            # Ensure the "Error: The deck is empty!" message was NOT printed
+            error_message = "Error: The deck is empty!"
+            self.assertNotIn(call(error_message), mock_print.mock_calls)
+
+            # Ensure shuffle_deck was called once
+            mock_card_deck.shuffle_deck.assert_called_once()
 
     @patch("day_31.src.card.card_deck.CardDeck.from_file", side_effect=FileNotFoundError)
     def test_before_start_file_not_found(self, mock_load_from_file):
