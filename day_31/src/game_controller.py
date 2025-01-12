@@ -24,8 +24,8 @@ class GameController:
                 print("Error: The deck is empty!")
                 return
 
-            # Shuffle the deck
             self.card_deck.shuffle_deck()
+
         except FileNotFoundError:
             print("Error: data.json file not found!")
         except Exception as e:
@@ -36,7 +36,8 @@ class GameController:
         if not self.card_deck:
             print("Error: Card deck is not initialized!")
             return
-
+        # Shuffle the deck
+        self.card_deck.shuffle_deck()
         self.current_card = self.card_deck.draw_card()
         print("Game started! Good luck!")  # Replace with UI logic if needed
 
@@ -114,58 +115,37 @@ class GameController:
                 button_clicked = "❌"
 
             try:
-                self.during_progress(button_clicked)
+                self.handle_button_click(button_clicked)
             except ValueError as e:
                 print(f"Invalid input: {e}")
 
         self.end()
 
+
 if __name__ == "__main__":
     from card.card import Card
     from card.card_deck import CardDeck
-    from game_controller import GameController
 
-    # Example test script for GameController
-    print("Initializing Game Controller...")
+    # Initialize the GameController
     game = GameController()
 
-    # Create some cards and add them to the deck
-    card1 = Card(JAPANESE="エース", KOREAN="에이스", ENGLISH="Ace")
-    card2 = Card(JAPANESE="キング", KOREAN="킹", ENGLISH="King")
-    card3 = Card(JAPANESE="クイーン", KOREAN="퀸", ENGLISH="Queen")
-    card4 = Card(JAPANESE="10", KOREAN="10", ENGLISH="10")
+    # Example cards for testing
+    card1 = Card(JAPANESE="こんにちは", KOREAN="안녕하세요", ENGLISH="Hello")
+    card2 = Card(JAPANESE="さようなら", KOREAN="안녕히 가세요", ENGLISH="Goodbye")
+    card3 = Card(JAPANESE="ありがとう", KOREAN="감사합니다", ENGLISH="Thank you")
 
-    # Create and set up the deck
+    # Create a deck and add cards
     deck = CardDeck()
     deck.add_to_deck(card1)
     deck.add_to_deck(card2)
     deck.add_to_deck(card3)
-    deck.add_to_deck(card4)
 
-    # Assign the deck to the game controller and shuffle
+    # Assign the deck to the controller
     game.card_deck = deck
-    game.card_deck.shuffle_deck()
-    print(f"Shuffled Deck: ``{game.card_deck._card_deck}``")
+    # Shuffle the deck and start the game
+    print("\nStarting the Game...")
+    game.before_start()
+    print(f"Shuffled Deck: {game.card_deck._card_deck}")
 
-    # Start the game
-    game.start()
-    print(f"Current Card: ``{game.current_card}``")
+    game.play_game()
 
-    # Simulate progress
-    print("\nDuring Progress: ✅ Button Clicked")
-    game.handle_button_click("✅")
-    print(f"Next Card: ``{game.current_card}``")
-    print(f"Deck After Progress: ``{game.card_deck._card_deck}``")
-
-    print("\nDuring Progress: ❌ Button Clicked")
-    game.handle_button_click("❌")
-    print(f"Next Card: ``{game.current_card}``")
-    print(f"Deck After Progress: ``{game.card_deck._card_deck}``")
-
-    # Simulate ending the game when the deck is empty
-    while not game.card_deck.is_empty():
-        print(f"Deck Status Before Progress: {game.card_deck._card_deck}")
-        game.handle_button_click("✅")
-        print(f"Deck Status After Progress: {game.card_deck._card_deck}")
-
-    game.end()
