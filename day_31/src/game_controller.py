@@ -1,4 +1,5 @@
 from day_31.src.card.card_deck import CardDeck
+from day_31.src.data.data_file_manager import DataFileManager
 
 
 class GameController:
@@ -14,18 +15,20 @@ class GameController:
         self.current_card = None
 
     def before_start(self):
-        """Assign the card deck and shuffle the card deck."""
         try:
             # Load the deck from the file
-            self.card_deck = CardDeck.from_file("data.json")
+            file_manager = DataFileManager()
+
+            self.card_deck = CardDeck.from_file(file_manager)
 
             # Check if the deck is empty
             if self.card_deck.is_empty():
                 print("Error: The deck is empty!")
                 return
 
+            # Shuffle the deck and print its state
+            print("Shuffling deck...")
             self.card_deck.shuffle_deck()
-
         except FileNotFoundError:
             print("Error: data.json file not found!")
         except Exception as e:
@@ -59,8 +62,8 @@ class GameController:
 
         # Validate and log the button click
         button_clicked = self._validate_button(button_clicked)
-        print(f"Button Clicked: {button_clicked}")
-        print(f"Current Card Before Action: {self.current_card}")
+        # print(f"Button Clicked: {button_clicked}")
+        # print(f"Current Card Before Action: {self.current_card}")
 
         # Handle the button action
         if button_clicked == "✅":
@@ -70,16 +73,13 @@ class GameController:
             self.current_card.uncheck()
             print(f"Card Unchecked: {self.current_card.is_checked}")
 
-        # Handle the last card
-        if self.card_deck.is_empty():
-            print(f"Last card processed: {self.current_card}")
-            self.end()
-            return
-
-        # Draw the next card
-        self.current_card = self.card_deck.draw_card()
-        print(f"Next Card Drawn: {self.current_card}")
-        print(f"Deck After Drawing: {self.card_deck._card_deck}")
+        # Draw the next card if the deck is not empty
+        if not self.card_deck.is_empty():
+            self.current_card = self.card_deck.draw_card()
+        else:
+            self.current_card = None  # No more cards to draw
+            print("Processing the last card.")
+            # self.end()
 
     def _is_deck_valid(self) -> bool:
         """Helper to check if the card deck is valid."""
@@ -94,32 +94,33 @@ class GameController:
     def end(self):
         """Handle game over logic."""
         print("Game over! Thanks for playing!")  # Replace with proper UI handling
+        self.current_card = None
 
     def play_game(self):
-        """Runs the game loop until the deck is empty."""
+        """
+        Runs the game loop until all cards are processed.
+
+        The game loop repeatedly prompts the user for input, processes the current card,
+        and advances to the next card. Ends when all cards are checked or discarded.
+        """
         print("Game started! Good luck!")
-        self.start()  # Initialize the game
+        self.start()
 
-        while not self.card_deck.is_empty():
-            # Prompt the user for input
+        while self.current_card or not self.card_deck.is_empty():
+            print(f"Current Card: {self.current_card}")
+
             button_clicked = input("Press 'v' to check or 'x' to uncheck: ").strip().lower()
-
             if button_clicked not in ["v", "x"]:
                 print("Invalid input! Please enter 'v' or 'x'.")
                 continue
 
-            # Map input to the appropriate action
-            if button_clicked == "v":
-                button_clicked = "✅"
-            elif button_clicked == "x":
-                button_clicked = "❌"
-
             try:
-                self.handle_button_click(button_clicked)
+                action = "✅" if button_clicked == "v" else "❌"
+                self.handle_button_click(action)
             except ValueError as e:
-                print(f"Invalid input: {e}")
+                print(f"Error: {e}")
 
-        self.end()
+        # self.end()
 
 
 if __name__ == "__main__":
@@ -145,7 +146,7 @@ if __name__ == "__main__":
     # Shuffle the deck and start the game
     print("\nStarting the Game...")
     game.before_start()
-    print(f"Shuffled Deck: {game.card_deck._card_deck}")
+    print(f"Shuffled Deck: {game.card_deck.card_deck}")
 
     game.play_game()
 

@@ -6,7 +6,6 @@ from day_31.src.data.data_file_manager import DataFileManager
 from day_31.src.card.card import Card # for the unit test
 
 
-
 class CardDeck:
     """
     Represents a collection of cards that can be added, discarded, or shuffled.
@@ -20,6 +19,10 @@ class CardDeck:
         Initializes an empty card deck.
         """
         self._card_deck: List[Card] = []
+
+    @property
+    def card_deck(self):
+        return self._card_deck
 
     @classmethod
     def from_file(cls, file_manager: DataFileManager):  # test method didn't catch the class importing error
@@ -79,8 +82,12 @@ class CardDeck:
         if not self._card_deck:  # Deck is empty
             raise ValueError("Cannot shuffle an empty deck.")
         if len(self._card_deck) <= 1:  # Deck has only one card
+            print("Deck has one or no cards, skipping shuffle.")
             return
+
+        print(f"Deck before shuffle: {self._card_deck}")
         random.shuffle(self._card_deck)
+        print(f"Deck after shuffle: {self._card_deck}")
 
     def get_card_count(self) -> int:
         """
@@ -133,7 +140,7 @@ if __name__ == "__main__":
 
     # Shuffle the deck
     deck.shuffle_deck()
-    print(f"Shuffled Deck: ``{deck._card_deck}``")
+    print(f"Shuffled Deck: ``{deck.card_deck}``")
 
     # Draw a card
     drawn_card = deck.draw_card()
@@ -144,16 +151,16 @@ if __name__ == "__main__":
 
     # Discard a card
     deck.discard_from_deck(card2)
-    print(f"Deck after discarding: ``{deck._card_deck}``")
+    print(f"Deck after discarding: ``{deck.card_deck}``")
 
     # Test the put_back method
     print("\nTesting put_back method:")
     deck.put_back(drawn_card)  # Put the drawn card back to the bottom of the deck
-    print(f"Deck after putting back at the bottom: ``{deck._card_deck}``")
+    print(f"Deck after putting back at the bottom: ``{deck.card_deck}``")
 
     deck.put_back(card3)  # Put card3 back at the top of the deck
-    print(f"Deck after putting back at the top: ``{deck._card_deck}``")
+    print(f"Deck after putting back at the top: ``{deck.card_deck}``")
 
     # Shuffle again and verify
     deck.shuffle_deck()
-    print(f"Deck after reshuffling: ``{deck._card_deck}``")
+    print(f"Deck after reshuffling: ``{deck.card_deck}``")

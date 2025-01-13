@@ -17,7 +17,7 @@ class DataFileManager:
         _file_name (str): Name of the JSON file for storing card data.
     """
 
-    def __init__(self, file_name: str = Data.FILE_NAME):
+    def __init__(self, file_name: str = Data.FILE_NAME.value):
         self._file_name = file_name
 
     def create_file(self) -> None:
