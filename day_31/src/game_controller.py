@@ -1,6 +1,5 @@
 from day_31.src.card.card_deck import CardDeck
-from day_31.src.data.data_file_manager import DataFileManager
-
+from day_31.src.data.data_file_manager import DataFileManager, Data
 
 class GameController:
     """
@@ -123,30 +122,48 @@ class GameController:
         # self.end()
 
 
+
+import logging
+from pathlib import Path
+
+# Configure logging
+logging.basicConfig(
+    level=logging.DEBUG,
+    format="%(asctime)s - %(levelname)s - %(message)s",
+    handlers=[
+        logging.StreamHandler()
+    ]
+)
+
 if __name__ == "__main__":
-    from card.card import Card
-    from card.card_deck import CardDeck
+    logging.debug("Initializing GameController...")
 
-    # Initialize the GameController
+    # Get the base path of the script and construct the file path for data.json
+    base_path = Path(__file__).resolve().parent / "data"  # Stay in src and add the "data" directory
+    file_name = base_path / Data.FILE_NAME.value  # Construct the full path to the data.json file
+    logging.debug(f"Base path: {base_path}")
+    logging.debug(f"Full path to data file: {file_name}")
+
+    # Initialize the GameController and DataFileManager
     game = GameController()
+    file_manager = DataFileManager(str(file_name))
 
-    # Example cards for testing
-    card1 = Card(JAPANESE="こんにちは", KOREAN="안녕하세요", ENGLISH="Hello")
-    card2 = Card(JAPANESE="さようなら", KOREAN="안녕히 가세요", ENGLISH="Goodbye")
-    card3 = Card(JAPANESE="ありがとう", KOREAN="감사합니다", ENGLISH="Thank you")
+    try:
+        logging.debug("Attempting to read the file...")
+        data = file_manager.read_file()
 
-    # Create a deck and add cards
-    deck = CardDeck()
-    deck.add_to_deck(card1)
-    deck.add_to_deck(card2)
-    deck.add_to_deck(card3)
+        if data.empty:
+            logging.debug("Data file is empty. Creating an empty file...")
+            file_manager.create_file()
+            logging.info(f"No cards in {file_name}. Please populate the file with card data.")
+        else:
+            logging.debug(f"Loading cards from {file_name}...")
+            game.card_deck = CardDeck.from_file(file_manager)
 
-    # Assign the deck to the controller
-    game.card_deck = deck
-    # Shuffle the deck and start the game
-    print("\nStarting the Game...")
-    game.before_start()
-    print(f"Shuffled Deck: {game.card_deck.card_deck}")
+            logging.debug("Shuffling the deck and starting the game...")
+            game.before_start()
+            logging.debug(f"Shuffled Deck: {game.card_deck._card_deck}")
+            game.play_game()
 
-    game.play_game()
-
+    except Exception as e:
+        logging.error(f"An error occurred: {e}")

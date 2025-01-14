@@ -100,12 +100,21 @@ class DataFileManager:
 
 # Example usage
 if __name__ == "__main__":
-    manager = DataFileManager()
-    manager.create_file()  # Creates the file with predefined columns
+    from day_31.src.data.data_file_manager import DataFileManager
+    import pandas as pd
 
-    # Check the structure of the JSON file
-    data = manager.read_file()
-    print("DataFrame structure:")
-    print(data.info())  # Displays the structure of the DataFrame
-    print("DataFrame preview:")
-    print(data.head())  # Displays the first few rows of the DataFrame
+    # Initialize the DataFileManager
+    file_name = "data.json"
+    data_manager = DataFileManager(file_name)
+
+    # Check if the file can be read properly
+    try:
+        print("Reading data from the file...")
+        data = data_manager.read_file()
+        if data.empty:
+            print(f"The file `{file_name}` is empty or could not be read.")
+        else:
+            print(f"Data read successfully from `{file_name}`:")
+            print(data)  # Print the DataFrame to check its contents
+    except Exception as e:
+        print(f"An error occurred while reading `{file_name}`: {e}")

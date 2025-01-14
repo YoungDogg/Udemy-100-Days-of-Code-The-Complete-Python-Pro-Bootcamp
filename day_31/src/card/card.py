@@ -30,16 +30,16 @@ class Card:
                     a Language enum, and the value is the word in that language.
         """
         self._word = {}
-        for key, word in kwargs.items():
-            if isinstance(key, Language):  # If the key is already a Language enum
+        for key, word in kwargs.get("words", {}).items():
+            if isinstance(key, Language):
                 self._word[key] = word
-            elif isinstance(key, str):  # If the key is a string, convert it to Language
+            elif isinstance(key, str):
                 try:
                     enum_key = Language[key.upper()]
                     self._word[enum_key] = word
                 except KeyError:
                     raise ValueError(f"Invalid language key: {key}")
-        self._is_checked = False
+        self._is_checked = kwargs.get("is_checked", False)
 
     def get_word(self, language: Language) -> str:
         """

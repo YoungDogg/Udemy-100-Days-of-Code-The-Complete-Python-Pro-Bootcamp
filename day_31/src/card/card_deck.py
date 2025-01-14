@@ -85,9 +85,10 @@ class CardDeck:
             print("Deck has one or no cards, skipping shuffle.")
             return
 
-        print(f"Deck before shuffle: {self._card_deck}")
+        print(f"Deck before shuffle: {[str(card) for card in self._card_deck]}")
         random.shuffle(self._card_deck)
-        print(f"Deck after shuffle: {self._card_deck}")
+        print(f"Deck after shuffle: {[str(card) for card in self._card_deck]}")
+
 
     def get_card_count(self) -> int:
         """
