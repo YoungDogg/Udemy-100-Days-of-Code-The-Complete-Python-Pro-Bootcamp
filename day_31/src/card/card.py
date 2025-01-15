@@ -35,7 +35,7 @@ class Card:
                 self._word[key] = word
             elif isinstance(key, str):
                 try:
-                    enum_key = Language[key.upper()]
+                    enum_key = next((lang for lang in Language if lang.value == key),None)
                     self._word[enum_key] = word
                 except KeyError:
                     raise ValueError(f"Invalid language key: {key}")

@@ -25,14 +25,16 @@ class CardDeck:
         return self._card_deck
 
     @classmethod
-    def from_file(cls, file_manager: DataFileManager):  # test method didn't catch the class importing error
-        """ Creates a CardDeck instance by loading data from a file. """
+    def from_file(cls, file_manager: DataFileManager):
         data = file_manager.read_file()
         deck = cls()
-        for _, row in data.iterrows():
-            card = Card(**row['words'])
-            card.is_checked = row["is_checked"]
-            deck.add_to_deck(card)
+        for index, row in data.iterrows():
+            try:
+                card = Card(**row)
+                deck.add_to_deck(card)
+            except ValueError as e:
+                print(f"Error creating card from row {index}: {e}")
+                raise e
         return deck
 
     def add_to_deck(self, card: Card) -> None:
