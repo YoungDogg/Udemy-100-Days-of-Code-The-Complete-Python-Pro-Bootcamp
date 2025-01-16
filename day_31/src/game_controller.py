@@ -14,24 +14,36 @@ class GameController:
         self.current_card = None
 
     def before_start(self):
+        """
+        Initializes the card deck, loads data from file, and shuffles the deck.
+        """
+        print("Starting before_start()...")
         try:
-            # Load the deck from the file
+            # Step 1: Initialize file manager and load deck
+            print("Initializing DataFileManager...")
             file_manager = DataFileManager()
 
+            print("Loading card deck from file...")
             self.card_deck = CardDeck.from_file(file_manager)
 
-            # Check if the deck is empty
+            # Step 2: Check if the deck is empty
             if self.card_deck.is_empty():
-                print("Error: The deck is empty!")
+                print("Deck is empty after loading from file!")
                 return
 
-            # Shuffle the deck and print its state
-            print("Shuffling deck...")
+            # Step 3: Shuffle the deck and print its state
+            print("Shuffling the deck...")
             self.card_deck.shuffle_deck()
-        except FileNotFoundError:
-            print("Error: data.json file not found!")
+            print(f"Deck shuffled successfully: {self.card_deck._card_deck}")
+
+        except FileNotFoundError as e:
+            print(f"Error: data.json file not found! Details: {e}")
+            raise
         except Exception as e:
-            print(f"An error occurred: {e}")
+            print(f"An unexpected error occurred in before_start: {e}")
+            raise
+        finally:
+            print("Exiting before_start()")
 
     def start(self):
         """Start the game."""
