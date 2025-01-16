@@ -26,16 +26,48 @@ class CardDeck:
 
     @classmethod
     def from_file(cls, file_manager: DataFileManager):
-        data = file_manager.read_file()
-        deck = cls()
-        for index, row in data.iterrows():
-            try:
-                card = Card(**row)
-                deck.add_to_deck(card)
-            except ValueError as e:
-                print(f"Error creating card from row {index}: {e}")
-                raise e
-        return deck
+        """
+        Loads card data from a file and initializes the CardDeck.
+
+        Args:
+            file_manager: An instance of DataFileManager to handle file reading.
+
+        Returns:
+            An instance of CardDeck populated with cards from the file.
+        """
+        print("Starting from_file()...")
+        try:
+            # Step 1: Read the data from file
+            print("Reading file using DataFileManager...")
+            data = file_manager.read_file()
+            print(f"Data read successfully: {data}")
+
+            # Step 2: Initialize the deck
+            print("Initializing CardDeck...")
+            deck = cls()
+
+            # Step 3: Add cards to the deck
+            for index, row in data.iterrows():
+                try:
+                    print(f"Creating card from row {index}: {row}")
+                    card = Card(**row)
+                    deck.add_to_deck(card)
+                    print(f"Card added successfully: {card}")
+                except ValueError as e:
+                    print(f"Error creating card from row {index}: {e}")
+                    raise
+
+            print("CardDeck initialized successfully.")
+            return deck
+
+        except FileNotFoundError as e:
+            print(f"FileNotFoundError in from_file: {e}")
+            raise
+        except Exception as e:
+            print(f"An unexpected error occurred in from_file: {e}")
+            raise
+        finally:
+            print("Exiting from_file()")
 
     def add_to_deck(self, card: Card) -> None:
         """
