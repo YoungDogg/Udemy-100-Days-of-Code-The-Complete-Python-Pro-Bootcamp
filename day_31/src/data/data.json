@@ -1,0 +1,82 @@
+[
+    {
+        "words":{
+            "JAP":"\u3053\u3093\u306b\u3061\u306f",
+            "KOR":"\uc548\ub155\ud558\uc138\uc694",
+            "ENG":"Hello"
+        },
+        "is_checked":false
+    },
+    {
+        "words":{
+            "JAP":"\u3055\u3088\u3046\u306a\u3089",
+            "KOR":"\uc548\ub155\ud788 \uac00\uc138\uc694",
+            "ENG":"Goodbye"
+        },
+        "is_checked":false
+    },
+    {
+        "words":{
+            "JAP":"\u3042\u308a\u304c\u3068\u3046",
+            "KOR":"\uac10\uc0ac\ud569\ub2c8\ub2e4",
+            "ENG":"Thank you"
+        },
+        "is_checked":false
+    },
+    {
+        "words":{
+            "JAP":"\u3059\u307f\u307e\u305b\u3093",
+            "KOR":"\uc8c4\uc1a1\ud569\ub2c8\ub2e4",
+            "ENG":"Sorry"
+        },
+        "is_checked":false
+    },
+    {
+        "words":{
+            "JAP":"\u304a\u306f\u3088\u3046",
+            "KOR":"\uc548\ub155\ud558\uc138\uc694",
+            "ENG":"Good Morning"
+        },
+        "is_checked":false
+    },
+    {
+        "words":{
+            "JAP":"\u3053\u3093\u3070\u3093\u306f",
+            "KOR":"\uc548\ub155\ud558\uc138\uc694",
+            "ENG":"Good Evening"
+        },
+        "is_checked":false
+    },
+    {
+        "words":{
+            "JAP":"\u306f\u3044",
+            "KOR":"\ub124",
+            "ENG":"Yes"
+        },
+        "is_checked":false
+    },
+    {
+        "words":{
+            "JAP":"\u3044\u3044\u3048",
+            "KOR":"\uc544\ub2c8\uc694",
+            "ENG":"No"
+        },
+        "is_checked":false
+    },
+    {
+        "words":{
+            "JAP":"\u304a\u540d\u524d\u306f\uff1f",
+            "KOR":"\uc774\ub984\uc774 \ubb34\uc5c7\uc778\uac00\uc694?",
+            "ENG":"What is your name?"
+        },
+        "is_checked":false
+    },
+    {
+        "words":{
+            "JAP":"\u79c1\u306f\u5b66\u751f\u3067\u3059",
+            "KOR":"\uc800\ub294 \ud559\uc0dd\uc785\ub2c8\ub2e4",
+            "ENG":"I am a student"
+        },
+        "is_checked":false
+    }
+]
