@@ -12,9 +12,20 @@ Extra Hard Starting Project
 """
 import datetime as dt
 import os
-
+import smtplib
+from dotenv import load_dotenv
 import pandas as pd
 import random
+
+load_dotenv()
+my_email = os.environ.get("MY_EMAIL")
+receiver_email = os.environ.get("RECEIVER_EMAIL")
+password = os.environ.get("PASSWORD")
+
+today = {"month": dt.datetime.now().month, "day": dt.datetime.now().day}
+# Pick a random letter txt
+birthday_directory_path = "birthdays.csv"
+letter_directory_path = "letter_templates"
 
 
 def directory_check(directory):
@@ -49,6 +60,30 @@ def get_letter(directory_path, name="Unknown"):
         print(named_content)
         return named_content
 
+def send_email(sender, sender_password, receiver, msg_head, msg_body):
+    """
+    Sends an email using SMTP with TLS encryption (commonly for Gmail).
+
+    Args:
+        sender (str): Sender email address.
+        sender_password (str): Sender email password or app password.
+        receiver (str): Receiver email address.
+        msg_head (str): Email subject line.
+        msg_body (str): Email body text.
+    """
+    try:
+        with smtplib.SMTP("smtp.gmail.com", 587) as connection:
+            connection.starttls()
+            connection.login(user=sender, password=sender_password)
+            connection.sendmail(
+                from_addr=sender,
+                to_addrs=receiver,
+                msg=f"Subject:{msg_head}\n\n{msg_body}"
+            )
+        print("[DEBUG] Email sent successfully!")
+    except Exception as e:
+        print(f"[DEBUG] Email failed to send. Error: {e}")
+
 
 def check_whos_birthday(birthday_dir, letter_dir):
     with open(birthday_dir, 'r') as file:
@@ -57,15 +92,17 @@ def check_whos_birthday(birthday_dir, letter_dir):
     for month, day, name, email in zip(df["month"], df["day"], df["name"], df["email"]):
         if month == today["month"] and day == today["day"]:
             print(f"it's {name}'s birthday! \n Email:{email}")
-            get_letter(letter_dir, name)
-            print("***send to email***")
+            birthday_letter = get_letter(letter_dir, name)
+            send_email(
+                sender=my_email,sender_password=password,
+                receiver=receiver_email,
+                msg_head="happy birthday",
+                msg_body=birthday_letter
+            )
 
 
+if __name__ == "__main__":
 
-today = {"month": dt.datetime.now().month, "day": dt.datetime.now().day}
-# Pick a random letter txt
-birthday_directory_path = "birthdays.csv"
-letter_directory_path = "letter_templates"
+    directory_check(letter_directory_path)
+    check_whos_birthday(birthday_directory_path, letter_directory_path)
 
-directory_check(letter_directory_path)
-check_whos_birthday(birthday_directory_path,letter_directory_path)
