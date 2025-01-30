@@ -7,9 +7,14 @@ parameters = {
 response = requests.get(url="https://opentdb.com/api.php", params=parameters)
 response.raise_for_status()
 data = response.json()["results"]
-
+"""
+question = data["question"]
+answer = data["correct_answer"]
+"""
+total_questions = len(data)
 
 question_data = data
+
 
 
 if __name__ == "__main__":
