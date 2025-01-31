@@ -82,12 +82,16 @@ class QuizUI:
         Handle the 'True' button being pressed.
         """
         print("True pressed")
+        self.quiz.check_answer(True)
+
 
     def press_false(self):
         """
         Handle the 'False' button being pressed.
         """
         print("False pressed")
+        self.quiz.check_answer(False)
+
 
 
 
