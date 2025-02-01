@@ -15,15 +15,29 @@ class QuizUI:
         self.window.geometry("450x800")
         self.window.config(bg=THEME_COLOR, padx=20, pady=20)
 
-        # Score label (top-right)
+        # Create a frame to hold the label and the numeric value
+        score_frame = tk.Frame(self.window, bg=THEME_COLOR)
+        score_frame.pack(side="top", anchor="ne")
+
+        # Label for the text "Score:"
         self.score_label = tk.Label(
-            self.window,
-            text="score: 0",
+            score_frame,
+            text="Score:",
             fg="white",
             bg=THEME_COLOR,
             font=("Arial", 16, "bold")
         )
-        self.score_label.pack(side="top", anchor="ne")
+        self.score_label.pack(side="left", padx=(0, 5))
+
+        # Label for the numeric value of the score
+        self.score_value = tk.Label(
+            score_frame,
+            text="0",
+            fg="white",
+            bg=THEME_COLOR,
+            font=("Arial", 16, "bold")
+        )
+        self.score_value.pack(side="left")
 
         # Question canvas in the middle
         self.canvas = tk.Canvas(
@@ -36,7 +50,7 @@ class QuizUI:
         self.question_text = self.canvas.create_text(
             150,  # x-position (center of canvas width)
             200,  # y-position (center of canvas height)
-            text="Questions will be here.",
+            text=self.quiz.get_question(),
             fill="black",
             font=("Arial", 20, "italic"),
             width=280  # wrap text at 280px
@@ -74,25 +88,33 @@ class QuizUI:
 
     def display_question(self, q_txt):
         # get question from data.py question_data
-
-        self.canvas.itemconfig(self.question_text, text=q_txt)
+        if self.quiz.still_has_questions():
+            self.canvas.itemconfig(self.question_text, text=q_txt)
+        else:
+            self.quiz.game_over()
 
     def press_true(self):
         """
         Handle the 'True' button being pressed.
         """
         print("True pressed")
-        self.quiz.check_answer(True)
-
+        score = self.quiz.check_answer(True)
+        self.update_score(score)
+        question = self.quiz.next_question()
+        self.display_question(question)
 
     def press_false(self):
         """
         Handle the 'False' button being pressed.
         """
         print("False pressed")
-        self.quiz.check_answer(False)
+        score = self.quiz.check_answer(False)
+        self.update_score(score)
+        question = self.quiz.next_question()
+        self.display_question(question)
 
-
+    def update_score(self, new_score):
+        self.score_value.config(text=str(new_score))
 
 
 if __name__ == "__main__":

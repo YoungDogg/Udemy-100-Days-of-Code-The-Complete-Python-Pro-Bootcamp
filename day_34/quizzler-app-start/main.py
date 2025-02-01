@@ -41,12 +41,12 @@ if __name__ == "__main__":
 
     ui = QuizUI(quiz)
 
-    while quiz.still_has_questions():
-        question_line = quiz.get_question()
-        ui.display_question(question_line)
-        quiz.next_question()
+    # while quiz.still_has_questions():
+    #     question_line = quiz.get_question()
+    #     ui.display_question(question_line)
+    #     quiz.next_question()
 
-    print("You've completed the quiz")
-    print(f"Your final score was: {quiz.score}/{quiz.question_number}")
+    # print("You've completed the quiz")
+    # print(f"Your final score was: {quiz.score}/{quiz.question_number}")
 
     ui.window.mainloop()
