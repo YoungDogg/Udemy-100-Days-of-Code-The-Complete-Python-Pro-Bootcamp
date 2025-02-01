@@ -91,27 +91,35 @@ class QuizUI:
         if self.quiz.still_has_questions():
             self.canvas.itemconfig(self.question_text, text=q_txt)
         else:
-            self.quiz.game_over()
+            self.canvas.itemconfig(self.question_text, text=self.quiz.game_over())
 
     def press_true(self):
         """
         Handle the 'True' button being pressed.
         """
-        print("True pressed")
-        score = self.quiz.check_answer(True)
-        self.update_score(score)
-        question = self.quiz.next_question()
-        self.display_question(question)
+        if self.quiz.still_has_questions():
+            print("True pressed")
+            score = self.quiz.check_answer(True)
+            self.update_score(score)
+            question = self.quiz.next_question()
+            self.display_question(question)
+        else:
+            print("play again")
+            self.quiz.play_again()
 
     def press_false(self):
         """
         Handle the 'False' button being pressed.
         """
-        print("False pressed")
-        score = self.quiz.check_answer(False)
-        self.update_score(score)
-        question = self.quiz.next_question()
-        self.display_question(question)
+        if self.quiz.still_has_questions():
+            print("False pressed")
+            score = self.quiz.check_answer(False)
+            self.update_score(score)
+            question = self.quiz.next_question()
+            self.display_question(question)
+        else:
+            print("exit")
+            self.quiz.end_game()
 
     def update_score(self, new_score):
         self.score_value.config(text=str(new_score))

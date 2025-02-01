@@ -1,13 +1,19 @@
 import html
-
+import sys
+from question_model import Question
+from data import QuestionData
 
 class QuizBrain:
 
-    def __init__(self, q_list):
+    def __init__(self):
+        self.question_data = QuestionData().fetch_new_questions()
         self.question_number = 0
         self.score = 0
-        self.question_list = q_list
+        self.question_list = self.get_q_list()
         self.current_question = None
+
+    def get_q_list(self):
+        return [Question(q["question"],q["correct_answer"]) for q in self.question_data]
 
     def still_has_questions(self):
         return self.question_number < len(self.question_list)
@@ -39,4 +45,26 @@ class QuizBrain:
 
 
     def game_over(self):
-        print("game over")
+        print("**Game over**")
+        return (f"**Game over**\n"
+                f"Score: {self.score}\n"
+                f"V for play again.\n"
+                f"X for exit.")
+
+    def play_again(self):
+        """
+        Restart the current program
+        Reset question number
+        Reset score
+        Reset question
+        """
+        self.question_number = 0
+        self.score = 0
+        self.question_data = None
+        self.question_data = QuestionData().fetch_new_questions()
+
+
+
+
+    def end_game(self):
+        sys.exit()
