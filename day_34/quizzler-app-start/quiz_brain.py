@@ -6,14 +6,15 @@ from data import QuestionData
 class QuizBrain:
 
     def __init__(self):
-        self.question_data = QuestionData().fetch_new_questions()
+        self.question_data = QuestionData()
+        print(self.question_data.question_set_index)
         self.question_number = 0
         self.score = 0
         self.question_list = self.get_q_list()
         self.current_question = None
 
     def get_q_list(self):
-        return [Question(q["question"],q["correct_answer"]) for q in self.question_data]
+        return [Question(q["question"],q["correct_answer"]) for q in self.question_data.fetch_new_questions()]
 
     def still_has_questions(self):
         return self.question_number < len(self.question_list)
@@ -60,8 +61,7 @@ class QuizBrain:
         """
         self.question_number = 0
         self.score = 0
-        self.question_data = None
-        self.question_data = QuestionData().fetch_new_questions()
+        self.question_list = self.get_q_list()
 
 
 
